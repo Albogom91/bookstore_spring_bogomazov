@@ -94,6 +94,7 @@ public class BookDaoJdbcImpl implements BookDao{
         }
     }
 
+    @Override
     public int countAllBooks() {
         int counter = 0;
         try {
@@ -108,6 +109,7 @@ public class BookDaoJdbcImpl implements BookDao{
         return counter;
     }
 
+    @Override
     public Book getBookByIsbn(String isbn) {
         Book book = null;
         try {
@@ -127,6 +129,7 @@ public class BookDaoJdbcImpl implements BookDao{
         return book;
     }
 
+    @Override
     public List<Book> getBooksByAuthor(String author) {
         List<Book> books = new ArrayList<>();
         try {
@@ -146,4 +149,6 @@ public class BookDaoJdbcImpl implements BookDao{
         }
         return books;
     }
+
+
 }

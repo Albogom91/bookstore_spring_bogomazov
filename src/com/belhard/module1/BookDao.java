@@ -7,9 +7,15 @@ public interface BookDao {
 
     Book getBookById(Long id);
 
+    Book getBookByIsbn(String isbn);
+
+    List<Book> getBooksByAuthor(String author);
+
     Book createBook(Book book);
 
     Book updateBook(Book book);
 
     void deleteBook(Long id);
+
+    int countAllBooks();
 }
