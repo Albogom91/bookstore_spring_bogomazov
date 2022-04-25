@@ -71,17 +71,12 @@ public class BookDaoJdbcImpl implements BookDao{
     public Book updateBook(Book book) {
         try {
             Connection connection = DbConfigurator.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO books (isbn, title, author)\n" +
-                    "VALUES (?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("UPDATE books SET isbn = ?, title = ?, author = ? WHERE id=?");
             statement.setString(1, book.getIsbn());
             statement.setString(2, book.getTitle());
             statement.setString(3, book.getAuthor());
+            statement.setLong(4, book.getId());
             statement.executeUpdate();
-            Statement statementQuery = connection.createStatement();
-            ResultSet resultSet = statementQuery.executeQuery("SELECT * FROM books WHERE id=(SELECT max(id) FROM books)");
-            while (resultSet.next()) {
-                book.setId(resultSet.getLong("id"));
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

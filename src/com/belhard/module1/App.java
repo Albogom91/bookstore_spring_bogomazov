@@ -24,15 +24,23 @@ public class App {
         book1.setTitle("One Flew Over the Cuckoo's Nest");
         book1.setAuthor("Ken Kesey");
 
-        //book1 = BOOK_DAO.createBook(book1);
-        //System.out.println(book1);
+        book1 = BOOK_DAO.createBook(book1);
+        System.out.println(book1);
+
+        book1.setIsbn("1047");
+        book1.setTitle("War");
+        book1.setAuthor("Colonel");
+
+        book1 = BOOK_DAO.updateBook(book1);
+
+        System.out.println(book1);
 
         //BOOK_DAO.deleteBook(book1.getId());
         //book = BOOK_DAO.updateBook(book);
 
         //System.out.println(book);
 
-        BookDaoJdbcImpl BDAO = new BookDaoJdbcImpl();
+        /*BookDaoJdbcImpl BDAO = new BookDaoJdbcImpl();
         System.out.println(BDAO.countAllBooks());
 
         String isbn1 = "1011";
@@ -47,7 +55,7 @@ public class App {
 
         for(Book b : books1){
             System.out.println(b);
-        }
+        }*/
 
 
 
