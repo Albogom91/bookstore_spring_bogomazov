@@ -4,21 +4,24 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDaoJdbcImpl implements BookDao{
+public class BookDaoJdbcImpl implements BookDao {
+    public static final String GET_ALL = "SELECT * FROM books WHERE deleted = false";
+    public static final String GET_BY_ID = "SELECT * FROM books WHERE id = ? AND deleted = false";
+    public static final String CREATE = "INSERT INTO books (isbn, title, author) VALUES (?, ?, ?)";
+    public static final String UPDATE = "UPDATE books SET isbn = ?, title = ?, author = ? WHERE id = ? AND deleted = false";
+    public static final String DELETE = "UPDATE books SET deleted = true WHERE id = ? AND deleted = false";
+    public static final String COUNT_ALL_BOOKS = "SELECT COUNT(*) FROM books";
+    public static final String GET_BY_ISBN = "SELECT * FROM books WHERE isbn = ? AND deleted = false";
+    public static final String GET_BY_AUTHOR = "SELECT * FROM books WHERE author = ? AND deleted = false";
 
     @Override
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
         try {
             Statement statement = DbConfigurator.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM books");
+            ResultSet resultSet = statement.executeQuery(GET_ALL);
             while (resultSet.next()) {
-                Book book = new Book();
-                book.setId(resultSet.getLong("id"));
-                book.setIsbn(resultSet.getString("isbn"));
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor(resultSet.getString("author"));
-                books.add(book);
+                books.add(processResultSet(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -26,19 +29,28 @@ public class BookDaoJdbcImpl implements BookDao{
         return books;
     }
 
+    private Book processResultSet(ResultSet resultSet) {
+        Book book = new Book();
+        try {
+            book.setId(resultSet.getLong("id"));
+            book.setIsbn(resultSet.getString("isbn"));
+            book.setTitle(resultSet.getString("title"));
+            book.setAuthor(resultSet.getString("author"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return book;
+    }
+
     @Override
     public Book getBookById(Long id) {
         Book book = null;
         try {
-            PreparedStatement statement = DbConfigurator.getConnection().prepareStatement("SELECT * FROM books WHERE id=?");
+            PreparedStatement statement = DbConfigurator.getConnection().prepareStatement(GET_BY_ID);
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                book = new Book();
-                book.setId(resultSet.getLong("id"));
-                book.setIsbn(resultSet.getString("isbn"));
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor(resultSet.getString("author"));
+            if (resultSet.next()) {
+                book = processResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -50,48 +62,51 @@ public class BookDaoJdbcImpl implements BookDao{
     public Book createBook(Book book) {
         try {
             Connection connection = DbConfigurator.getConnection();
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO books (isbn, title, author)\n" +
-                    "VALUES (?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, book.getIsbn());
             statement.setString(2, book.getTitle());
             statement.setString(3, book.getAuthor());
             statement.executeUpdate();
-            Statement statementQuery = connection.createStatement();
-            ResultSet resultSet = statementQuery.executeQuery("SELECT * FROM books WHERE id=(SELECT max(id) FROM books)");
-            while (resultSet.next()) {
-                book.setId(resultSet.getLong("id"));
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return processResultSet(generatedKeys);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return book;
+        throw new RuntimeException("Book was not created!");
     }
 
     @Override
     public Book updateBook(Book book) {
         try {
             Connection connection = DbConfigurator.getConnection();
-            PreparedStatement statement = connection.prepareStatement("UPDATE books SET isbn = ?, title = ?, author = ? WHERE id=?");
+            PreparedStatement statement = connection.prepareStatement(UPDATE);
             statement.setString(1, book.getIsbn());
             statement.setString(2, book.getTitle());
             statement.setString(3, book.getAuthor());
             statement.setLong(4, book.getId());
-            statement.executeUpdate();
+            int result = statement.executeUpdate();
+            if (result == 1) {
+                return getBookById(book.getId());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return book;
+        throw new RuntimeException("Book was not updated!");
     }
 
     @Override
-    public void deleteBook(Long id) {
+    public boolean deleteBook(Long id) {
         try {
-            PreparedStatement statement = DbConfigurator.getConnection().prepareStatement("UPDATE books SET deleted = true WHERE id=?");
+            PreparedStatement statement = DbConfigurator.getConnection().prepareStatement(DELETE);
             statement.setLong(1, id);
-            statement.executeUpdate();
+            int result = statement.executeUpdate();
+            return result == 1;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        throw new RuntimeException("There was a mistake during deletion process!");
     }
 
     @Override
@@ -99,8 +114,8 @@ public class BookDaoJdbcImpl implements BookDao{
         int counter = 0;
         try {
             Statement statement = DbConfigurator.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM books");
-            if(resultSet.next()){
+            ResultSet resultSet = statement.executeQuery(COUNT_ALL_BOOKS);
+            if (resultSet.next()) {
                 counter = resultSet.getInt("count");
             }
         } catch (SQLException e) {
@@ -113,15 +128,11 @@ public class BookDaoJdbcImpl implements BookDao{
     public Book getBookByIsbn(String isbn) {
         Book book = null;
         try {
-            PreparedStatement statement = DbConfigurator.getConnection().prepareStatement("SELECT * FROM books WHERE isbn=?");
+            PreparedStatement statement = DbConfigurator.getConnection().prepareStatement(GET_BY_ISBN);
             statement.setString(1, isbn);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                book = new Book();
-                book.setId(resultSet.getLong("id"));
-                book.setIsbn(resultSet.getString("isbn"));
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor(resultSet.getString("author"));
+            if (resultSet.next()) {
+                book = processResultSet(resultSet);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -133,16 +144,11 @@ public class BookDaoJdbcImpl implements BookDao{
     public List<Book> getBooksByAuthor(String author) {
         List<Book> books = new ArrayList<>();
         try {
-            PreparedStatement statement = DbConfigurator.getConnection().prepareStatement("SELECT * FROM books WHERE author=?");
+            PreparedStatement statement = DbConfigurator.getConnection().prepareStatement(GET_BY_AUTHOR);
             statement.setString(1, author);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Book book = new Book();
-                book.setId(resultSet.getLong("id"));
-                book.setIsbn(resultSet.getString("isbn"));
-                book.setTitle(resultSet.getString("title"));
-                book.setAuthor(resultSet.getString("author"));
-                books.add(book);
+                books.add(processResultSet(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();

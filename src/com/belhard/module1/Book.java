@@ -106,8 +106,4 @@ public class Book {
     public int hashCode() {
         return Objects.hash(id, isbn, title, author, price, cover);
     }
-
-    public void showBriefInfo(Book book){
-        System.out.println("Id = " + id + ", title = " + title + ", author = " + author);
-    }
 }
