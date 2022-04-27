@@ -11,7 +11,7 @@ public class DbConfigurator {
     private static String url;
     private static String user;
     private static String password;
-    private static final String PATH_TO_PROPERTIES = "dblocal.properties";
+    private static final String PATH_TO_PROPERTIES = "dbremote.properties";
 
     public static void initDbConnection() {
         try {
@@ -42,5 +42,4 @@ public class DbConfigurator {
         }
         return connection;
     }
-
 }

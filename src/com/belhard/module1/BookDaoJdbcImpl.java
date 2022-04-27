@@ -5,14 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoJdbcImpl implements BookDao {
-    public static final String GET_ALL = "SELECT * FROM books WHERE deleted = false";
-    public static final String GET_BY_ID = "SELECT * FROM books WHERE id = ? AND deleted = false";
-    public static final String CREATE = "INSERT INTO books (isbn, title, author) VALUES (?, ?, ?)";
-    public static final String UPDATE = "UPDATE books SET isbn = ?, title = ?, author = ? WHERE id = ? AND deleted = false";
+    public static final String GET_ALL = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
+            "FROM books b JOIN covers c ON b.cover_id = c.id WHERE deleted = false";
+    public static final String GET_BY_ID = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
+            "FROM books b JOIN covers c ON b.cover_id = c.id WHERE b.id = ? AND deleted = false";
+    public static final String CREATE = "INSERT INTO books (isbn, title, author, price, cover_id) VALUES (?, ?, ?, ?, ?)";
+    public static final String UPDATE = "UPDATE books SET isbn = ?, title = ?, author = ?, price = ?, cover_id = ? WHERE id = ? AND deleted = false";
     public static final String DELETE = "UPDATE books SET deleted = true WHERE id = ? AND deleted = false";
-    public static final String COUNT_ALL_BOOKS = "SELECT COUNT(*) FROM books";
-    public static final String GET_BY_ISBN = "SELECT * FROM books WHERE isbn = ? AND deleted = false";
-    public static final String GET_BY_AUTHOR = "SELECT * FROM books WHERE author = ? AND deleted = false";
+    public static final String COUNT_ALL_BOOKS = "SELECT COUNT(*) FROM books WHERE deleted = false";
+    public static final String GET_BY_ISBN = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
+            "FROM books b JOIN covers c ON b.cover_id = c.id WHERE b.isbn = ? AND deleted = false";
+    public static final String GET_BY_AUTHOR = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
+            "FROM books b JOIN covers c ON b.cover_id = c.id WHERE b.author = ? AND deleted = false";
 
     @Override
     public List<Book> getAllBooks() {
@@ -36,6 +40,8 @@ public class BookDaoJdbcImpl implements BookDao {
             book.setIsbn(resultSet.getString("isbn"));
             book.setTitle(resultSet.getString("title"));
             book.setAuthor(resultSet.getString("author"));
+            book.setPrice(resultSet.getBigDecimal("price"));
+            book.setCover(Book.Cover.valueOf(resultSet.getString("cover")));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,10 +72,13 @@ public class BookDaoJdbcImpl implements BookDao {
             statement.setString(1, book.getIsbn());
             statement.setString(2, book.getTitle());
             statement.setString(3, book.getAuthor());
+            statement.setBigDecimal(4, book.getPrice());
+            statement.setInt(5, ReaderUtil.getIdByCover(book));
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                return processResultSet(generatedKeys);
+                Long id = generatedKeys.getLong("id");
+                return getBookById(id);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +94,9 @@ public class BookDaoJdbcImpl implements BookDao {
             statement.setString(1, book.getIsbn());
             statement.setString(2, book.getTitle());
             statement.setString(3, book.getAuthor());
-            statement.setLong(4, book.getId());
+            statement.setBigDecimal(4, book.getPrice());
+            statement.setInt(5, ReaderUtil.getIdByCover(book));
+            statement.setLong(6, book.getId());
             int result = statement.executeUpdate();
             if (result == 1) {
                 return getBookById(book.getId());
@@ -155,6 +166,4 @@ public class BookDaoJdbcImpl implements BookDao {
         }
         return books;
     }
-
-
 }

@@ -16,14 +16,16 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         chooseMainMenuOption(scanner);
         scanner.close();
-
+        System.out.print("Current number of books in the store is: ");
         System.out.println(BOOK_DAO.countAllBooks());
 
     }
 
     public static void chooseMainMenuOption(Scanner scanner) {
         while (true) {
+            String divider = "-----------------------------------";
             System.out.print(INFO);
+            System.out.println(divider);
             String input = scanner.nextLine();
             String[] options = input.split(" ");
             switch (options[0]) {
@@ -32,15 +34,18 @@ public class App {
                     for (Book book : books) {
                         PrinterUtil.showBriefInfo(book);
                     }
+                    System.out.println(divider);
                     break;
                 }
                 case "get": {
                     Book book = BOOK_DAO.getBookById(Long.parseLong(options[1]));
                     System.out.println(book);
+                    System.out.println(divider);
+                    break;
                 }
-                break;
                 case "delete": {
                     BOOK_DAO.deleteBook(Long.parseLong(options[1]));
+                    System.out.println(divider);
                     break;
                 }
                 case "create": {
@@ -51,7 +56,13 @@ public class App {
                     book.setTitle(scanner.nextLine());
                     System.out.print("Please, enter author of the new book: ");
                     book.setAuthor(scanner.nextLine());
+                    System.out.print("Please, enter price of the new book: ");
+                    book.setPrice(scanner.nextBigDecimal());
+                    System.out.print("Please, enter cover id (1 for soft, 2 or hard, 3 for special) of the new book: ");
+                    ReaderUtil.setCoverById(scanner.nextInt(), book);
                     BOOK_DAO.createBook(book);
+                    scanner.nextLine();
+                    System.out.println(divider);
                     break;
                 }
                 case "update": {
@@ -62,7 +73,13 @@ public class App {
                     book.setTitle(scanner.nextLine());
                     System.out.print("Please, enter new author of the book you wish to update: ");
                     book.setAuthor(scanner.nextLine());
+                    System.out.print("Please, enter new price of the book you wish to update: ");
+                    book.setPrice(scanner.nextBigDecimal());
+                    System.out.print("Please, enter new cover id (1 for soft, 2 or hard, 3 for special) of the book you wish to update: ");
+                    ReaderUtil.setCoverById(scanner.nextInt(), book);
                     BOOK_DAO.updateBook(book);
+                    scanner.nextLine();
+                    System.out.println(divider);
                     break;
                 }
                 case "exit": {
@@ -70,6 +87,7 @@ public class App {
                 }
                 default: {
                     System.out.println("Invalid input! Please, try again!");
+                    System.out.println(divider);
                     break;
                 }
             }
