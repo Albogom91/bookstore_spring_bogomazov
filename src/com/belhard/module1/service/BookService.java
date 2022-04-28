@@ -6,21 +6,21 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface BookService {
-    List<BookDto> getAllBooks();
+    List<BookDto> getAll();
 
-    BookDto getBookById(Long id);
+    BookDto getById(Long id);
 
-    BookDto getBookByIsbn(String isbn);
+    BookDto getByIsbn(String isbn);
 
-    List<BookDto> getBooksByAuthor(String author);
+    List<BookDto> getByAuthor(String author);
 
-    BookDto createBook(BookDto bookDto);
+    BookDto create(BookDto bookDto);
 
-    BookDto updateBook(BookDto bookDto);
+    BookDto update(BookDto bookDto);
 
-    void deleteBook(Long id);
+    void delete(Long id);
 
-    int countAllBooks();
+    int countAll();
 
     public BigDecimal countPriceOfAllBooksByAuthor(String author);
 }

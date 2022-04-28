@@ -27,7 +27,7 @@ public class App {
         scanner.close();
 
         System.out.print("Current number of books in the store is: ");
-        System.out.println(BOOK_SERVICE.countAllBooks());
+        System.out.println(BOOK_SERVICE.countAll());
 
         System.out.println(BOOK_SERVICE.countPriceOfAllBooksByAuthor("Leo Tolstoy"));
 
@@ -42,7 +42,7 @@ public class App {
             String[] options = input.split(" ");
             switch (options[0]) {
                 case "all": {
-                    List<BookDto> bookDtos = BOOK_SERVICE.getAllBooks();
+                    List<BookDto> bookDtos = BOOK_SERVICE.getAll();
                     for (BookDto bookDto : bookDtos) {
                         PrinterUtil.showBriefInfo(bookDto);
                     }
@@ -50,13 +50,13 @@ public class App {
                     break;
                 }
                 case "get": {
-                    BookDto bookDto = BOOK_SERVICE.getBookById(Long.parseLong(options[1]));
+                    BookDto bookDto = BOOK_SERVICE.getById(Long.parseLong(options[1]));
                     System.out.println(bookDto);
                     System.out.println(divider);
                     break;
                 }
                 case "delete": {
-                    BOOK_SERVICE.deleteBook(Long.parseLong(options[1]));
+                    BOOK_SERVICE.delete(Long.parseLong(options[1]));
                     System.out.println(divider);
                     break;
                 }
@@ -72,13 +72,13 @@ public class App {
                     bookDto.setPrice(scanner.nextBigDecimal());
                     System.out.print("Please, enter cover id (1 for soft, 2 or hard, 3 for special) of the new book: ");
                     ReaderUtil.setCoverById(scanner.nextInt(), bookDto);
-                    BOOK_SERVICE.createBook(bookDto);
+                    BOOK_SERVICE.create(bookDto);
                     scanner.nextLine();
                     System.out.println(divider);
                     break;
                 }
                 case "update": {
-                    BookDto bookDto = BOOK_SERVICE.getBookById(Long.parseLong(options[1]));
+                    BookDto bookDto = BOOK_SERVICE.getById(Long.parseLong(options[1]));
                     System.out.print("Please, enter new isbn of the book you wish to update: ");
                     bookDto.setIsbn(scanner.nextLine());
                     System.out.print("Please, enter new title of the book you wish to update: ");
@@ -89,7 +89,7 @@ public class App {
                     bookDto.setPrice(scanner.nextBigDecimal());
                     System.out.print("Please, enter new cover id (1 for soft, 2 or hard, 3 for special) of the book you wish to update: ");
                     ReaderUtil.setCoverById(scanner.nextInt(), bookDto);
-                    BOOK_SERVICE.updateBook(bookDto);
+                    BOOK_SERVICE.update(bookDto);
                     scanner.nextLine();
                     System.out.println(divider);
                     break;

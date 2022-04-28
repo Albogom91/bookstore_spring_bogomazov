@@ -15,7 +15,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public List<BookDto> getAllBooks() {
+    public List<BookDto> getAll() {
         List<Book> books = bookDao.getAllBooks();
         return booksToBooksDtos(books);
     }
@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookById(Long id) {
+    public BookDto getById(Long id) {
         Book book = bookDao.getBookById(id);
         if (book == null) {
             throw new RuntimeException("There is no book with such id!");
@@ -50,7 +50,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getBookByIsbn(String isbn) {
+    public BookDto getByIsbn(String isbn) {
         Book book = bookDao.getBookByIsbn(isbn);
         if (book == null) {
             throw new RuntimeException("There is no book with such isbn!");
@@ -59,7 +59,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDto> getBooksByAuthor(String author) {
+    public List<BookDto> getByAuthor(String author) {
         List<Book> books = bookDao.getBooksByAuthor(author);
         if (books.isEmpty()) {
             throw new RuntimeException("No books by such author!");
@@ -68,7 +68,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto createBook(BookDto bookDto) {
+    public BookDto create(BookDto bookDto) {
         Book checkBook = bookDao.getBookByIsbn(bookDto.getIsbn());
         if (checkBook != null) {
             throw new RuntimeException("Book with such ISBN already exists!");
@@ -90,7 +90,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto updateBook(BookDto bookDto) {
+    public BookDto update(BookDto bookDto) {
         Book checkBook = bookDao.getBookByIsbn(bookDto.getIsbn());
         if (checkBook != null && checkBook.getId() != bookDto.getId()) {
             throw new RuntimeException("Book with such ISBN already exists!");
@@ -101,20 +101,20 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteBook(Long id) {
+    public void delete(Long id) {
         if (!bookDao.deleteBook(id)) {
             throw new RuntimeException("Deletion was not completed! There is no book with such id!");
         }
     }
 
     @Override
-    public int countAllBooks() {
+    public int countAll() {
         return bookDao.countAllBooks();
     }
 
     public BigDecimal countPriceOfAllBooksByAuthor(String author) {
         BigDecimal sumPrice = new BigDecimal(0.0);
-        List<BookDto> bookDtos = getBooksByAuthor(author);
+        List<BookDto> bookDtos = getByAuthor(author);
         for (BookDto bookDto : bookDtos) {
             sumPrice = sumPrice.add(bookDto.getPrice());
         }
