@@ -1,4 +1,6 @@
-package com.belhard.module1;
+package com.belhard.module1.dao;
+
+import com.belhard.module1.dao.beans.Book;
 
 import java.util.List;
 

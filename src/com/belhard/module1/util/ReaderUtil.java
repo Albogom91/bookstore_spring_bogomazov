@@ -1,19 +1,22 @@
-package com.belhard.module1;
+package com.belhard.module1.util;
+
+import com.belhard.module1.dao.beans.Book;
+import com.belhard.module1.service.dto.BookDto;
 
 public class ReaderUtil {
 
-    public static void setCoverById(int id, Book book) {
+    public static void setCoverById(int id, BookDto bookDto) {
         switch (id) {
             case 1: {
-                book.setCover(Book.Cover.SOFT);
+                bookDto.setCover(BookDto.CoverDto.SOFT);
                 break;
             }
             case 2: {
-                book.setCover(Book.Cover.HARD);
+                bookDto.setCover(BookDto.CoverDto.HARD);
                 break;
             }
             case 3: {
-                book.setCover((Book.Cover.SPECIAL));
+                bookDto.setCover((BookDto.CoverDto.SPECIAL));
                 break;
             }
             default: {
