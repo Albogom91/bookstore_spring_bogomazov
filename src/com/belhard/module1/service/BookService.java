@@ -24,3 +24,4 @@ public interface BookService {
 
     public BigDecimal countPriceOfAllBooksByAuthor(String author);
 }
+

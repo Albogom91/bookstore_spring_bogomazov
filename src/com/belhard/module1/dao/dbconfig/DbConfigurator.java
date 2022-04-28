@@ -1,4 +1,4 @@
-package com.belhard.module1;
+package com.belhard.module1.dao.dbconfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,13 +11,14 @@ public class DbConfigurator {
     private static String url;
     private static String user;
     private static String password;
-    private static final String PATH_TO_PROPERTIES = "dblocal.properties";
+    private static final String PATH_TO_PROPERTIES_REMOTE = "dbremote.properties";
+    private static final String PATH_TO_PROPERTIES_LOCAL = "dblocal.properties";
 
     public static void initDbConnection() {
         try {
             getProperties();
             connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -25,7 +26,7 @@ public class DbConfigurator {
     public static void getProperties() {
         try {
             Properties properties = new Properties();
-            FileInputStream fis = new FileInputStream(PATH_TO_PROPERTIES);
+            FileInputStream fis = new FileInputStream(PATH_TO_PROPERTIES_REMOTE);
             properties.load(fis);
             url = properties.get("db.url").toString();
             user = properties.get("db.user").toString();
@@ -42,5 +43,5 @@ public class DbConfigurator {
         }
         return connection;
     }
-
 }
+

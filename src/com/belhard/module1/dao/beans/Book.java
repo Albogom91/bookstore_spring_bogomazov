@@ -107,3 +107,4 @@ public class Book {
         return Objects.hash(id, isbn, title, author, price, cover);
     }
 }
+
