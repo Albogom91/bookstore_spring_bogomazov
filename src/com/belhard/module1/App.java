@@ -73,7 +73,7 @@ public class App {
                     bookDto.setPrice(scanner.nextBigDecimal());
                     scanner.nextLine();
                     System.out.print("Please, enter cover id (soft, hard or special) of the new book: ");
-                    bookDto.setCover(BookDto.CoverDto.valueOf(scanner.nextLine().toUpperCase()));
+                    bookDto.setCoverDto(BookDto.CoverDto.valueOf(scanner.nextLine().toUpperCase()));
                     BOOK_SERVICE.create(bookDto);
                     System.out.println(divider);
                     break;
@@ -90,7 +90,7 @@ public class App {
                     bookDto.setPrice(scanner.nextBigDecimal());
                     scanner.nextLine();
                     System.out.print("Please, enter new cover id (soft, hard or special) of the book you wish to update: ");
-                    bookDto.setCover(BookDto.CoverDto.valueOf(scanner.nextLine().toUpperCase()));
+                    bookDto.setCoverDto(BookDto.CoverDto.valueOf(scanner.nextLine().toUpperCase()));
                     BOOK_SERVICE.update(bookDto);
                     System.out.println(divider);
                     break;

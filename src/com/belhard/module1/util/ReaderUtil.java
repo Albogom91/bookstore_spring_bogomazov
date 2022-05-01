@@ -8,15 +8,15 @@ public class ReaderUtil {
     public static void setCoverById(int id, BookDto bookDto) {
         switch (id) {
             case 1: {
-                bookDto.setCover(BookDto.CoverDto.SOFT);
+                bookDto.setCoverDto(BookDto.CoverDto.SOFT);
                 break;
             }
             case 2: {
-                bookDto.setCover(BookDto.CoverDto.HARD);
+                bookDto.setCoverDto(BookDto.CoverDto.HARD);
                 break;
             }
             case 3: {
-                bookDto.setCover((BookDto.CoverDto.SPECIAL));
+                bookDto.setCoverDto((BookDto.CoverDto.SPECIAL));
                 break;
             }
             default: {

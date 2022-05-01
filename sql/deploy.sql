@@ -13,10 +13,25 @@ CREATE TABLE covers (
 	name VARCHAR(20)
 );
 
+CREATE TABLE users (
+	id BIGSERIAL PRIMARY KEY,
+	firstname VARCHAR(50) NOT NULL,
+	lastname VARCHAR(50) NOT NULL,
+	email VARCHAR(100) UNIQUE NOT NULL,
+	userpassword VARCHAR(100) NOT NULL,
+	role_id BIGINT REFERENCES roles,
+	deleted BOOLEAN DEFAULT false NOT NULL
+);
+
+CREATE TABLE roles (
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(20)
+);
+
 INSERT INTO covers (name)
 VALUES ('SOFT'),
 	('HARD'),
-	('SPECIAL')
+	('SPECIAL');
 
 INSERT INTO books (isbn, title, author, price, cover_id)
 VALUES ('1001', 'Pride and Prejudice', 'Jane Austen', '10.75', '1'),
@@ -39,3 +54,20 @@ VALUES ('1001', 'Pride and Prejudice', 'Jane Austen', '10.75', '1'),
 	('1018', 'Frankenstein', 'Mary Shelley', '7.75', '1'),
 	('1019', 'To the Lighthouse', 'Virginia Woolf', '13.95', '2'),
 	('1020', 'Moby-Dick', 'Herman Melville', '19.95', '3');
+
+INSERT INTO roles (name)
+VALUES ('ADMIN'),
+	('MANAGER'),
+	('CUSTOMER');
+
+INSERT INTO users (firstname, lastname, email, userpassword, role_id)
+VALUES ('Alex', 'Baker', 'test1111@gmail.com', '1111', '1'),
+	('John', 'Carpenter', 'test2222@gmail.com', '2222', '1'),
+	('James', 'Smith', 'test3333@gmail.com', '3333', '3'),
+	('John', 'Smith', 'test4444@gmail.com', '4444', '3'),
+	('Michael', 'Carver', 'test5555@gmail.com', '5555', '2'),
+	('William', 'Fisher', 'test6666@gmail.com', '6666', '3'),
+	('George', 'Shepherd', 'test7777@gmail.com', '7777', '3'),
+	('James', 'Hunter', 'test8888@gmail.com', '8888', '3'),
+	('John', 'Baker', 'test9999@gmail.com', '9999', '2'),
+	('Nicholas', 'Carver', 'test0000@gmail.com', '0000', '3');

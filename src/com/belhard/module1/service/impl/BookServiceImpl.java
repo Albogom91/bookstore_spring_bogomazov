@@ -27,7 +27,7 @@ public class BookServiceImpl implements BookService {
         bookDto.setTitle(book.getTitle());
         bookDto.setAuthor(book.getAuthor());
         bookDto.setPrice(book.getPrice());
-        bookDto.setCover(BookDto.CoverDto.valueOf(book.getCover().toString()));
+        bookDto.setCoverDto(BookDto.CoverDto.valueOf(book.getCover().toString()));
         return bookDto;
     }
 
@@ -85,7 +85,7 @@ public class BookServiceImpl implements BookService {
         book.setTitle(bookDto.getTitle());
         book.setAuthor(bookDto.getAuthor());
         book.setPrice(bookDto.getPrice());
-        book.setCover(Book.Cover.valueOf(bookDto.getCover().toString()));
+        book.setCover(Book.Cover.valueOf(bookDto.getCoverDto().toString()));
         return book;
     }
 

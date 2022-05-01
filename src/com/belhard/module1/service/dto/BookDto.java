@@ -70,11 +70,11 @@ public class BookDto {
         this.price = price;
     }
 
-    public CoverDto getCover() {
+    public CoverDto getCoverDto() {
         return coverDto;
     }
 
-    public void setCover(CoverDto coverDto) {
+    public void setCoverDto(CoverDto coverDto) {
         this.coverDto = coverDto;
     }
 
