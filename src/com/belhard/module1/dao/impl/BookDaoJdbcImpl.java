@@ -14,8 +14,10 @@ public class BookDaoJdbcImpl implements BookDao {
             "FROM books b JOIN covers c ON b.cover_id = c.id WHERE deleted = false";
     public static final String GET_BY_ID = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
             "FROM books b JOIN covers c ON b.cover_id = c.id WHERE b.id = ? AND deleted = false";
-    public static final String CREATE = "INSERT INTO books (isbn, title, author, price, cover_id) VALUES (?, ?, ?, ?, ?)";
-    public static final String UPDATE = "UPDATE books SET isbn = ?, title = ?, author = ?, price = ?, cover_id = ? WHERE id = ? AND deleted = false";
+    public static final String CREATE = "INSERT INTO books (isbn, title, author, price, cover_id) " +
+            "VALUES (?, ?, ?, ?, (SELECT id FROM covers WHERE name = ?))";
+    public static final String UPDATE = "UPDATE books SET isbn = ?, title = ?, author = ?, price = ?, cover_id = (SELECT id FROM covers WHERE name = ?) " +
+            "WHERE id = ? AND deleted = false";
     public static final String DELETE = "UPDATE books SET deleted = true WHERE id = ? AND deleted = false";
     public static final String COUNT_ALL_BOOKS = "SELECT COUNT(*) FROM books WHERE deleted = false";
     public static final String GET_BY_ISBN = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
@@ -78,7 +80,7 @@ public class BookDaoJdbcImpl implements BookDao {
             statement.setString(2, book.getTitle());
             statement.setString(3, book.getAuthor());
             statement.setBigDecimal(4, book.getPrice());
-            statement.setInt(5, ReaderUtil.getIdByCover(book));
+            statement.setString(5, book.getCover().toString());
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -100,7 +102,7 @@ public class BookDaoJdbcImpl implements BookDao {
             statement.setString(2, book.getTitle());
             statement.setString(3, book.getAuthor());
             statement.setBigDecimal(4, book.getPrice());
-            statement.setInt(5, ReaderUtil.getIdByCover(book));
+            statement.setString(5, book.getCover().toString());
             statement.setLong(6, book.getId());
             int result = statement.executeUpdate();
             if (result == 1) {

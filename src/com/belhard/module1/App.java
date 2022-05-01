@@ -9,6 +9,7 @@ import com.belhard.module1.util.PrinterUtil;
 import com.belhard.module1.util.ReaderUtil;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class App {
@@ -28,7 +29,7 @@ public class App {
 
         System.out.print("Current number of books in the store is: ");
         System.out.println(BOOK_SERVICE.countAll());
-
+        System.out.print("Current summary price of all books by Leo Tolstoy in the store is: ");
         System.out.println(BOOK_SERVICE.countPriceOfAllBooksByAuthor("Leo Tolstoy"));
 
     }
@@ -70,10 +71,10 @@ public class App {
                     bookDto.setAuthor(scanner.nextLine());
                     System.out.print("Please, enter price of the new book: ");
                     bookDto.setPrice(scanner.nextBigDecimal());
-                    System.out.print("Please, enter cover id (1 for soft, 2 or hard, 3 for special) of the new book: ");
-                    ReaderUtil.setCoverById(scanner.nextInt(), bookDto);
-                    BOOK_SERVICE.create(bookDto);
                     scanner.nextLine();
+                    System.out.print("Please, enter cover id (soft, hard or special) of the new book: ");
+                    bookDto.setCover(BookDto.CoverDto.valueOf(scanner.nextLine().toUpperCase()));
+                    BOOK_SERVICE.create(bookDto);
                     System.out.println(divider);
                     break;
                 }
@@ -87,10 +88,10 @@ public class App {
                     bookDto.setAuthor(scanner.nextLine());
                     System.out.print("Please, enter new price of the book you wish to update: ");
                     bookDto.setPrice(scanner.nextBigDecimal());
-                    System.out.print("Please, enter new cover id (1 for soft, 2 or hard, 3 for special) of the book you wish to update: ");
-                    ReaderUtil.setCoverById(scanner.nextInt(), bookDto);
-                    BOOK_SERVICE.update(bookDto);
                     scanner.nextLine();
+                    System.out.print("Please, enter new cover id (soft, hard or special) of the book you wish to update: ");
+                    bookDto.setCover(BookDto.CoverDto.valueOf(scanner.nextLine().toUpperCase()));
+                    BOOK_SERVICE.update(bookDto);
                     System.out.println(divider);
                     break;
                 }
