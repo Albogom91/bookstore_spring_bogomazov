@@ -1,11 +1,11 @@
-package main.java.com.belhard.bookstore.dao.dbconfig;
+package com.belhard.bookstore.dao.dbconfig;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import main.java.com.belhard.bookstore.util.PropertiesUtil;
+import com.belhard.bookstore.util.PropertiesUtil;
 
 public class DbConfigurator {
     private static Connection connection;

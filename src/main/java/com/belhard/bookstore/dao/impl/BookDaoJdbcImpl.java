@@ -1,8 +1,8 @@
-package main.java.com.belhard.bookstore.dao.impl;
+package com.belhard.bookstore.dao.impl;
 
-import main.java.com.belhard.bookstore.dao.BookDao;
-import main.java.com.belhard.bookstore.dao.dbconfig.DbConfigurator;
-import main.java.com.belhard.bookstore.dao.beans.Book;
+import com.belhard.bookstore.dao.BookDao;
+import com.belhard.bookstore.dao.dbconfig.DbConfigurator;
+import com.belhard.bookstore.dao.beans.Book;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package main.java.com.belhard.bookstore.service;
+package com.belhard.bookstore.service;
 
-import main.java.com.belhard.bookstore.service.dto.BookDto;
+import com.belhard.bookstore.service.dto.BookDto;
 
 import java.math.BigDecimal;
 import java.util.List;

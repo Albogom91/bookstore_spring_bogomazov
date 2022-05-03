@@ -1,11 +1,11 @@
 package com.belhard.bookstore.controller;
 
-import main.java.com.belhard.bookstore.dao.BookDao;
-import main.java.com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
-import main.java.com.belhard.bookstore.service.dto.BookDto;
-import main.java.com.belhard.bookstore.service.BookService;
-import main.java.com.belhard.bookstore.service.impl.BookServiceImpl;
-import main.java.com.belhard.bookstore.util.PrinterUtil;
+import com.belhard.bookstore.dao.BookDao;
+import com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
+import com.belhard.bookstore.service.dto.BookDto;
+import com.belhard.bookstore.service.BookService;
+import com.belhard.bookstore.service.impl.BookServiceImpl;
+import com.belhard.bookstore.util.PrinterUtil;
 
 import java.util.List;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package main.java.com.belhard.bookstore.dao.beans;
+package com.belhard.bookstore.dao.beans;
 
 import java.math.BigDecimal;
 import java.util.Objects;

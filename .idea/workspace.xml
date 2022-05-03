@@ -4,33 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f6540f6-e57a-4540-99ce-79523d0cecbd" name="Changes" comment="Added dao and service layers for user">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/postgresql_42_3_4.xml" beforeDir="false" />
+    <list default="true" id="6f6540f6-e57a-4540-99ce-79523d0cecbd" name="Changes" comment="Implemented maven">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_checkerframework_checker_qual_3_5_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_postgresql_postgresql_42_3_4.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookstore_bogomazov.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bookstore_bogomazov.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/AppUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/BookDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/UserDao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/beans/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/beans/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/beans/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/beans/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/dbconfig/DbConfigurator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/dbconfig/DbConfigurator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/impl/BookDaoJdbcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/impl/BookDaoJdbcImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/impl/UserDaoJdbcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/impl/UserDaoJdbcImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/BookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/dto/BookDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/dto/BookDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/dto/UserDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/impl/BookServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/util/PrinterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PrinterUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/util/PropertiesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PropertiesUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/util/ReaderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/ReaderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dblocal.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dblocal.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dbremote.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/dbremote.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/AppUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/BookDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/beans/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/beans/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/beans/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/beans/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/dbconfig/DbConfigurator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/dbconfig/DbConfigurator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/impl/BookDaoJdbcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/impl/BookDaoJdbcImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/impl/UserDaoJdbcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/impl/UserDaoJdbcImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/dto/BookDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/dto/BookDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/dto/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PrinterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PrinterUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PropertiesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PropertiesUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/ReaderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/ReaderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/bookstore-1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/bookstore-1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,19 +96,14 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\resources" />
       <recent name="C:\Users\User\IdeaProjects\bookstore_bogomazov" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.AppUser">
+  <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.belhard.bookstore.controller.App" />
       <module name="bookstore_bogomazov" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="main.java.bookstore.util.*" />
-          <option name="ENABLED" value="false" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -137,8 +138,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.AppUser" />
         <item itemvalue="Application.App" />
+        <item itemvalue="Application.AppUser" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.App" />
@@ -252,7 +253,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651421763292</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Implemented maven">
+      <created>1651580821173</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1651580821173</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -292,6 +300,7 @@
     <MESSAGE value="Modified method names in bookservice" />
     <MESSAGE value="Corrected tasks from 2nd module" />
     <MESSAGE value="Added dao and service layers for user" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added dao and service layers for user" />
+    <MESSAGE value="Implemented maven" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented maven" />
   </component>
 </project>

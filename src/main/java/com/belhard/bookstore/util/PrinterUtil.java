@@ -1,6 +1,6 @@
-package main.java.com.belhard.bookstore.util;
+package com.belhard.bookstore.util;
 
-import main.java.com.belhard.bookstore.service.dto.BookDto;
+import com.belhard.bookstore.service.dto.BookDto;
 
 public class PrinterUtil {
 

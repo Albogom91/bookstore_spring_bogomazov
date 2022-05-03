@@ -1,6 +1,6 @@
-package main.java.com.belhard.bookstore.dao;
+package com.belhard.bookstore.dao;
 
-import main.java.com.belhard.bookstore.dao.beans.Book;
+import com.belhard.bookstore.dao.beans.Book;
 
 import java.util.List;
 

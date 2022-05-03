@@ -1,10 +1,10 @@
-package main.java.com.belhard.bookstore.service.impl;
+package com.belhard.bookstore.service.impl;
 
-import main.java.com.belhard.bookstore.dao.beans.Book;
-import main.java.com.belhard.bookstore.dao.BookDao;
-import main.java.com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
-import main.java.com.belhard.bookstore.service.BookService;
-import main.java.com.belhard.bookstore.service.dto.BookDto;
+import com.belhard.bookstore.dao.beans.Book;
+import com.belhard.bookstore.dao.BookDao;
+import com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
+import com.belhard.bookstore.service.BookService;
+import com.belhard.bookstore.service.dto.BookDto;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

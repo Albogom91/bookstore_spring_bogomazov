@@ -1,4 +1,4 @@
-package main.java.com.belhard.bookstore.service.dto;
+package com.belhard.bookstore.service.dto;
 
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
-package main.java.com.belhard.bookstore.service;
+package com.belhard.bookstore.service;
 
-import main.java.com.belhard.bookstore.service.dto.UserDto;
+import com.belhard.bookstore.service.dto.UserDto;
 
 import java.util.List;
 
