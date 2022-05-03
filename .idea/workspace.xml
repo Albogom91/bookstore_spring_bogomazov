@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6f6540f6-e57a-4540-99ce-79523d0cecbd" name="Changes" comment="Added dao and service layers for user">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/postgresql_42_3_4.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookstore_bogomazov.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bookstore_bogomazov.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/AppUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/BookDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/BookDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/beans/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/beans/Book.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/beans/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/beans/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/dbconfig/DbConfigurator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/dbconfig/DbConfigurator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/impl/BookDaoJdbcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/impl/BookDaoJdbcImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/dao/impl/UserDaoJdbcImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/impl/UserDaoJdbcImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/dto/BookDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/dto/BookDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/dto/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/impl/BookServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/impl/BookServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/util/PrinterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PrinterUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/util/PropertiesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PropertiesUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/belhard/module1/util/ReaderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/ReaderUtil.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="28EuNCXUec44yZxt6Qo4qJquv4T" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="jdk.selected.JAVA_MODULE" value="17" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\User\IdeaProjects\bookstore_bogomazov" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.AppUser">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.belhard.bookstore.controller.App" />
+      <module name="bookstore_bogomazov" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.bookstore.util.*" />
+          <option name="ENABLED" value="false" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AppUser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.belhard.bookstore.controller.AppUser" />
+      <module name="bookstore_bogomazov" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="main.java.bookstore.*" />
+          <option name="ENABLED" value="false" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="Application.AppUser" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.AppUser" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+        <item itemvalue="Application.App" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6f6540f6-e57a-4540-99ce-79523d0cecbd" name="Changes" comment="" />
+      <created>1650794026391</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1650794026391</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Completed CRUD">
+      <created>1650805990420</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1650805990420</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Finished CRUD task">
+      <created>1650879830909</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1650879830909</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Modified bookdao interface and method main in App">
+      <created>1650884169144</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1650884169144</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Removed class files and out folder">
+      <created>1651054885196</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1651054885196</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Made corrections to tasks from 1st homework">
+      <created>1651064062408</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1651064062408</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added possibility to connect to remote db, added ReaderUtil">
+      <created>1651073283806</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1651073283806</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Started 2nd hometask">
+      <created>1651073689079</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1651073689079</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Modified SQL queries">
+      <created>1651074732001</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1651074732001</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Added service interface and implementation">
+      <created>1651156679478</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1651156679478</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Added service interface and implementation">
+      <created>1651158151983</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1651158151983</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Corrected some mistakes after merge conflict">
+      <created>1651159193855</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1651159193855</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Modified method names in bookservice">
+      <created>1651160321362</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1651160321362</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Corrected tasks from 2nd module">
+      <created>1651406282581</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1651406282581</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Added dao and service layers for user">
+      <created>1651421763292</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1651421763292</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="module2_service" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Completed CRUD" />
+    <MESSAGE value="Finished CRUD task" />
+    <MESSAGE value="Modified bookdao interface and method main in App" />
+    <MESSAGE value="Removed class files and out folder" />
+    <MESSAGE value="Made corrections to tasks from 1st homework" />
+    <MESSAGE value="Added possibility to connect to remote db, added ReaderUtil" />
+    <MESSAGE value="Started 2nd hometask" />
+    <MESSAGE value="Modified SQL queries" />
+    <MESSAGE value="Added service interface and implementation" />
+    <MESSAGE value="Corrected some mistakes after merge conflict" />
+    <MESSAGE value="Modified method names in bookservice" />
+    <MESSAGE value="Corrected tasks from 2nd module" />
+    <MESSAGE value="Added dao and service layers for user" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added dao and service layers for user" />
+  </component>
+</project>
