@@ -1,11 +1,10 @@
 package com.belhard.bookstore.controller;
 
-import com.belhard.bookstore.dao.BookDao;
-import com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
 import com.belhard.bookstore.service.dto.BookDto;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.impl.BookServiceImpl;
 import com.belhard.bookstore.util.PrinterUtil;
+import com.belhard.bookstore.util.PropertiesUtil;
 
 import java.util.List;
 import java.util.Scanner;
@@ -17,18 +16,24 @@ public class App {
             "please, enter \"create\" if you want to create new book by providing necessary information;\n" +
             "please, enter \"update #\" where # is the id of the book which you want to update;\n" +
             "please, enter \"exit\" if you want to finish your work with this application.\n";
-    private static final BookDao BOOK_DAO = new BookDaoJdbcImpl();
     private static final BookService BOOK_SERVICE = new BookServiceImpl();
 
     public static void main(String[] args) {
+        if (args.length != 0) {
+            PropertiesUtil.setPathOption(args[0]);
+        }
+        else {
+            PropertiesUtil.setPathOption();
+        }
+
         Scanner scanner = new Scanner(System.in);
         chooseMainMenuOption(scanner);
         scanner.close();
 
-        System.out.print("Current number of books in the store is: ");
-        System.out.println(BOOK_SERVICE.countAll());
-        System.out.print("Current summary price of all books by Leo Tolstoy in the store is: ");
-        System.out.println(BOOK_SERVICE.countPriceOfAllBooksByAuthor("Leo Tolstoy"));
+        System.out.print(BOOK_SERVICE.countAll());
+        System.out.println(" - current number of books in the store");
+        System.out.print(BOOK_SERVICE.countPriceOfAllBooksByAuthor("Leo Tolstoy"));
+        System.out.println(" - current summary price of all books by Leo Tolstoy in the store");
 
     }
 

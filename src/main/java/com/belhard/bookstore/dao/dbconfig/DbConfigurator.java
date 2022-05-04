@@ -6,8 +6,11 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.belhard.bookstore.util.PropertiesUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DbConfigurator {
+    private static Logger logger = LogManager.getLogger();
     private static Connection connection;
 
     public static void initDbConnection() {
@@ -25,7 +28,9 @@ public class DbConfigurator {
     public static Connection getConnection() {
         if (connection == null) {
             initDbConnection();
+            logger.info("Database connection was established.");
         }
+        logger.debug("Database was accessed.");
         return connection;
     }
 }

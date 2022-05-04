@@ -1,34 +1,38 @@
 package com.belhard.bookstore.controller;
 
-import com.belhard.bookstore.dao.UserDao;
-import com.belhard.bookstore.dao.impl.UserDaoJdbcImpl;
 import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.dto.UserDto;
 import com.belhard.bookstore.service.impl.UserServiceImpl;
+import com.belhard.bookstore.util.PropertiesUtil;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class AppUser {
-    private static final int I = 1;
     public static final String INFO = "Please, enter \"all\" if you want to see information about all users;\n" +
             "please, enter \"get #\" where # is the id of the user about whom you want to see full information;\n" +
             "please, enter \"delete #\" where # is the id of the user whom you want to delete;\n" +
             "please, enter \"create\" if you want to create new user by providing necessary information;\n" +
             "please, enter \"update #\" where # is the id of the user whom you want to update;\n" +
             "please, enter \"exit\" if you want to finish your work with this application.\n";
-    private static final UserDao USER_DAO = new UserDaoJdbcImpl();
     private static final UserService USER_SERVICE = new UserServiceImpl();
 
-
     public static void main(String ... args) {
+        if (args.length != 0) {
+            PropertiesUtil.setPathOption(args[0]);
+        }
+        else {
+            PropertiesUtil.setPathOption();
+        }
+
         Scanner scanner = new Scanner(System.in);
         chooseMainMenuOption(scanner);
         scanner.close();
 
-        System.out.print("Current number of users is: ");
-        System.out.println(USER_SERVICE.countAll());
-        System.out.println(USER_SERVICE.validate("test1111@gmail.com", "1111"));
+        System.out.print(USER_SERVICE.countAll());
+        System.out.println(" - current number of users");
+        System.out.print(USER_SERVICE.validate("test2222@gmail.com", "2222"));
+        System.out.println(" - user with email \"test1111@gmail.com\" and password \"1111\" exists");
 
     }
 

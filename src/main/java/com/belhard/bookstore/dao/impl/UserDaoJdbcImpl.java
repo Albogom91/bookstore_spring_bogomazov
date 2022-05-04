@@ -13,20 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJdbcImpl implements UserDao {
-    public static final String GET_ALL = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
+    private static final String GET_ALL = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
             "FROM users u JOIN roles r ON u.role_id = r.id WHERE deleted = false";
-    public static final String GET_BY_ID = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
+    private static final String GET_BY_ID = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
             "FROM users u JOIN roles r ON u.role_id = r.id WHERE u.id = ? AND deleted = false";
-    public static final String GET_BY_EMAIL = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
+    private static final String GET_BY_EMAIL = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
             "FROM users u JOIN roles r ON u.role_id = r.id WHERE u.email = ? AND deleted = false";
-    public static final String GET_BY_LASTNAME = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
+    private static final String GET_BY_LASTNAME = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
             "FROM users u JOIN roles r ON u.role_id = r.id WHERE u.lastname = ? AND deleted = false";
-    public static final String CREATE = "INSERT INTO users (firstname, lastname, email, userpassword, role_id) " +
+    private static final String CREATE = "INSERT INTO users (firstname, lastname, email, userpassword, role_id) " +
             "VALUES (?, ?, ?, ?, (SELECT id FROM roles WHERE name = ?))";
-    public static final String UPDATE = "UPDATE users SET firstname = ?, lastname = ?, email = ?, userpassword = ?, " +
+    private static final String UPDATE = "UPDATE users SET firstname = ?, lastname = ?, email = ?, userpassword = ?, " +
             "role_id = (SELECT id FROM roles WHERE name = ?) WHERE id = ? AND deleted = false";
-    public static final String DELETE = "UPDATE users SET deleted = true WHERE id = ? AND deleted = false";
-    public static final String COUNT_ALL_USERS = "SELECT COUNT(*) FROM users WHERE deleted = false";
+    private static final String DELETE = "UPDATE users SET deleted = true WHERE id = ? AND deleted = false";
+    private static final String COUNT_ALL_USERS = "SELECT COUNT(*) AS count FROM users WHERE deleted = false";
 
     @Override
     public List<User> getAllUsers() {
@@ -43,18 +43,14 @@ public class UserDaoJdbcImpl implements UserDao {
         return users;
     }
 
-    private User processResultSet(ResultSet resultSet) {
+    private User processResultSet(ResultSet resultSet) throws SQLException {
         User user = new User();
-        try {
-            user.setId(resultSet.getLong("id"));
-            user.setFirstName(resultSet.getString("firstname"));
-            user.setLastName(resultSet.getString("lastname"));
-            user.setEmail(resultSet.getString("email"));
-            user.setPassword(resultSet.getString("userpassword"));
-            user.setRole(User.Role.valueOf(resultSet.getString("role")));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        user.setId(resultSet.getLong("id"));
+        user.setFirstName(resultSet.getString("firstname"));
+        user.setLastName(resultSet.getString("lastname"));
+        user.setEmail(resultSet.getString("email"));
+        user.setPassword(resultSet.getString("userpassword"));
+        user.setRole(User.Role.valueOf(resultSet.getString("role")));
         return user;
     }
 
@@ -111,11 +107,7 @@ public class UserDaoJdbcImpl implements UserDao {
         try {
             Connection connection = DbConfigurator.getConnection();
             PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPassword());
-            statement.setString(5, user.getRole().toString());
+            prepareStatement(user, statement);
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -128,16 +120,20 @@ public class UserDaoJdbcImpl implements UserDao {
         throw new RuntimeException("User was not created!");
     }
 
+    private void prepareStatement(User user, PreparedStatement statement) throws SQLException {
+        statement.setString(1, user.getFirstName());
+        statement.setString(2, user.getLastName());
+        statement.setString(3, user.getEmail());
+        statement.setString(4, user.getPassword());
+        statement.setString(5, user.getRole().toString());
+    }
+
     @Override
     public User updateUser(User user) {
         try {
             Connection connection = DbConfigurator.getConnection();
             PreparedStatement statement = connection.prepareStatement(UPDATE);
-            statement.setString(1, user.getFirstName());
-            statement.setString(2, user.getLastName());
-            statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPassword());
-            statement.setString(5, user.getRole().toString());
+            prepareStatement(user, statement);
             statement.setLong(6, user.getId());
             int result = statement.executeUpdate();
             if (result == 1) {
