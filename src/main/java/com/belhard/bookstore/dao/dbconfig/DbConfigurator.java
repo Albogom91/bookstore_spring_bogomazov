@@ -19,8 +19,9 @@ public class DbConfigurator {
             String url = properties.get("db.url").toString();
             String user = properties.get("db.user").toString();
             String password = properties.get("db.password").toString();
+            Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

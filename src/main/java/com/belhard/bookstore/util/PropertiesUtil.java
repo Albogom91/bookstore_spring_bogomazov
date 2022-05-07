@@ -25,7 +25,7 @@ public class PropertiesUtil {
     public static Properties getDbProperties() {
         Properties properties = new Properties();
         try {
-            FileInputStream fis = new FileInputStream(option);
+            FileInputStream fis = new FileInputStream(System.getenv("TOMCAT_HOME") + "/webapps/bookstore-bogomazov/WEB-INF/classes/dblocal.properties");
             properties.load(fis);
         } catch (IOException e) {
             e.printStackTrace();

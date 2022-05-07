@@ -1,8 +1,9 @@
-C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\controller\App.java
+C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\controller\BooksController.java
+C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\util\ControllerUtil.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\service\dto\BookDto.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\service\dto\UserDto.java
+C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\controller\BookController.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\beans\Book.java
-C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\controller\AppUser.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\impl\BookDaoJdbcImpl.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\dbconfig\DbConfigurator.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\impl\UserDaoJdbcImpl.java
@@ -10,9 +11,12 @@ C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\booksto
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\BookDao.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\service\impl\BookServiceImpl.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\util\PrinterUtil.java
+C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\AppUser.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\service\impl\UserServiceImpl.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\service\BookService.java
+C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\App.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\service\UserService.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\util\PropertiesUtil.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\util\ReaderUtil.java
+C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\controller\UserController.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\UserDao.java
