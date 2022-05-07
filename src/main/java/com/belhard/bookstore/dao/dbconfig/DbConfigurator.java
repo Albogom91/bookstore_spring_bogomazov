@@ -10,7 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class DbConfigurator {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(DbConfigurator.class);
     private static Connection connection;
 
     public static void initDbConnection() {

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookServiceImpl implements BookService {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
     private final BookDao bookDao = new BookDaoJdbcImpl();
 
     @Override

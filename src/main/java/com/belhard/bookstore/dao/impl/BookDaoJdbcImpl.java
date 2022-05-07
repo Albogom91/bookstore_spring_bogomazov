@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoJdbcImpl implements BookDao {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(BookDaoJdbcImpl.class);
     private static final String GET_ALL = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
             "FROM books b JOIN covers c ON b.cover_id = c.id WHERE deleted = false";
     private static final String GET_BY_ID = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
