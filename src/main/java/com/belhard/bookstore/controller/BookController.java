@@ -15,6 +15,12 @@ import java.io.PrintWriter;
 @WebServlet("/book")
 public class BookController extends HttpServlet {
     private static final BookService BOOK_SERVICE = new BookServiceImpl();
+    private static final String STYLE = "<style>" +
+            "* {" +
+            "font-style: italic;" +
+            "text-align: center" +
+            "}" +
+            "</style>";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -22,6 +28,9 @@ public class BookController extends HttpServlet {
         Long id = Long.valueOf(req.getParameter("id"));
         BookDto bookDto = BOOK_SERVICE.getById(id);
         PrintWriter out = resp.getWriter();
-        out.write(bookDto.toString());
+        out.write(STYLE + "<h1>Book, id = " + bookDto.getId() + " </h1>");
+        out.write("<h2>" + bookDto.getTitle() + " by " + bookDto.getAuthor() + " in " + bookDto.getCoverDto().toString().toLowerCase() + " cover</h2>");
+        out.write("<h3>ISBN = " + bookDto.getIsbn());
+        out.write("<h4>Price = " + bookDto.getPrice() + "</h4>");
     }
 }

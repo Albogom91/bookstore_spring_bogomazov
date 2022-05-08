@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f6540f6-e57a-4540-99ce-79523d0cecbd" name="Changes" comment="Implemented logger">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_servlet_jakarta_servlet_api_5_0_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+    <list default="true" id="6f6540f6-e57a-4540-99ce-79523d0cecbd" name="Changes" comment="Added controller classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookstore.iml" beforeDir="false" afterPath="$PROJECT_DIR$/bookstore.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/AppUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/dbconfig/DbConfigurator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/dao/dbconfig/DbConfigurator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/deploy.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/deploy.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/BooksController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/BooksController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/ControllerUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/ControllerUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PropertiesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/belhard/bookstore/util/PropertiesUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/bookstore-1.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -276,7 +270,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651674247511</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Added controller classes">
+      <created>1651948568143</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1651948568143</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -319,6 +320,10 @@
     <MESSAGE value="Implemented maven" />
     <MESSAGE value="Modified project structure" />
     <MESSAGE value="Implemented logger" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented logger" />
+    <MESSAGE value="Added controller classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added controller classes" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/bookstore_bogomazov$App.ic" NAME="App Coverage Results" MODIFIED="1652021531271" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

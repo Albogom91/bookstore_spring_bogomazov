@@ -47,7 +47,7 @@ INSERT INTO books (isbn, title, author, price, cover_id)
 VALUES ('901-1-13-141401-0', 'Pride and Prejudice', 'Jane Austen', 10.75, (SELECT id FROM covers WHERE name='SOFT')),
 	('902-2-13-141401-9', 'To Kill a Mockingbird', 'Harper Lee', 9.25, (SELECT id FROM covers WHERE name='HARD')),
 	('903-3-13-141401-8', 'The Great Gatsby', 'F. Scott Fitzgerald', 11.55, (SELECT id FROM covers WHERE name='SPECIAL')),
-	('904-4-13-141401-7', 'One Hundred Years of Solitude', 'Gabriel García Márquez', 17.35, (SELECT id FROM covers WHERE name='SPECIAL')),
+	('904-4-13-141401-7', 'One Hundred Years of Solitude', 'Gabriel Garcia Marquez', 17.35, (SELECT id FROM covers WHERE name='SPECIAL')),
 	('905-5-13-141401-6', 'In Cold Blood', 'Truman Capote', 9.45, (SELECT id FROM covers WHERE name='HARD')),
 	('906-6-13-141401-5', 'Wide Sargasso Sea', 'Jean Rhys', 5.75, (SELECT id FROM covers WHERE name='SOFT')),
 	('907-7-13-141401-4', 'Brave New World', 'Aldous Huxley', 19.25, (SELECT id FROM covers WHERE name='HARD')),
