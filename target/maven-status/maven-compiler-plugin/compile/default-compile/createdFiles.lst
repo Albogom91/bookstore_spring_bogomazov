@@ -8,6 +8,7 @@ com\belhard\bookstore\dao\BookDao.class
 com\belhard\bookstore\service\dto\BookDto$CoverDto.class
 com\belhard\bookstore\dao\beans\User.class
 com\belhard\bookstore\controller\UserController.class
+com\belhard\bookstore\controller\UsersController.class
 com\belhard\bookstore\AppUser.class
 com\belhard\bookstore\dao\dbconfig\DbConfigurator.class
 com\belhard\bookstore\service\impl\UserServiceImpl.class

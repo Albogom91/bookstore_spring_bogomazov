@@ -24,9 +24,13 @@ public class BookController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setStatus(200);
         Long id = Long.valueOf(req.getParameter("id"));
         BookDto bookDto = BOOK_SERVICE.getById(id);
+        if (bookDto == null) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+        resp.setStatus(200);
         PrintWriter out = resp.getWriter();
         out.write(STYLE + "<h1>Book, id = " + bookDto.getId() + " </h1>");
         out.write("<h2>" + bookDto.getTitle() + " by " + bookDto.getAuthor() + " in " + bookDto.getCoverDto().toString().toLowerCase() + " cover</h2>");

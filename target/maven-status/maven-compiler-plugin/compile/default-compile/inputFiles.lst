@@ -4,6 +4,7 @@ C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\booksto
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\service\dto\UserDto.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\controller\BookController.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\beans\Book.java
+C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\controller\UsersController.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\impl\BookDaoJdbcImpl.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\dbconfig\DbConfigurator.java
 C:\Users\User\IdeaProjects\bookstore_bogomazov\src\main\java\com\belhard\bookstore\dao\impl\UserDaoJdbcImpl.java

@@ -5,6 +5,8 @@ import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponseWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,7 +51,8 @@ public class BookServiceImpl implements BookService {
         Book book = bookDao.getBookById(id);
         if (book == null) {
             logger.error("There is no book with such id: " + id);
-            throw new RuntimeException("There is no book with such id: " + id);
+            //throw new RuntimeException("There is no book with such id: " + id);
+            return null;
         }
         return bookToDto(book);
     }
