@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
     private static final UserDao USER_DAO = new UserDaoJdbcImpl();
 
     @Override
@@ -46,7 +46,9 @@ public class UserServiceImpl implements UserService {
         logger.debug("Service method \"getById\" was called.");
         User user = USER_DAO.getUserById(id);
         if (user == null) {
-            throw new RuntimeException("There is no user with such id!");
+            logger.error("There is no user with such id: " + id);
+            //throw new RuntimeException("There is no user with such id: " + id);
+            return null;
         }
         return userToDto(user);
     }
