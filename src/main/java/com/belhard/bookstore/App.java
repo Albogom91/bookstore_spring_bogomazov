@@ -1,4 +1,4 @@
-package com.belhard.bookstore.controller;
+package com.belhard.bookstore;
 
 import com.belhard.bookstore.service.dto.BookDto;
 import com.belhard.bookstore.service.BookService;
@@ -34,7 +34,7 @@ public class App {
         System.out.println(" - current number of books in the store");
         System.out.print(BOOK_SERVICE.countPriceOfAllBooksByAuthor("Leo Tolstoy"));
         System.out.println(" - current summary price of all books by Leo Tolstoy in the store");
-
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
     }
 
     public static void chooseMainMenuOption(Scanner scanner) {
