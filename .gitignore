@@ -1,3 +1,6 @@
 *.class
 out/
 logs/
+.idea/
+*.iml
+*.ini
