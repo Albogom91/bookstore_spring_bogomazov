@@ -1,6 +1,7 @@
 package com.belhard.bookstore.controller.command;
 
 import com.belhard.bookstore.controller.command.impl.BookCommand;
+import com.belhard.bookstore.controller.command.impl.BookCreateCommand;
 import com.belhard.bookstore.controller.command.impl.BooksCommand;
 import com.belhard.bookstore.controller.command.impl.ErrorCommand;
 import com.belhard.bookstore.controller.command.impl.UserCommand;
@@ -11,7 +12,8 @@ public enum CommandRegister {
     BOOKS(new BooksCommand()),
     USER(new UserCommand()),
     USERS(new UsersCommand()),
-    ERROR(new ErrorCommand());
+    ERROR(new ErrorCommand()),
+    BOOKCREATE(new BookCreateCommand());
 
     private final Command command;
 
