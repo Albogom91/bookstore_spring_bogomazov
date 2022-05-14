@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
     private static final UserDao USER_DAO = new UserDaoJdbcImpl();
 
     @Override
@@ -46,7 +46,9 @@ public class UserServiceImpl implements UserService {
         logger.debug("Service method \"getById\" was called.");
         User user = USER_DAO.getUserById(id);
         if (user == null) {
-            throw new RuntimeException("There is no user with such id!");
+            logger.error("There is no user with such id: " + id);
+            //throw new RuntimeException("There is no user with such id: " + id);
+            return null;
         }
         return userToDto(user);
     }
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
         logger.debug("Service method \"getByEmail\" was called.");
         User user = USER_DAO.getUserByEmail(email);
         if (user == null) {
+            logger.error("There is no user with such email: " + email);
             throw new RuntimeException("There is no user with such email!");
         }
         return userToDto(user);
@@ -66,6 +69,7 @@ public class UserServiceImpl implements UserService {
         logger.debug("Service method \"getByLastName\" was called.");
         List<User> users = USER_DAO.getUsersByLastName(lastName);
         if (users.isEmpty()) {
+            logger.error("There are no users with such last name: " + lastName);
             throw new RuntimeException("There are no users with such lastname!");
         }
         return usersToUsersDtos(users);
@@ -76,6 +80,7 @@ public class UserServiceImpl implements UserService {
         logger.debug("Service method \"create\" was called.");
         User checkUser = USER_DAO.getUserByEmail(userDto.getEmail());
         if (checkUser != null) {
+            logger.error("User with such email already exists: " + checkUser.getEmail());
             throw new RuntimeException("User with such email already exists!");
         }
         User user = dtoToUser(userDto);
@@ -99,6 +104,7 @@ public class UserServiceImpl implements UserService {
         logger.debug("Service method \"update\" was called.");
         User checkUser = USER_DAO.getUserByEmail(userDto.getEmail());
         if (checkUser != null && checkUser.getId() != userDto.getId()) {
+            logger.error("User with such email already exists: " + checkUser.getEmail());
             throw new RuntimeException("User with such email already exists!");
         }
         User user = dtoToUser(userDto);
@@ -110,6 +116,7 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         logger.debug("Service method \"delete\" was called.");
         if (!USER_DAO.deleteUser(id)) {
+            logger.error("There is no user to delete with such id: " + id);
             throw new RuntimeException("Deletion was not completed! There is no user with such id!");
         }
     }

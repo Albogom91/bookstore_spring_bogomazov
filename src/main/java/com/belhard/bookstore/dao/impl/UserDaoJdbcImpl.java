@@ -3,6 +3,8 @@ package com.belhard.bookstore.dao.impl;
 import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.beans.User;
 import com.belhard.bookstore.dao.dbconfig.DbConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJdbcImpl implements UserDao {
+    private static Logger logger = LogManager.getLogger(UserDaoJdbcImpl.class);
     private static final String GET_ALL = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
             "FROM users u JOIN roles r ON u.role_id = r.id WHERE deleted = false";
     private static final String GET_BY_ID = "SELECT u.id, u.firstname, u.lastname, u.email, u.userpassword, r.name AS role " +
@@ -38,7 +41,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 users.add(processResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return users;
     }
@@ -65,7 +68,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 user = processResultSet(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return user;
     }
@@ -81,7 +84,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 user = processResultSet(resultSet);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return user;
     }
@@ -97,7 +100,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 users.add(processResultSet(resultSet));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return users;
     }
@@ -115,7 +118,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 return getUserById(id);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         throw new RuntimeException("User was not created!");
     }
@@ -140,7 +143,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 return getUserById(user.getId());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         throw new RuntimeException("User was not updated!");
     }
@@ -153,7 +156,7 @@ public class UserDaoJdbcImpl implements UserDao {
             int result = statement.executeUpdate();
             return result == 1;
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         throw new RuntimeException("There was a mistake during deletion process!");
     }
@@ -168,7 +171,7 @@ public class UserDaoJdbcImpl implements UserDao {
                 counter = resultSet.getInt("count");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         return counter;
     }
