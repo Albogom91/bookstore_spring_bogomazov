@@ -1,24 +1,40 @@
 package com.belhard.bookstore.service.impl;
 
+import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.beans.User;
-import com.belhard.bookstore.dao.impl.UserDaoJdbcImpl;
 import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service("userService")
 public class UserServiceImpl implements UserService {
     private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    private static final UserDao USER_DAO = new UserDaoJdbcImpl();
+    private UserDao userDao;
+
+    public UserServiceImpl() {
+
+    }
+
+    @Autowired
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public void setBookDao(BookDao bookDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public List<UserDto> getAll() {
         logger.debug("Service method \"getAll\" was called.");
-        List<User> users = USER_DAO.getAllUsers();
+        List<User> users = userDao.getAllUsers();
         return usersToUsersDtos(users);
     }
 
@@ -44,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getById(Long id) {
         logger.debug("Service method \"getById\" was called.");
-        User user = USER_DAO.getUserById(id);
+        User user = userDao.getUserById(id);
         if (user == null) {
             logger.error("There is no user with such id: " + id);
             //throw new RuntimeException("There is no user with such id: " + id);
@@ -56,7 +72,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getByEmail(String email) {
         logger.debug("Service method \"getByEmail\" was called.");
-        User user = USER_DAO.getUserByEmail(email);
+        User user = userDao.getUserByEmail(email);
         if (user == null) {
             logger.error("There is no user with such email: " + email);
             throw new RuntimeException("There is no user with such email!");
@@ -67,7 +83,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getByLastName (String lastName) {
         logger.debug("Service method \"getByLastName\" was called.");
-        List<User> users = USER_DAO.getUsersByLastName(lastName);
+        List<User> users = userDao.getUsersByLastName(lastName);
         if (users.isEmpty()) {
             logger.error("There are no users with such last name: " + lastName);
             throw new RuntimeException("There are no users with such lastname!");
@@ -78,13 +94,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto create(UserDto userDto) {
         logger.debug("Service method \"create\" was called.");
-        User checkUser = USER_DAO.getUserByEmail(userDto.getEmail());
+        User checkUser = userDao.getUserByEmail(userDto.getEmail());
         if (checkUser != null) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
             throw new RuntimeException("User with such email already exists!");
         }
         User user = dtoToUser(userDto);
-        user = USER_DAO.createUser(user);
+        user = userDao.createUser(user);
         return userToDto(user);
     }
 
@@ -102,20 +118,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto update(UserDto userDto) {
         logger.debug("Service method \"update\" was called.");
-        User checkUser = USER_DAO.getUserByEmail(userDto.getEmail());
+        User checkUser = userDao.getUserByEmail(userDto.getEmail());
         if (checkUser != null && checkUser.getId() != userDto.getId()) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
             throw new RuntimeException("User with such email already exists!");
         }
         User user = dtoToUser(userDto);
-        user = USER_DAO.updateUser(user);
+        user = userDao.updateUser(user);
         return userToDto(user);
     }
 
     @Override
     public void delete(Long id) {
         logger.debug("Service method \"delete\" was called.");
-        if (!USER_DAO.deleteUser(id)) {
+        if (!userDao.deleteUser(id)) {
             logger.error("There is no user to delete with such id: " + id);
             throw new RuntimeException("Deletion was not completed! There is no user with such id!");
         }
@@ -124,13 +140,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public int countAll() {
         logger.debug("Service method \"countAll\" was called.");
-        return USER_DAO.countAllUsers();
+        return userDao.countAllUsers();
     }
 
     @Override
     public boolean validate(String email, String password) {
         logger.debug("Service method \"validate\" was called.");
-        User user = USER_DAO.getUserByEmail(email);
+        User user = userDao.getUserByEmail(email);
         if (user != null && user.getPassword().equals(password)) {
             return true;
         }

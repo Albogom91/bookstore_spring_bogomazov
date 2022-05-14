@@ -1,5 +1,6 @@
 package com.belhard.bookstore.controller.command.impl;
 
+import com.belhard.bookstore.controller.Controller;
 import com.belhard.bookstore.controller.command.Command;
 import com.belhard.bookstore.controller.command.CommandFactory;
 import com.belhard.bookstore.service.BookService;
@@ -14,7 +15,8 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 
 public class BookCreateCommand implements Command {
-    private static final BookService BOOK_SERVICE = new BookServiceImpl();
+    //private static final BookService BOOK_SERVICE = new BookServiceImpl();
+    private static final BookService BOOK_SERVICE = Controller.getContext().getBean("bookService", BookServiceImpl.class);
 
     @Override
     public String execute(HttpServletRequest req) {

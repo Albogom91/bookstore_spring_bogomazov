@@ -72,7 +72,7 @@
                     <artifactId>maven-war-plugin</artifactId>
                     <version>3.3.2</version>
                     <configuration>
-                        <warName>bookstore-bogomazov</warName>
+                        <warName>spring-bookstore-bogomazov</warName>
                         <failOnMissingWebXml>false</failOnMissingWebXml>
                         <outputDirectory>${env.TOMCAT_HOME}/webapps</outputDirectory>
                     </configuration>
