@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,7 +19,16 @@ import java.math.BigDecimal;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
-    private static final BookService BOOK_SERVICE = new BookServiceImpl();
+    private static ClassPathXmlApplicationContext context;
+
+    @Override
+    public void init() throws ServletException {
+        context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    }
+
+    public static ClassPathXmlApplicationContext getContext() {
+        return context;
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

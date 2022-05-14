@@ -1,5 +1,6 @@
 package com.belhard.bookstore.service.impl;
 
+import com.belhard.bookstore.controller.Controller;
 import com.belhard.bookstore.dao.beans.Book;
 import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
@@ -9,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,12 +19,16 @@ import java.util.List;
 
 public class BookServiceImpl implements BookService {
     private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
-    private final BookDao bookDao = new BookDaoJdbcImpl();
+    //private static final BookDao BOOK_DAO = new BookDaoJdbcImpl();
+    private static ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+
+    private static final BookDao BOOK_DAO = context.getBean("bookDao", BookDaoJdbcImpl.class);
+    //private static final BookDao BOOK_DAO = Controller.getContext().getBean("bookDao", BookDaoJdbcImpl.class);
 
     @Override
     public List<BookDto> getAll() {
         logger.debug("Service method \"getAll\" was called.");
-        List<Book> books = bookDao.getAllBooks();
+        List<Book> books = BOOK_DAO.getAllBooks();
         return booksToBooksDtos(books);
     }
 
@@ -48,7 +55,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto getById(Long id) {
         logger.debug("Service method \"getById\" was called.");
-        Book book = bookDao.getBookById(id);
+        Book book = BOOK_DAO.getBookById(id);
         if (book == null) {
             logger.error("There is no book with such id: " + id);
             //throw new RuntimeException("There is no book with such id: " + id);
@@ -60,7 +67,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto getByIsbn(String isbn) {
         logger.debug("Service method \"getByIsbn\" was called.");
-        Book book = bookDao.getBookByIsbn(isbn);
+        Book book = BOOK_DAO.getBookByIsbn(isbn);
         if (book == null) {
             logger.error("There is no book with such isbn: " + isbn);
             throw new RuntimeException("There is no book with such isbn: " + isbn);
@@ -71,7 +78,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> getByAuthor(String author) {
         logger.debug("Service method \"getByAuthor\" was called.");
-        List<Book> books = bookDao.getBooksByAuthor(author);
+        List<Book> books = BOOK_DAO.getBooksByAuthor(author);
         if (books.isEmpty()) {
             logger.error("There are no books by such author: " + author);
             throw new RuntimeException("There are no books by such author: " + author);
@@ -82,13 +89,13 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto create(BookDto bookDto) {
         logger.debug("Service method \"create\" was called.");
-        Book checkBook = bookDao.getBookByIsbn(bookDto.getIsbn());
+        Book checkBook = BOOK_DAO.getBookByIsbn(bookDto.getIsbn());
         if (checkBook != null) {
             logger.error("Book with such isbn already exists: " + checkBook.getIsbn());
             throw new RuntimeException("Book with such isbn already exists: " + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
-        book = bookDao.createBook(book);
+        book = BOOK_DAO.createBook(book);
         return bookToDto(book);
     }
 
@@ -106,20 +113,20 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto update(BookDto bookDto) {
         logger.debug("Service method \"update\" was called.");
-        Book checkBook = bookDao.getBookByIsbn(bookDto.getIsbn());
+        Book checkBook = BOOK_DAO.getBookByIsbn(bookDto.getIsbn());
         if (checkBook != null && checkBook.getId() != bookDto.getId()) {
             logger.error("Book with such ISBN already exists!" + checkBook.getIsbn());
             throw new RuntimeException("Book with such ISBN already exists!" + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
-        book = bookDao.updateBook(book);
+        book = BOOK_DAO.updateBook(book);
         return bookToDto(book);
     }
 
     @Override
     public void delete(Long id) {
         logger.debug("Service method \"delete\" was called.");
-        if (!bookDao.deleteBook(id)) {
+        if (!BOOK_DAO.deleteBook(id)) {
             logger.error("There is no book to delete with such id: " + id);
             throw new RuntimeException("There is no book to delete with such id: " + id);
         }
@@ -128,7 +135,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public int countAll() {
         logger.debug("Service method \"countAll\" was called.");
-        return bookDao.countAllBooks();
+        return BOOK_DAO.countAllBooks();
     }
 
     public BigDecimal countPriceOfAllBooksByAuthor(String author) {

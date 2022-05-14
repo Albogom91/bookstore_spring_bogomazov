@@ -21,6 +21,7 @@ com\belhard\bookstore\dao\impl\BookDaoJdbcImpl.class
 com\belhard\bookstore\util\ReaderUtil.class
 com\belhard\bookstore\controller\Controller.class
 com\belhard\bookstore\service\dto\BookDto.class
+com\belhard\bookstore\controller\command\impl\BookCreateCommand.class
 com\belhard\bookstore\service\BookService.class
 com\belhard\bookstore\dao\beans\Book$Cover.class
 com\belhard\bookstore\dao\beans\Book.class

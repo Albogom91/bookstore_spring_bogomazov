@@ -1,5 +1,6 @@
 package com.belhard.bookstore.service.impl;
 
+import com.belhard.bookstore.controller.Controller;
 import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.beans.User;
 import com.belhard.bookstore.dao.impl.UserDaoJdbcImpl;
@@ -7,13 +8,17 @@ import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    private static final UserDao USER_DAO = new UserDaoJdbcImpl();
+    //private static final UserDao USER_DAO = new UserDaoJdbcImpl();
+    private static ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+    private static final UserDao USER_DAO = context.getBean("userDao", UserDaoJdbcImpl.class);
+
 
     @Override
     public List<UserDto> getAll() {
