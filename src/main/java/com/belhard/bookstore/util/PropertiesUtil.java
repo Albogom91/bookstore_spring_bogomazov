@@ -7,8 +7,8 @@ import java.io.IOException;
 public class PropertiesUtil {
     private static final String PATH_TO_PROPERTIES_REMOTE = "src/main/resources/dbremote.properties";
     private static final String PATH_TO_PROPERTIES_LOCAL = "src/main/resources/dblocal.properties";
-    private static final String PATH_TO_PROPERTIES_REMOTE_TOMCAT = System.getenv("TOMCAT_HOME") + "/webapps/bookstore-bogomazov/WEB-INF/classes/dbremote.properties";
-    private static final String PATH_TO_PROPERTIES_LOCAL_TOMCAT = System.getenv("TOMCAT_HOME") + "/webapps/bookstore-bogomazov/WEB-INF/classes/dblocal.properties";
+    private static final String PATH_TO_PROPERTIES_REMOTE_TOMCAT = System.getenv("TOMCAT_HOME") + "/webapps/spring-bookstore-bogomazov/WEB-INF/classes/dbremote.properties";
+    private static final String PATH_TO_PROPERTIES_LOCAL_TOMCAT = System.getenv("TOMCAT_HOME") + "/webapps/spring-bookstore-bogomazov/WEB-INF/classes/dblocal.properties";
 
     private static String option;
 

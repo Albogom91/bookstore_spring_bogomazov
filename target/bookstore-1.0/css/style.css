@@ -22,3 +22,12 @@ th, td {
 th {
   text-transform: uppercase;
 }
+
+form {
+    padding: 10px;
+    font-style: italic;
+}
+
+input {
+     margin: 10px;
+}
