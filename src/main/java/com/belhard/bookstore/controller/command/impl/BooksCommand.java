@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class BooksCommand implements Command {
-    //private static final BookService BOOK_SERVICE = new BookServiceImpl();
     private static final BookService BOOK_SERVICE = Controller.getContext().getBean(BookServiceImpl.class);
 
     @Override

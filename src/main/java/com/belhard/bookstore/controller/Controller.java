@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
-    //private static final BookService BOOK_SERVICE = new BookServiceImpl();
     private static AnnotationConfigApplicationContext context;
 
     @Override

@@ -15,7 +15,6 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 
 public class BookCreateCommand implements Command {
-    //private static final BookService BOOK_SERVICE = new BookServiceImpl();
     private static final BookService BOOK_SERVICE = Controller.getContext().getBean(BookServiceImpl.class);
 
     @Override

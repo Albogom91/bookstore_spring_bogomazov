@@ -17,7 +17,6 @@ import java.util.List;
 
 public class BookServiceImpl implements BookService {
     private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
-    //private final BookDao bookDao = new BookDaoJdbcImpl();
     private BookDao bookDao;
 
     public BookServiceImpl() {

@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class UsersCommand implements Command {
-    //private static final UserService USER_SERVICE = new UserServiceImpl();
     private static final UserService USER_SERVICE = Controller.getContext().getBean(UserServiceImpl.class);
 
     @Override
