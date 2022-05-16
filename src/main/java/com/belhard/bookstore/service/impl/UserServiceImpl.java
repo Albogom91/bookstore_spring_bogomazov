@@ -15,7 +15,6 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    //private static final UserDao USER_DAO = new UserDaoJdbcImpl();
     private static ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
     private static final UserDao USER_DAO = context.getBean("userDao", UserDaoJdbcImpl.class);
 

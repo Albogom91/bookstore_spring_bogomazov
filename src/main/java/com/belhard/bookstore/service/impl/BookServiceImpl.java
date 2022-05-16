@@ -19,11 +19,8 @@ import java.util.List;
 
 public class BookServiceImpl implements BookService {
     private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
-    //private static final BookDao BOOK_DAO = new BookDaoJdbcImpl();
     private static ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-
     private static final BookDao BOOK_DAO = context.getBean("bookDao", BookDaoJdbcImpl.class);
-    //private static final BookDao BOOK_DAO = Controller.getContext().getBean("bookDao", BookDaoJdbcImpl.class);
 
     @Override
     public List<BookDto> getAll() {
