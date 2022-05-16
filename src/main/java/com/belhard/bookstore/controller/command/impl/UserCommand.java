@@ -8,7 +8,6 @@ import com.belhard.bookstore.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class UserCommand implements Command {
-    //private static final UserService USER_SERVICE = new UserServiceImpl();
     private static final UserService USER_SERVICE = Controller.getContext().getBean("userService", UserServiceImpl.class);
 
     @Override

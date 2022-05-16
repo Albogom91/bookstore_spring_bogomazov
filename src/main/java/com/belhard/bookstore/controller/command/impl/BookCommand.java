@@ -12,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class BookCommand implements Command {
-    //private static final BookService BOOK_SERVICE = new BookServiceImpl();
     private static final BookService BOOK_SERVICE = Controller.getContext().getBean("bookService", BookServiceImpl.class);
 
     @Override

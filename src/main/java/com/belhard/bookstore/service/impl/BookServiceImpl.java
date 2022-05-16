@@ -22,9 +22,6 @@ import java.util.List;
 @Service("bookService")
 public class BookServiceImpl implements BookService {
     private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
-    //private final BookDao bookDao = new BookDaoJdbcImpl();
-    //private static ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-    //private static final BookDao BOOK_DAO = context.getBean("bookDao", BookDaoJdbcImpl.class);
     private BookDao bookDao;
 
     public BookServiceImpl() {

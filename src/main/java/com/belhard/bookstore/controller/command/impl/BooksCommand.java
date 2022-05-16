@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 public class BooksCommand implements Command {
-    //private static final BookService BOOK_SERVICE = new BookServiceImpl();
     private static final BookService BOOK_SERVICE = Controller.getContext().getBean("bookService", BookServiceImpl.class);
 
     @Override
