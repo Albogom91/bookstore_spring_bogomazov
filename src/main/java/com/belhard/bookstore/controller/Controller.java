@@ -1,5 +1,6 @@
 package com.belhard.bookstore.controller;
 
+import com.belhard.bookstore.ContextConfiguration;
 import com.belhard.bookstore.controller.command.Command;
 import com.belhard.bookstore.controller.command.CommandFactory;
 import com.belhard.bookstore.controller.command.impl.BookCreateCommand;
@@ -11,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
@@ -19,14 +21,14 @@ import java.math.BigDecimal;
 
 @WebServlet("/controller")
 public class Controller extends HttpServlet {
-    private static ClassPathXmlApplicationContext context;
+    private static AnnotationConfigApplicationContext context;
 
     @Override
     public void init() throws ServletException {
-        context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        context = new AnnotationConfigApplicationContext(ContextConfiguration.class);
     }
 
-    public static ClassPathXmlApplicationContext getContext() {
+    public static AnnotationConfigApplicationContext getContext() {
         return context;
     }
 
@@ -48,5 +50,10 @@ public class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BookCreateCommand.create(req, resp);
 
+    }
+
+    @Override
+    public void destroy() {
+        context.close();
     }
 }

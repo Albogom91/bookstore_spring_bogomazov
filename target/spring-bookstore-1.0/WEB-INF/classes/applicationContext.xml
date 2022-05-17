@@ -7,9 +7,9 @@
             http://www.springframework.org/schema/context
             http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.belhard"/>
+    <!--<context:component-scan base-package="com.belhard"/>
 
-    <!--<bean id="bookService" class="com.belhard.bookstore.service.impl.BookServiceImpl"/>
+    <bean id="bookService" class="com.belhard.bookstore.service.impl.BookServiceImpl"/>
     <bean id="bookDao" class="com.belhard.bookstore.dao.impl.BookDaoJdbcImpl"/>
     <bean id="userService" class="com.belhard.bookstore.service.impl.UserServiceImpl"/>
     <bean id="userDao" class="com.belhard.bookstore.dao.impl.UserDaoJdbcImpl"/>-->
