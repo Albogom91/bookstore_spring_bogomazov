@@ -1,5 +1,6 @@
 package com.belhard.bookstore.service.impl;
 
+import com.belhard.bookstore.controller.Controller;
 import com.belhard.bookstore.dao.beans.Book;
 import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
@@ -9,14 +10,33 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpServletResponseWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service("bookService")
 public class BookServiceImpl implements BookService {
     private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
-    private final BookDao bookDao = new BookDaoJdbcImpl();
+    private BookDao bookDao;
+
+    public BookServiceImpl() {
+
+    }
+
+    @Autowired
+    public BookServiceImpl(BookDao bookDao) {
+        this.bookDao = bookDao;
+    }
+
+    public void setBookDao(BookDao bookDao) {
+        this.bookDao = bookDao;
+    }
+
 
     @Override
     public List<BookDto> getAll() {
