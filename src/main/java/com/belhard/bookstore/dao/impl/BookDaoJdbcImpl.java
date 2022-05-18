@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -102,6 +104,25 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public Book createBook(Book book) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update((connection) -> getPreparedStatement(book, connection, CREATE), keyHolder);
+        Number number = keyHolder.getKey();
+        Long id = number.longValue();
+        return getBookById(id);
+    }
+
+    private PreparedStatement getPreparedStatement(Book book, Connection connection, String action) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(action, new String[] {"id"});
+        preparedStatement.setString(1, book.getIsbn());
+        preparedStatement.setString(2, book.getTitle());
+        preparedStatement.setString(3, book.getAuthor());
+        preparedStatement.setBigDecimal(4, book.getPrice());
+        preparedStatement.setString(5, book.getCover().toString());
+        return preparedStatement;
+    }
+
+    /*@Override
+    public Book createBook(Book book) {
         try {
             Connection connection = DbConfigurator.getConnection();
             PreparedStatement statement = connection.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
@@ -116,7 +137,7 @@ public class BookDaoJdbcImpl implements BookDao {
             logger.error("There was an error while creating new book!");
         }
         throw new RuntimeException("Book was not created!");
-    }
+    }*/
 
     private void prepareStatement(Book book, PreparedStatement statement) throws SQLException {
         statement.setString(1, book.getIsbn());
