@@ -14,13 +14,16 @@ C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\service\dto\BookDto.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\service\dto\UserDto.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\dao\dbconfig\DbConfigurator.java
+C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\controller\BookController.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\util\ControllerUtil.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\controller\command\Command.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\controller\command\CommandRegister.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\dao\UserDao.java
+C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\controller\impl\BookControllerImpl.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\controller\command\CommandFactory.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\service\impl\BookServiceImpl.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\util\ReaderUtil.java
+C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\dao\impl\BookRowMapper.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\controller\command\impl\BookCreateCommand.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\controller\command\impl\ErrorCommand.java
 C:\Users\User\IdeaProjects\bookstore_spring_bogomazov\src\main\java\com\belhard\bookstore\service\impl\UserServiceImpl.java

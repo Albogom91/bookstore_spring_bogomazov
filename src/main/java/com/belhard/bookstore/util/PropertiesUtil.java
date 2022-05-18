@@ -27,7 +27,7 @@ public class PropertiesUtil {
     public static Properties getDbProperties() {
         Properties properties = new Properties();
         try {
-            FileInputStream fis = new FileInputStream(PATH_TO_PROPERTIES_REMOTE_TOMCAT);
+            FileInputStream fis = new FileInputStream(PATH_TO_PROPERTIES_LOCAL);
             properties.load(fis);
         } catch (IOException e) {
             e.printStackTrace();

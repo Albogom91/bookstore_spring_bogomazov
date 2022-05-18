@@ -17,7 +17,7 @@ public class AppUser {
             "please, enter \"exit\" if you want to finish your work with this application.\n";
     private static final UserService USER_SERVICE = new UserServiceImpl();
 
-    public static void main(String ... args) {
+    /*public static void main(String ... args) {
         if (args.length != 0) {
             PropertiesUtil.setPathOption(args[0]);
         }
@@ -34,7 +34,7 @@ public class AppUser {
         System.out.print(USER_SERVICE.validate("test2222@gmail.com", "2222"));
         System.out.println(" - user with email \"test1111@gmail.com\" and password \"1111\" exists");
 
-    }
+    }*/
 
     public static void chooseMainMenuOption(Scanner scanner) {
         while (true) {

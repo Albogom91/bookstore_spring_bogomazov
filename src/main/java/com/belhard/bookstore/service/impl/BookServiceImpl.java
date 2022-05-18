@@ -1,6 +1,5 @@
 package com.belhard.bookstore.service.impl;
 
-import com.belhard.bookstore.controller.Controller;
 import com.belhard.bookstore.dao.beans.Book;
 import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
@@ -19,7 +18,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("bookService")
+@Service
 public class BookServiceImpl implements BookService {
     private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
     private BookDao bookDao;

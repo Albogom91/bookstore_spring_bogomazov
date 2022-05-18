@@ -18,7 +18,7 @@ public class App {
             "please, enter \"exit\" if you want to finish your work with this application.\n";
     private static final BookService BOOK_SERVICE = new BookServiceImpl();
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         if (args.length != 0) {
             PropertiesUtil.setPathOption(args[0]);
         }
@@ -35,7 +35,7 @@ public class App {
         System.out.print(BOOK_SERVICE.countPriceOfAllBooksByAuthor("Leo Tolstoy"));
         System.out.println(" - current summary price of all books by Leo Tolstoy in the store");
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
-    }
+    }*/
 
     public static void chooseMainMenuOption(Scanner scanner) {
         while (true) {

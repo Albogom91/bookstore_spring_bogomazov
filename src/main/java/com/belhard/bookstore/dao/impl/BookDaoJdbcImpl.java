@@ -5,6 +5,8 @@ import com.belhard.bookstore.dao.dbconfig.DbConfigurator;
 import com.belhard.bookstore.dao.beans.Book;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +18,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("bookDao")
+@Repository
 public class BookDaoJdbcImpl implements BookDao {
     private static Logger logger = LogManager.getLogger(BookDaoJdbcImpl.class);
     private static final String GET_ALL = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
@@ -33,8 +35,20 @@ public class BookDaoJdbcImpl implements BookDao {
             "FROM books b JOIN covers c ON b.cover_id = c.id WHERE b.isbn = ? AND deleted = false";
     private static final String GET_BY_AUTHOR = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
             "FROM books b JOIN covers c ON b.cover_id = c.id WHERE b.author = ? AND deleted = false";
+    private JdbcTemplate jdbcTemplate;
+    private BookRowMapper bookRowMapper;
 
-    @Override
+    public BookDaoJdbcImpl() {
+
+    }
+
+    @Autowired
+    public BookDaoJdbcImpl(JdbcTemplate jdbcTemplate, BookRowMapper bookRowMapper) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.bookRowMapper = bookRowMapper;
+    }
+
+    /*@Override
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
         try {
@@ -47,6 +61,16 @@ public class BookDaoJdbcImpl implements BookDao {
             logger.error("There was an error in the process of acquiring list of all books!");
         }
         return books;
+    }*/
+
+    @Override
+    public List<Book> getAllBooks() {
+        return jdbcTemplate.query(GET_ALL, bookRowMapper);
+    }
+
+    @Override
+    public Book getBookById(Long id) {
+        return jdbcTemplate.queryForObject(GET_BY_ID, bookRowMapper, id);
     }
 
     private Book processResultSet(ResultSet resultSet) throws SQLException {
@@ -60,7 +84,7 @@ public class BookDaoJdbcImpl implements BookDao {
         return book;
     }
 
-    @Override
+    /*@Override
     public Book getBookById(Long id) {
         Book book = null;
         try {
@@ -74,7 +98,7 @@ public class BookDaoJdbcImpl implements BookDao {
             logger.error("There was an error while acquiring book by id: " + id);
         }
         return book;
-    }
+    }*/
 
     @Override
     public Book createBook(Book book) {
