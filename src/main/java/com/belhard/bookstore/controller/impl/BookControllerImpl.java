@@ -30,7 +30,7 @@ public class BookControllerImpl implements BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @Override
     public String getAll(Model model) {
         List<BookDto> bookDtos = bookService.getAll();

@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Book Form</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <table>
