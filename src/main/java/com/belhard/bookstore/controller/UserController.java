@@ -18,4 +18,11 @@ public interface UserController {
     String update(UserDto userDto, Model model);
 
     String delete(Model model, Long id);
+
+    String countAll(Model model);
+
+    String getByEmail(Model model, String email);
+
+    String getByLastName(Model model, String lastName);
+
 }

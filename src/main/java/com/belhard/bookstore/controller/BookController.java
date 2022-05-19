@@ -25,5 +25,4 @@ public interface BookController {
 
     String getByAuthor(Model model, String author);
 
-
 }

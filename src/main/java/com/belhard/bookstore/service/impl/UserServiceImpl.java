@@ -1,6 +1,5 @@
 package com.belhard.bookstore.service.impl;
 
-import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.beans.User;
 import com.belhard.bookstore.service.UserService;
@@ -13,21 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
     private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    private UserDao userDao;
-
-    public UserServiceImpl() {
-
-    }
+    private final UserDao userDao;
 
     @Autowired
     public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public void setBookDao(BookDao bookDao) {
         this.userDao = userDao;
     }
 
@@ -80,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getByLastName (String lastName) {
+    public List<UserDto> getByLastName(String lastName) {
         logger.debug("Service method \"getByLastName\" was called.");
         List<User> users = userDao.getUsersByLastName(lastName);
         if (users.isEmpty()) {

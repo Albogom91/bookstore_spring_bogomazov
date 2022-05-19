@@ -1,17 +1,12 @@
 package com.belhard.bookstore.service.impl;
 
-import com.belhard.bookstore.dao.beans.Book;
 import com.belhard.bookstore.dao.BookDao;
-import com.belhard.bookstore.dao.impl.BookDaoJdbcImpl;
+import com.belhard.bookstore.dao.beans.Book;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpServletResponseWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

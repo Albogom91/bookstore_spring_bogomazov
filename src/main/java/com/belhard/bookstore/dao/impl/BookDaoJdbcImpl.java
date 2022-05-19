@@ -1,7 +1,6 @@
 package com.belhard.bookstore.dao.impl;
 
 import com.belhard.bookstore.dao.BookDao;
-import com.belhard.bookstore.dao.dbconfig.DbConfigurator;
 import com.belhard.bookstore.dao.beans.Book;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,15 +9,11 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -62,17 +57,6 @@ public class BookDaoJdbcImpl implements BookDao {
         }
     }
 
-    private Book processResultSet(ResultSet resultSet) throws SQLException {
-        Book book = new Book();
-        book.setId(resultSet.getLong("id"));
-        book.setIsbn(resultSet.getString("isbn"));
-        book.setTitle(resultSet.getString("title"));
-        book.setAuthor(resultSet.getString("author"));
-        book.setPrice(resultSet.getBigDecimal("price"));
-        book.setCover(Book.Cover.valueOf(resultSet.getString("cover")));
-        return book;
-    }
-
     @Override
     public Book createBook(Book book) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -88,13 +72,6 @@ public class BookDaoJdbcImpl implements BookDao {
         return preparedStatement;
     }
 
-    private PreparedStatement getPreparedStatementForUpdate(Book book, Connection connection, String action) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(action);
-        prepareStatement(book, preparedStatement);
-        preparedStatement.setLong(6, book.getId());
-        return preparedStatement;
-    }
-
     private void prepareStatement(Book book, PreparedStatement preparedStatement) throws SQLException {
         preparedStatement.setString(1, book.getIsbn());
         preparedStatement.setString(2, book.getTitle());
@@ -107,6 +84,13 @@ public class BookDaoJdbcImpl implements BookDao {
     public Book updateBook(Book book) {
         jdbcTemplate.update((connection) -> getPreparedStatementForUpdate(book, connection, UPDATE));
         return getBookById(book.getId());
+    }
+
+    private PreparedStatement getPreparedStatementForUpdate(Book book, Connection connection, String action) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(action);
+        prepareStatement(book, preparedStatement);
+        preparedStatement.setLong(6, book.getId());
+        return preparedStatement;
     }
 
     @Override
@@ -128,7 +112,7 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public Book getBookByIsbn(String isbn) {
-        try{
+        try {
             return jdbcTemplate.queryForObject(GET_BY_ISBN, bookRowMapper, isbn);
         } catch (EmptyResultDataAccessException e) {
             return null;
