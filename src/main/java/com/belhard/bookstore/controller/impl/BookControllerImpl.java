@@ -18,20 +18,15 @@ import java.util.List;
 
 @Controller
 public class BookControllerImpl implements BookController {
-    private BookService bookService;
+    private static Long updatedBookId = -1L;
 
-    public BookControllerImpl() {
-
-    }
+    private final BookService bookService;
 
     @Autowired
     public BookControllerImpl(BookService bookService) {
         this.bookService = bookService;
     }
 
-    public void setBookDao(BookService bookService) {
-        this.bookService = bookService;
-    }
 
     @GetMapping("/books")
     @Override
@@ -46,21 +41,82 @@ public class BookControllerImpl implements BookController {
     public String getById(Model model, @PathVariable Long id) {
         BookDto bookDto = bookService.getById(id);
         model.addAttribute("book", bookDto);
-        System.out.println(bookDto);
         return "book";
     }
 
     @GetMapping(value = "/books/create")
+    @Override
     public String getCreate(Model model) {
         model.addAttribute("book", new BookDto());
         return "bookform";
     }
 
     @PostMapping("/books/create")
+    @Override
     public String create(@ModelAttribute BookDto bookDto, Model model) {
-        System.out.println(bookDto);
         bookDto = bookService.create(bookDto);
         model.addAttribute("book", bookDto);
         return "book";
+    }
+
+    @GetMapping(value = "/books/update/{id}")
+    @Override
+    public String getUpdate(Model model, @PathVariable Long id) {
+        BookDto bookDto = bookService.getById(id);
+        setUpdatedBookId(bookDto.getId());
+        model.addAttribute("book", bookDto);
+        return "bookupdateform";
+    }
+
+    @PostMapping("/books/update/update")
+    @Override
+    public String update(@ModelAttribute BookDto bookDto, Model model) {
+        bookDto.setId(getUpdatedBookId());
+        bookDto = bookService.update(bookDto);
+        model.addAttribute("book", bookDto);
+        setUpdatedBookId(-1L);
+        return "book";
+    }
+
+    private void setUpdatedBookId(Long id) {
+        updatedBookId = id;
+    }
+
+    private Long getUpdatedBookId() {
+        return updatedBookId;
+    }
+
+    @GetMapping("/books/delete/{id}")
+    @Override
+    public String delete(Model model, @PathVariable Long id) {
+        bookService.delete(id);
+        model.addAttribute("id", id);
+        return "bookdeleted";
+    }
+
+    @GetMapping("/books/total")
+    @Override
+    public String countAll(Model model) {
+        int result = bookService.countAll();
+        model.addAttribute("number", result);
+        return "totalbooksnumber";
+
+    }
+
+    @GetMapping("/books/isbn/{isbn}")
+    @Override
+    public String getByIsbn(Model model, @PathVariable String isbn) {
+        BookDto bookDto = bookService.getByIsbn(isbn);
+        model.addAttribute("book", bookDto);
+        return "book";
+    }
+
+    @GetMapping("/books/author/{author}")
+    @Override
+    public String getByAuthor(Model model, @PathVariable String author) {
+        author = author.toUpperCase();
+        List<BookDto> bookDtos = bookService.getByAuthor(author);
+        model.addAttribute("books", bookDtos);
+        return "books";
     }
 }

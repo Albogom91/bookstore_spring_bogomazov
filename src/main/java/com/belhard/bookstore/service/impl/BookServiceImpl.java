@@ -21,21 +21,12 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
     private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
-    private BookDao bookDao;
-
-    public BookServiceImpl() {
-
-    }
+    private final BookDao bookDao;
 
     @Autowired
     public BookServiceImpl(BookDao bookDao) {
         this.bookDao = bookDao;
     }
-
-    public void setBookDao(BookDao bookDao) {
-        this.bookDao = bookDao;
-    }
-
 
     @Override
     public List<BookDto> getAll() {
@@ -70,8 +61,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookDao.getBookById(id);
         if (book == null) {
             logger.error("There is no book with such id: " + id);
-            //throw new RuntimeException("There is no book with such id: " + id);
-            return null;
+            throw new RuntimeException("There is no book with such id: " + id);
         }
         return bookToDto(book);
     }

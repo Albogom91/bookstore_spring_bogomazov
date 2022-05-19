@@ -1,4 +1,4 @@
-package com.belhard.bookstore;
+/*package com.belhard.bookstore;
 
 import com.belhard.bookstore.service.dto.BookDto;
 import com.belhard.bookstore.service.BookService;
@@ -16,9 +16,9 @@ public class App {
             "please, enter \"create\" if you want to create new book by providing necessary information;\n" +
             "please, enter \"update #\" where # is the id of the book which you want to update;\n" +
             "please, enter \"exit\" if you want to finish your work with this application.\n";
-    private static final BookService BOOK_SERVICE = new BookServiceImpl();
+    //private static final BookService BOOK_SERVICE = new BookServiceImpl();
 
-    /*public static void main(String[] args) {
+    public static void main(String[] args) {
         if (args.length != 0) {
             PropertiesUtil.setPathOption(args[0]);
         }
@@ -35,7 +35,7 @@ public class App {
         System.out.print(BOOK_SERVICE.countPriceOfAllBooksByAuthor("Leo Tolstoy"));
         System.out.println(" - current summary price of all books by Leo Tolstoy in the store");
         System.out.println("Working Directory = " + System.getProperty("user.dir"));
-    }*/
+    }
 
     public static void chooseMainMenuOption(Scanner scanner) {
         while (true) {
@@ -109,5 +109,5 @@ public class App {
             }
         }
     }
-}
+}*/
 

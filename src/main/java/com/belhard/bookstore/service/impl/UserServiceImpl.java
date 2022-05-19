@@ -63,8 +63,7 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserById(id);
         if (user == null) {
             logger.error("There is no user with such id: " + id);
-            //throw new RuntimeException("There is no user with such id: " + id);
-            return null;
+            throw new RuntimeException("There is no user with such id: " + id);
         }
         return userToDto(user);
     }
