@@ -1,5 +1,8 @@
 package com.belhard.bookstore;
 
+import com.belhard.bookstore.service.UserService;
+import com.belhard.bookstore.service.dto.UserDto;
+import com.belhard.bookstore.service.impl.UserServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

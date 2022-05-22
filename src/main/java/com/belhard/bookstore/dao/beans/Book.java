@@ -94,11 +94,11 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return Objects.equals(id, book.id)
-                && Objects.equals(isbn, book.isbn)
-                && Objects.equals(title, book.title)
-                && Objects.equals(author, book.author)
-                && Objects.equals(price, book.price)
+        return id.equals(book.id)
+                && isbn.equals(book.isbn)
+                && title.equals(book.title)
+                && author.equals(book.author)
+                && price.equals(book.price)
                 && cover == book.cover;
     }
 

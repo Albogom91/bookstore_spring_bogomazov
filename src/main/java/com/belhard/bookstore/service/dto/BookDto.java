@@ -95,11 +95,11 @@ public class BookDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookDto bookDto = (BookDto) o;
-        return Objects.equals(id, bookDto.id)
-                && Objects.equals(isbn, bookDto.isbn)
-                && Objects.equals(title, bookDto.title)
-                && Objects.equals(author, bookDto.author)
-                && Objects.equals(price, bookDto.price)
+        return id.equals(bookDto.id)
+                && isbn.equals(bookDto.isbn)
+                && title.equals(bookDto.title)
+                && author.equals(bookDto.author)
+                && price.equals(bookDto.price)
                 && coverDto == bookDto.coverDto;
     }
 

@@ -2,11 +2,17 @@ DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS covers;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS orderitems;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS statuses;
 
 TRUNCATE books CASCADE;
 TRUNCATE covers CASCADE;
 TRUNCATE users CASCADE;
 TRUNCATE roles CASCADE;
+TRUNCATE orderitems CASCADE;
+TRUNCATE orders CASCADE;
+TRUNCATE statuses CASCADE;
 
 CREATE TABLE covers (
 	id BIGSERIAL PRIMARY KEY,
@@ -81,3 +87,47 @@ VALUES ('Alex', 'Baker', 'test1111@gmail.com', '1111', (SELECT id FROM roles WHE
 	('James', 'Hunter', 'test8888@gmail.com', '8888', (SELECT id FROM roles WHERE name='CUSTOMER')),
 	('John', 'Baker', 'test9999@gmail.com', '9999', (SELECT id FROM roles WHERE name='MANAGER')),
 	('Nicholas', 'Carver', 'test0000@gmail.com', '0000', (SELECT id FROM roles WHERE name='CUSTOMER'));
+
+CREATE TABLE statuses (
+	id BIGSERIAL PRIMARY KEY,
+	name VARCHAR(20)
+);
+
+CREATE TABLE orders (
+	id BIGSERIAL PRIMARY KEY,
+	user_id BIGINT REFERENCES users,
+	totalcost DECIMAL(7,2) DEFAULT 0.0 NOT NULL,
+	timestamp VARCHAR(50) NOT NULL,
+	status_id BIGINT REFERENCES statuses
+);
+
+INSERT INTO statuses (name)
+VALUES ('PENDING'),
+	('COMPLETED'),
+	('CANCELLED');
+
+INSERT INTO orders (user_id, totalcost, timestamp, status_id)
+VALUES (3, 10.75, '2022-05-04 11:30', (SELECT id FROM statuses WHERE name='PENDING')),
+	(4, 20.00, '2022-04-04 10:30', (SELECT id FROM statuses WHERE name='COMPLETED')),
+	(6, 11.55, '2022-03-04 10:30', (SELECT id FROM statuses WHERE name='CANCELLED')),
+	(7, 28.90, '2022-02-04 10:30', (SELECT id FROM statuses WHERE name='PENDING')),
+	(8, 9.45, '2022-01-04 11:30', (SELECT id FROM statuses WHERE name='COMPLETED')),
+	(10, 5.75, '2022-05-10 11:30', (SELECT id FROM statuses WHERE name='CANCELLED'));
+
+CREATE TABLE orderitems (
+	id BIGSERIAL PRIMARY KEY,
+	order_id BIGINT REFERENCES orders,
+	book_id BIGINT REFERENCES books,
+	quantity INT NOT NULL,
+	price DECIMAL(7,2) DEFAULT 0.0 NOT NULL
+);
+
+INSERT INTO orderitems (order_id, book_id, quantity, price)
+VALUES (1, 1, 1, 10.75),
+	(2, 1, 1, 10.75),
+	(2, 2, 1, 9.25),
+	(3, 3, 1, 11.55),
+	(4, 3, 1, 11.55),
+	(4, 4, 1, 17.35),
+	(5, 5, 1, 9.45),
+	(6, 6, 1, 5.75);
