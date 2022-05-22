@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>User</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
     <h1>User, id = ${user.id}</h1>

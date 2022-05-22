@@ -1,6 +1,7 @@
 package com.belhard.bookstore.dao;
 
 import com.belhard.bookstore.dao.beans.User;
+
 import java.util.List;
 
 public interface UserDao {

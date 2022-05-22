@@ -2,11 +2,11 @@
 <html>
 <head>
     <title>Book Form</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
 <table>
-     <form action="controller" method="POST">
+     <form action="create" method="POST">
         <tr>
             <td>ISBN</td>
             <td><input name="isbn"/></td>
@@ -21,9 +21,9 @@
         </tr>
         <tr>
             <td>Cover</td>
-            <td><input type="radio" name="cover" value="soft" checked/>Soft
-                <input type="radio" name="cover" value="hard"/>Hard
-                <input type="radio" name="cover" value="special"/>Special</td>
+            <td><input type="radio" name="coverDto" value="SOFT" checked/>Soft
+                <input type="radio" name="coverDto" value="HARD"/>Hard
+                <input type="radio" name="coverDto" value="SPECIAL"/>Special</td>
         </tr>
         <tr>
             <td>Price</td>

@@ -4,3 +4,5 @@ logs/
 .idea/
 *.iml
 *.ini
+HELP.md
+postgresql-42.3.4.jar

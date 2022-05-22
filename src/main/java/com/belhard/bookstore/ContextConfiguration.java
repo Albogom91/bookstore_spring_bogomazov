@@ -10,4 +10,5 @@ public class ContextConfiguration {
         SpringApplication.run(ContextConfiguration.class, args);
 
     }
+
 }

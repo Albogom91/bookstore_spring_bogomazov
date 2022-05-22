@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Books</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
     <h1>Books</h1>
@@ -20,7 +20,7 @@
             <tr>
                 <td>${book.id}</td>
                 <td>${book.isbn}</td>
-                <td><a href="controller?command=book&id=${book.id}" target="blank">${book.title}</a></td>
+                <td><a href="books/${book.id}" target="blank">${book.title}</a></td>
                 <td>${book.author}</td>
                 <td>${book.price}</td>
                 <td>${book.coverDto.toString().toLowerCase()}</td>

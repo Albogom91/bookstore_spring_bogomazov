@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Users</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
     <h1>Users</h1>
@@ -20,7 +20,7 @@
             <tr>
                 <td>${user.id}</td>
                 <td>${user.firstName}</td>
-                <td><a href="controller?command=user&id=${user.id}" target="blank">${user.lastName}</a></td>
+                <td><a href="users/${user.id}" target="blank">${user.lastName}</a></td>
                 <td>${user.email}</td>
                 <td>${user.password}</td>
                 <td>${user.roleDto.toString().toLowerCase()}</td>
