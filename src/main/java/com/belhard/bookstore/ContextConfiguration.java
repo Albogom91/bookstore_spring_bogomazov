@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +38,9 @@ public class ContextConfiguration {
         BookDto book1 = bookService.getById(8L);
         BookDto book2 = bookService.getById(9L);
 
-        OrderItemDto oi = new OrderItemDto(book, 2, BigDecimal.valueOf(19.25));
-        OrderItemDto oi1 = new OrderItemDto(book1, 1, BigDecimal.valueOf(7.75));
-        OrderItemDto oi2 = new OrderItemDto(book2, 1, BigDecimal.valueOf(8.75));
+        OrderItemDto oi = new OrderItemDto(book, 2, book.getPrice());
+        OrderItemDto oi1 = new OrderItemDto(book1, 1, book1.getPrice());
+        OrderItemDto oi2 = new OrderItemDto(book2, 1, book2.getPrice());
         List<OrderItemDto> ois = new ArrayList<>();
         ois.add(oi);
         ois.add(oi1);

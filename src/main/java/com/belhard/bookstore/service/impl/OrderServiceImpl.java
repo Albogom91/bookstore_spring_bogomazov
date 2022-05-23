@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,10 +55,7 @@ public class OrderServiceImpl implements OrderService {
         UserDto userDto = userService.getById(order.getUserId());
         orderDto.setUserDto(userDto);
         List<OrderItem> items = orderItemDao.getOrderItemsByOrderId(order.getId());
-        List<OrderItemDto> itemDtos = new ArrayList<>();
-        for (OrderItem item : items) {
-            itemDtos.add(orderItemToDto(item));
-        }
+        List<OrderItemDto> itemDtos = items.stream().map(oi -> orderItemToDto(oi)).toList();
         orderDto.setItems(itemDtos);
         return orderDto;
     }
@@ -80,9 +76,10 @@ public class OrderServiceImpl implements OrderService {
         Order order = dtoToOrder(orderDto);
         List<OrderItemDto> oids = orderDto.getItems();
         orderDto = orderToDto(orderDao.createOrder(order));
-        List<OrderItem> ois = dtoToOrderItems(oids, orderDto.getId());
-        List<OrderItem> oisCreated = ois.stream().map(oi -> orderItemDao.createOrderItem(oi)).toList();
-        oids = oisCreated.stream().map(oi -> orderItemToDto(oi)).toList();
+        Long id = orderDto.getId();
+        List<OrderItem> ois = oids.stream().map(oid -> dtoToOrderItem(oid, id)).toList();
+        ois = ois.stream().map(oi -> orderItemDao.createOrderItem(oi)).toList();
+        oids = ois.stream().map(oi -> orderItemToDto(oi)).toList();
         orderDto.setItems(oids);
         return orderDto;
     }
@@ -92,13 +89,10 @@ public class OrderServiceImpl implements OrderService {
         orderDto.setTotalCost(calculateTotalCost(orderDto));
         Order order = dtoToOrder(orderDto);
         List<OrderItem> oisDeleted = orderItemDao.getOrderItemsByOrderId(orderDto.getId());
-        for (OrderItem oiDel : oisDeleted) {
-            orderItemDao.deleteOrderItem(oiDel.getId());
-        }
-        List<OrderItem> ois = dtoToOrderItems(orderDto.getItems(), orderDto.getId());
-        for (OrderItem oi : ois) {
-            orderItemDao.createOrderItem(oi);
-        }
+        oisDeleted.stream().forEach(oi -> orderItemDao.deleteOrderItem(oi.getId()));
+        Long id = orderDto.getId();
+        List<OrderItem> ois = orderDto.getItems().stream().map(oid -> dtoToOrderItem(oid, id)).toList();
+        ois.stream().forEach(oi -> orderItemDao.createOrderItem(oi));
         orderDto = orderToDto(orderDao.updateOrder(order));
         return getById(orderDto.getId());
     }
@@ -111,10 +105,6 @@ public class OrderServiceImpl implements OrderService {
         order.setTimestamp(orderDto.getTimestamp());
         order.setStatus(Order.Status.valueOf(orderDto.getStatusDto().toString()));
         return order;
-    }
-
-    private List<OrderItem> dtoToOrderItems(List<OrderItemDto> oids, Long id) {
-        return oids.stream().map(oid -> dtoToOrderItem(oid, id)).toList();
     }
 
     private OrderItem dtoToOrderItem(OrderItemDto orderItemDto, Long id) {

@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -14,7 +13,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -33,16 +31,6 @@ public class OrderDaoJdbcImpl implements OrderDao {
             "VALUES (:userId, :totalCost, :timestamp, (SELECT id FROM statuses WHERE name = :status))";
     private static final String UPDATE = "UPDATE orders SET user_id = :userId, totalcost = :totalCost, timestamp = :timestamp, " +
             "status_id = (SELECT id FROM statuses WHERE name = :status) WHERE id = :id";
-
-    /*private static final String CREATE = "INSERT INTO books (isbn, title, author, price, cover_id) " +
-            "VALUES (?, ?, ?, ?, (SELECT id FROM covers WHERE name = ?))";
-    private static final String UPDATE = "UPDATE books SET isbn = ?, title = ?, author = ?, price = ?, cover_id = (SELECT id FROM covers WHERE name = ?) " +
-            "WHERE id = ? AND deleted = false";
-    private static final String COUNT_ALL_BOOKS = "SELECT COUNT(*) AS count FROM books WHERE deleted = false";
-    private static final String GET_BY_ISBN = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
-            "FROM books b JOIN covers c ON b.cover_id = c.id WHERE b.isbn = ? AND deleted = false";
-    private static final String GET_BY_AUTHOR = "SELECT b.id, b.isbn, b.title, b.author, b.price, c.name AS cover " +
-            "FROM books b JOIN covers c ON b.cover_id = c.id WHERE UPPER(b.author) = ? AND deleted = false";*/
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final OrderRowMapper orderRowMapper;

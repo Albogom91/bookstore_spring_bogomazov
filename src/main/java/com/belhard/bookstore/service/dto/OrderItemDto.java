@@ -13,6 +13,11 @@ public class OrderItemDto {
 
     }
 
+    public OrderItemDto(BookDto bookDto, Integer quantity) {
+        this.bookDto = bookDto;
+        this.quantity = quantity;
+    }
+
     public OrderItemDto(BookDto bookDto, Integer quantity, BigDecimal price) {
         this.bookDto = bookDto;
         this.quantity = quantity;

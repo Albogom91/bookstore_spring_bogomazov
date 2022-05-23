@@ -10,7 +10,7 @@
     <div>Order total cost: ${order.totalCost}, status: ${order.statusDto.toString().toLowerCase()}</div>
     <div>Order timestamp: ${order.timestamp.toString()}</div>
     <div>Order includes following items:</div>
-    <hr>
+    <div id="divtab">
     <table>
         <tr>
             <th>Order item id</th>
@@ -27,5 +27,6 @@
             </tr>
         </c:forEach>
     </table>
+    </div>
 </body>
 </html>
