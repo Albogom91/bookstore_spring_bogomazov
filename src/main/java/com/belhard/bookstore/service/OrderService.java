@@ -2,6 +2,7 @@ package com.belhard.bookstore.service;
 
 import com.belhard.bookstore.service.dto.OrderDto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface OrderService {
@@ -15,4 +16,5 @@ public interface OrderService {
     OrderDto update(OrderDto orderDto);
 
     void delete(Long id);
+
 }

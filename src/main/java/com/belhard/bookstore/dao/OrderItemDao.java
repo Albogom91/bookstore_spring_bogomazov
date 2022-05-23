@@ -14,7 +14,7 @@ public interface OrderItemDao {
 
     OrderItem createOrderItem(OrderItem orderItem);
 
-    OrderItem updateOrder(OrderItem orderItem);
+    OrderItem updateOrderItem(OrderItem orderItem);
 
     boolean deleteOrderItem(Long id);
 }

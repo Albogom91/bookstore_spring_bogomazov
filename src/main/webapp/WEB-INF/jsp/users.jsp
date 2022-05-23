@@ -20,7 +20,7 @@
             <tr>
                 <td>${user.id}</td>
                 <td>${user.firstName}</td>
-                <td><a href="users/${user.id}" target="blank">${user.lastName}</a></td>
+                <td><a href="users/${user.id}" target="_blank">${user.lastName}</a></td>
                 <td>${user.email}</td>
                 <td>${user.password}</td>
                 <td>${user.roleDto.toString().toLowerCase()}</td>

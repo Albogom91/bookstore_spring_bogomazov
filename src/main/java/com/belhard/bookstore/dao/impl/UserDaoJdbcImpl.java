@@ -10,7 +10,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -72,16 +71,14 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public User createUser(User user) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update((connection) -> getPreparedStatementForCreate(user, connection, CREATE), keyHolder);
+        jdbcTemplate.update((connection) -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE, new String[]{"id"});
+            prepareStatement(user, preparedStatement);
+            return preparedStatement;
+        }, keyHolder);
         Number number = keyHolder.getKey();
         Long id = number.longValue();
         return getUserById(id);
-    }
-
-    private PreparedStatement getPreparedStatementForCreate(User user, Connection connection, String action) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(action, new String[]{"id"});
-        prepareStatement(user, preparedStatement);
-        return preparedStatement;
     }
 
     private void prepareStatement(User user, PreparedStatement preparedStatement) throws SQLException {
@@ -94,15 +91,13 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User updateUser(User user) {
-        jdbcTemplate.update((connection) -> getPreparedStatementForUpdate(user, connection, UPDATE));
+        jdbcTemplate.update((connection) -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
+            prepareStatement(user, preparedStatement);
+            preparedStatement.setLong(6, user.getId());
+            return preparedStatement;
+        });
         return getUserById(user.getId());
-    }
-
-    private PreparedStatement getPreparedStatementForUpdate(User user, Connection connection, String action) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(action);
-        prepareStatement(user, preparedStatement);
-        preparedStatement.setLong(6, user.getId());
-        return preparedStatement;
     }
 
     @Override

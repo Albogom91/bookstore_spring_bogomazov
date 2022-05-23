@@ -25,6 +25,13 @@ public class OrderDto {
         this.items = items;
     }
 
+    public OrderDto(UserDto userDto, LocalDateTime timestamp, StatusDto statusDto, List<OrderItemDto> items) {
+        this.userDto = userDto;
+        this.timestamp = timestamp;
+        this.statusDto = statusDto;
+        this.items = items;
+    }
+
     public enum StatusDto {
         PENDING,
         COMPLETED,

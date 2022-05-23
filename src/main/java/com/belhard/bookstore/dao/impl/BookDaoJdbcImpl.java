@@ -60,16 +60,14 @@ public class BookDaoJdbcImpl implements BookDao {
     @Override
     public Book createBook(Book book) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update((connection) -> getPreparedStatementForCreate(book, connection, CREATE), keyHolder);
+        jdbcTemplate.update((connection) -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE, new String[]{"id"});
+            prepareStatement(book, preparedStatement);
+            return preparedStatement;
+        }, keyHolder);
         Number number = keyHolder.getKey();
         Long id = number.longValue();
         return getBookById(id);
-    }
-
-    private PreparedStatement getPreparedStatementForCreate(Book book, Connection connection, String action) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(action, new String[]{"id"});
-        prepareStatement(book, preparedStatement);
-        return preparedStatement;
     }
 
     private void prepareStatement(Book book, PreparedStatement preparedStatement) throws SQLException {
@@ -82,15 +80,13 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public Book updateBook(Book book) {
-        jdbcTemplate.update((connection) -> getPreparedStatementForUpdate(book, connection, UPDATE));
+        jdbcTemplate.update((connection) -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
+            prepareStatement(book, preparedStatement);
+            preparedStatement.setLong(6, book.getId());
+            return preparedStatement;
+        });
         return getBookById(book.getId());
-    }
-
-    private PreparedStatement getPreparedStatementForUpdate(Book book, Connection connection, String action) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(action);
-        prepareStatement(book, preparedStatement);
-        preparedStatement.setLong(6, book.getId());
-        return preparedStatement;
     }
 
     @Override

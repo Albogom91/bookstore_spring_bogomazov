@@ -19,11 +19,11 @@ public class OrderItemDto {
         this.price = price;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -66,10 +66,10 @@ public class OrderItemDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItemDto that = (OrderItemDto) o;
-        return id.equals(that.id)
-                && bookDto.equals(that.bookDto)
-                && quantity.equals(that.quantity)
-                && price.equals(that.price);
+        return Objects.equals(id, that.id)
+                && Objects.equals(bookDto, that.bookDto)
+                && Objects.equals(quantity, that.quantity)
+                && Objects.equals(price, that.price);
     }
 
     @Override

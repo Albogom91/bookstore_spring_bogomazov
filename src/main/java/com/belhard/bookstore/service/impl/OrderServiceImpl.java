@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,31 +57,91 @@ public class OrderServiceImpl implements OrderService {
         orderDto.setUserDto(userDto);
         List<OrderItem> items = orderItemDao.getOrderItemsByOrderId(order.getId());
         List<OrderItemDto> itemDtos = new ArrayList<>();
-        for(OrderItem item : items) {
-            OrderItemDto orderItemDto = new OrderItemDto();
-            orderItemDto.setId(item.getId());
-            orderItemDto.setQuantity(item.getQuantity());
-            orderItemDto.setPrice(item.getPrice());
-            BookDto bookDto = bookService.getById(item.getBookId());
-            orderItemDto.setBookDto(bookDto);
-            itemDtos.add(orderItemDto);
+        for (OrderItem item : items) {
+            itemDtos.add(orderItemToDto(item));
         }
         orderDto.setItems(itemDtos);
         return orderDto;
     }
 
+    private OrderItemDto orderItemToDto(OrderItem orderItem) {
+        OrderItemDto orderItemDto = new OrderItemDto();
+        orderItemDto.setId(orderItem.getId());
+        orderItemDto.setQuantity(orderItem.getQuantity());
+        orderItemDto.setPrice(orderItem.getPrice());
+        BookDto bookDto = bookService.getById(orderItem.getBookId());
+        orderItemDto.setBookDto(bookDto);
+        return orderItemDto;
+    }
+
     @Override
     public OrderDto create(OrderDto orderDto) {
-        return null;
+        orderDto.setTotalCost(calculateTotalCost(orderDto));
+        Order order = dtoToOrder(orderDto);
+        List<OrderItemDto> oids = orderDto.getItems();
+        orderDto = orderToDto(orderDao.createOrder(order));
+        List<OrderItem> ois = dtoToOrderItems(oids, orderDto.getId());
+        List<OrderItem> oisCreated = ois.stream().map(oi -> orderItemDao.createOrderItem(oi)).toList();
+        oids = oisCreated.stream().map(oi -> orderItemToDto(oi)).toList();
+        orderDto.setItems(oids);
+        return orderDto;
     }
 
     @Override
     public OrderDto update(OrderDto orderDto) {
-        return null;
+        orderDto.setTotalCost(calculateTotalCost(orderDto));
+        Order order = dtoToOrder(orderDto);
+        List<OrderItem> oisDeleted = orderItemDao.getOrderItemsByOrderId(orderDto.getId());
+        for (OrderItem oiDel : oisDeleted) {
+            orderItemDao.deleteOrderItem(oiDel.getId());
+        }
+        List<OrderItem> ois = dtoToOrderItems(orderDto.getItems(), orderDto.getId());
+        for (OrderItem oi : ois) {
+            orderItemDao.createOrderItem(oi);
+        }
+        orderDto = orderToDto(orderDao.updateOrder(order));
+        return getById(orderDto.getId());
+    }
+
+    private Order dtoToOrder(OrderDto orderDto) {
+        Order order = new Order();
+        order.setId(orderDto.getId());
+        order.setUserId(orderDto.getUserDto().getId());
+        order.setTotalCost(orderDto.getTotalCost());
+        order.setTimestamp(orderDto.getTimestamp());
+        order.setStatus(Order.Status.valueOf(orderDto.getStatusDto().toString()));
+        return order;
+    }
+
+    private List<OrderItem> dtoToOrderItems(List<OrderItemDto> oids, Long id) {
+        return oids.stream().map(oid -> dtoToOrderItem(oid, id)).toList();
+    }
+
+    private OrderItem dtoToOrderItem(OrderItemDto orderItemDto, Long id) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setId(orderItemDto.getId());
+        orderItem.setOrderId(id);
+        orderItem.setBookId(orderItemDto.getBookDto().getId());
+        orderItem.setQuantity(orderItemDto.getQuantity());
+        orderItem.setPrice(orderItemDto.getPrice());
+        return orderItem;
     }
 
     @Override
     public void delete(Long id) {
+        logger.debug("Service method \"delete\" was called.");
+        if (!orderDao.deleteOrder(id)) {
+            logger.error("There is no order to delete with such id: " + id);
+            throw new RuntimeException("There is no order to delete with such id: " + id);
+        }
+    }
 
+    private BigDecimal calculateTotalCost(OrderDto orderDto) {
+        BigDecimal totalCost = BigDecimal.ZERO;
+        List<OrderItemDto> oids = orderDto.getItems();
+        for (OrderItemDto oid : oids) {
+            totalCost = totalCost.add(oid.getPrice().multiply(BigDecimal.valueOf(oid.getQuantity())));
+        }
+        return totalCost;
     }
 }

@@ -20,7 +20,7 @@
             <tr>
                 <td>${book.id}</td>
                 <td>${book.isbn}</td>
-                <td><a href="books/${book.id}" target="blank">${book.title}</a></td>
+                <td><a href="books/${book.id}" target="_blank">${book.title}</a></td>
                 <td>${book.author}</td>
                 <td>${book.price}</td>
                 <td>${book.coverDto.toString().toLowerCase()}</td>

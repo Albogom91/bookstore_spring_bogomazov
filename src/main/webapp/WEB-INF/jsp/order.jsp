@@ -7,16 +7,25 @@
 </head>
 <body>
     <h1>Order, id = ${order.id}</h1>
-    <div>${order.totalCost}, status: ${order.statusDto.toString().toLowerCase()}</div>
-    <div>${order.timestamp.toString()}</div>
+    <div>Order total cost: ${order.totalCost}, status: ${order.statusDto.toString().toLowerCase()}</div>
+    <div>Order timestamp: ${order.timestamp.toString()}</div>
     <div>Order includes following items:</div>
-    <c:forEach items="${order.items}" var="item">
-    <div>
-        <div>Order item id: ${item.id}</div>
-        <div><a href="../books/${item.bookDto.getId()}" target="blank">Book id: ${item.bookDto.getId()}</a></div>
-        <div>Book quantity: ${item.quantity}</div>
-        <div>Book price: ${item.price}</div>
-    </div>
-    </c:forEach>
+    <hr>
+    <table>
+        <tr>
+            <th>Order item id</th>
+            <th>Book ID</th>
+            <th>Book quantity</th>
+            <th>Book price</th>
+        </tr>
+        <c:forEach items="${order.items}" var="item">
+            <tr>
+                <td>${item.id}</td>
+                <td><a href="../books/${item.bookDto.getId()}" target="_blank">${item.bookDto.getId()}</a></td>
+                <td>${item.quantity}</td>
+                <td>${item.price}</td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>

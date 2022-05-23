@@ -119,7 +119,8 @@ CREATE TABLE orderitems (
 	order_id BIGINT REFERENCES orders,
 	book_id BIGINT REFERENCES books,
 	quantity INT NOT NULL,
-	price DECIMAL(7,2) DEFAULT 0.0 NOT NULL
+	price DECIMAL(7,2) DEFAULT 0.0 NOT NULL,
+	deleted BOOLEAN DEFAULT false NOT NULL
 );
 
 INSERT INTO orderitems (order_id, book_id, quantity, price)
