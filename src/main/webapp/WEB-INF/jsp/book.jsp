@@ -9,5 +9,6 @@
     <div>${book.title} by ${book.author} in ${book.coverDto.toString().toLowerCase()} cover</div>
     <div>ISBN = ${book.isbn}</div>
     <div>Price = ${book.price}</div>
+    <div><form action="/books"><input id="crud" type="submit" value="To books"/></form></div>
 </body>
 </html>

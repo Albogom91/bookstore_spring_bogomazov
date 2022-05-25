@@ -9,5 +9,6 @@
     <div>${user.firstName} ${user.lastName}, ${user.roleDto.toString().toLowerCase()}</div>
     <div>Email = ${user.email}</div>
     <div>Password = ${user.password}</div>
+    <div><form action="/users"><input id="crud" type="submit" value="To users"/></form></div>
 </body>
 </html>

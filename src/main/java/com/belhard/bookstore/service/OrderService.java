@@ -11,6 +11,8 @@ public interface OrderService {
 
     OrderDto getById(Long id);
 
+    List<OrderDto> getAllByUserId(Long id);
+
     OrderDto create(OrderDto orderDto);
 
     OrderDto update(OrderDto orderDto);

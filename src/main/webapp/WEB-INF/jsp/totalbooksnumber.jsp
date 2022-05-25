@@ -6,5 +6,6 @@
 </head>
 <body>
     <div>Total number of books is: ${number}</div>
+    <div><form action="/books"><input id="crud" type="submit" value="To books"/></form></div>
 </body>
 </html>

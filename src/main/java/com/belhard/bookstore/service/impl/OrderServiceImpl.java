@@ -71,6 +71,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderDto> getAllByUserId(Long id) {
+        List<OrderDto> ods = getAll();
+        return ods.stream().filter(od -> od.getUserDto().getId() == id).toList();
+    }
+
+    @Override
     public OrderDto create(OrderDto orderDto) {
         orderDto.setTotalCost(calculateTotalCost(orderDto));
         Order order = dtoToOrder(orderDto);

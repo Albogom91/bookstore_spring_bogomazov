@@ -6,5 +6,6 @@
 </head>
 <body>
     <div>Order with id = ${id} was deleted!</div>
+    <div><form action="/orders"><input id="crud" type="submit" value="To orders"/></form></div>
 </body>
 </html>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <table>
-     <form action="create" method="POST">
+     <form action="/users/create" method="POST">
         <tr>
             <td>First name</td>
             <td><input name="firstName"/></td>
@@ -30,7 +30,7 @@
                 <input type="radio" name="roleDto" value="CUSTOMER"/>Customer</td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" value="Submit" /></td>
+            <td colspan="2"><input type="submit" value="Create"/></td>
         </tr>
         </form>
     </table>

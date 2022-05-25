@@ -6,22 +6,23 @@
 </head>
 <body>
 <table>
-     <form action="update" method="POST">
+     <form action="/users/update" method="POST">
+     <input name="id" type="hidden" value="${user.id}"/>
         <tr>
             <td>First name</td>
-            <td><input name="firstName"/></td>
+            <td><input name="firstName" type="text" value="${user.firstName}"/></td>
         </tr>
         <tr>
             <td>Last name</td>
-            <td><input name="lastName"/></td>
+            <td><input name="lastName" type="text" value="${user.lastName}"/></td>
         </tr>
         <tr>
             <td>Email</td>
-            <td><input name="email"/></td>
+            <td><input name="email" type="text" value="${user.email}"/></td>
         </tr>
         <tr>
              <td>Password</td>
-             <td><input name="password"/></td>
+             <td><input name="password" type="text" value="${user.password}"/></td>
         </tr>
         <tr>
             <td>Role</td>
@@ -30,7 +31,7 @@
                 <input type="radio" name="roleDto" value="CUSTOMER"/>Customer</td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" value="Submit" /></td>
+            <td colspan="2"><input type="submit" value="Update"/></td>
         </tr>
         </form>
     </table>

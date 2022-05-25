@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Book Form</title>
@@ -6,18 +7,18 @@
 </head>
 <body>
 <table>
-     <form action="create" method="POST">
+     <form action="/books/create" method="POST">
         <tr>
             <td>ISBN</td>
-            <td><input name="isbn"/></td>
+            <td><input name="isbn" type="text"/></td>
         </tr>
         <tr>
             <td>Title</td>
-            <td><input name="title"/></td>
+            <td><input name="title" type="text"/></td>
         </tr>
         <tr>
             <td>Author</td>
-            <td><input name="author"/></td>
+            <td><input name="author" type="text"/></td>
         </tr>
         <tr>
             <td>Cover</td>
@@ -27,10 +28,10 @@
         </tr>
         <tr>
             <td>Price</td>
-            <td><input name="price"/></td>
+            <td><input name="price" type="number" step=".01"/></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" value="Submit" /></td>
+            <td colspan="2"><input type="submit" value="Create"/></td>
         </tr>
         </form>
     </table>

@@ -17,13 +17,14 @@
         </tr>
         <c:forEach items="${orders}" var="order">
             <tr>
-                <td><a href="orders/${order.id}" target="_blank">${order.id}</a></td>
-                <td><a href="users/${order.userDto.getId()}" target="_blank">${order.userDto.getId()}</a></td>
+                <td><a href="/orders/${order.id}" target="_blank">${order.id}</a></td>
+                <td><a href="/users/${order.userDto.getId()}" target="_blank">${order.userDto.getId()}</a></td>
                 <td>${order.totalCost}</td>
                 <td>${order.timestamp.toString()}</td>
                 <td>${order.statusDto.toString().toLowerCase()}</td>
             </tr>
         </c:forEach>
     </table>
+    <form action="/"><input id="crud" type="submit" value="To main"/></form>
 </body>
 </html>

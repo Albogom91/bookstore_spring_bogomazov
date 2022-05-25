@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/orders")
 public class OrderControllerImpl implements OrderController {
     private final OrderService orderService;
 
@@ -20,7 +22,7 @@ public class OrderControllerImpl implements OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/orders")
+    @GetMapping
     @Override
     public String getAll(Model model) {
         List<OrderDto> orderDtos = orderService.getAll();
@@ -28,15 +30,15 @@ public class OrderControllerImpl implements OrderController {
         return "orders";
     }
 
-    @GetMapping("/orders/user/{id}")
+    @GetMapping("/user/{id}")
     @Override
     public String getAllByUserId(Model model, @PathVariable Long id) {
-        List<OrderDto> orderDtosUser = orderService.getAll().stream().filter(o -> o.getId() == id).toList();
+        List<OrderDto> orderDtosUser = orderService.getAllByUserId(id);
         model.addAttribute("orders", orderDtosUser);
         return "orders";
     }
 
-    @GetMapping("/orders/{id}")
+    @GetMapping("/{id}")
     @Override
     public String getById(Model model, @PathVariable Long id) {
         OrderDto orderDto = orderService.getById(id);
@@ -44,7 +46,7 @@ public class OrderControllerImpl implements OrderController {
         return "order";
     }
 
-    @GetMapping("/orders/delete/{id}")
+    @GetMapping("/delete/{id}")
     @Override
     public String delete(Model model, @PathVariable Long id) {
         orderService.delete(id);

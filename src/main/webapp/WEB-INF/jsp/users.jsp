@@ -15,17 +15,23 @@
             <th>Email</th>
             <th>Password</th>
             <th>Role</th>
+            <th colspan="3">Action</th>
         </tr>
         <c:forEach items="${users}" var="user">
             <tr>
                 <td>${user.id}</td>
                 <td>${user.firstName}</td>
-                <td><a href="users/${user.id}" target="_blank">${user.lastName}</a></td>
+                <td><a href="/users/${user.id}" target="_blank">${user.lastName}</a></td>
                 <td>${user.email}</td>
                 <td>${user.password}</td>
                 <td>${user.roleDto.toString().toLowerCase()}</td>
+                <td id="method"><form action="/users/${user.id}"><input id="crud" type="submit" value="View"/></form>
+                                <form action="/users/update/${user.id}"><input id="crud" type="submit" value="Update"/></form>
+                                <form action="/users/delete/${user.id}"><input id="crud" type="submit" value="Delete"/></form></td>
             </tr>
         </c:forEach>
     </table>
+    <form action="/users/create"><input id="crud" type="submit" value="Create"/></form>
+    <form action="/"><input id="crud" type="submit" value="To main"/></form>
 </body>
 </html>
