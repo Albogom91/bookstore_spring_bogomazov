@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<html xmlns:th="http://www.thymeleaf.org">
 <html>
 <head>
     <title>User Form</title>
@@ -6,7 +7,7 @@
 </head>
 <body>
 <table>
-     <form action="/users/update" method="POST">
+     <form action="/users/update/${user.id}" method="POST">
      <input name="id" type="hidden" value="${user.id}"/>
         <tr>
             <td>First name</td>

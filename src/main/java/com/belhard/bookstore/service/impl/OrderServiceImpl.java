@@ -95,10 +95,10 @@ public class OrderServiceImpl implements OrderService {
         orderDto.setTotalCost(calculateTotalCost(orderDto));
         Order order = dtoToOrder(orderDto);
         List<OrderItem> oisDeleted = orderItemDao.getOrderItemsByOrderId(orderDto.getId());
-        oisDeleted.stream().forEach(oi -> orderItemDao.deleteOrderItem(oi.getId()));
+        oisDeleted.forEach(oi -> orderItemDao.deleteOrderItem(oi.getId()));
         Long id = orderDto.getId();
         List<OrderItem> ois = orderDto.getItems().stream().map(oid -> dtoToOrderItem(oid, id)).toList();
-        ois.stream().forEach(oi -> orderItemDao.createOrderItem(oi));
+        ois.forEach(oi -> orderItemDao.createOrderItem(oi));
         orderDto = orderToDto(orderDao.updateOrder(order));
         return getById(orderDto.getId());
     }

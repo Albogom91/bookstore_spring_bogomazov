@@ -61,7 +61,7 @@ public class UserControllerImpl implements UserController {
         return "userupdateform";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update/{id}")
     @Override
     public String update(@ModelAttribute UserDto userDto, Model model) {
         userDto = userService.update(userDto);

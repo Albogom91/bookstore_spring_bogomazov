@@ -7,7 +7,7 @@
 </head>
 <body>
 <table>
-     <form action="/books/update" method="POST">
+     <form action="/books/update/${book.id}" method="POST">
         <input name="id" type="hidden" value="${book.id}"/>
         <tr>
             <td>ISBN</td>

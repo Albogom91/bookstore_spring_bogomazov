@@ -64,7 +64,7 @@ public class BookControllerImpl implements BookController {
         return "bookupdateform";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/update/{id}")
     @Override
     public String update(@ModelAttribute BookDto bookDto, Model model) {
         bookDto = bookService.update(bookDto);
