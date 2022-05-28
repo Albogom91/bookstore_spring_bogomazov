@@ -15,17 +15,23 @@
             <th>Author</th>
             <th>Price</th>
             <th>Cover</th>
+            <th colspan="3">Action</th>
         </tr>
         <c:forEach items="${books}" var="book">
             <tr>
                 <td>${book.id}</td>
                 <td>${book.isbn}</td>
-                <td><a href="books/${book.id}" target="blank">${book.title}</a></td>
+                <td><a href="/books/${book.id}" target="_blank">${book.title}</a></td>
                 <td>${book.author}</td>
                 <td>${book.price}</td>
                 <td>${book.coverDto.toString().toLowerCase()}</td>
+                <td id="method"><form action="/books/${book.id}"><input id="crud" type="submit" value="View"/></form>
+                                <form action="/books/update/${book.id}"><input id="crud" type="submit" value="Update"/></form>
+                                <form action="/books/delete/${book.id}"><input id="crud" type="submit" value="Delete"/></form></td>
             </tr>
         </c:forEach>
     </table>
+    <form action="/books/create"><input id="crud" type="submit" value="Create"/></form>
+    <form action="/"><input id="crud" type="submit" value="To main"/></form>
 </body>
 </html>

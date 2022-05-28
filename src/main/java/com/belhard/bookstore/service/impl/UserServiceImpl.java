@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
-    private final UserDao userDao;
+    private UserDao userDao;
 
     @Autowired
     public UserServiceImpl(UserDao userDao) {
@@ -25,8 +25,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAll() {
         logger.debug("Service method \"getAll\" was called.");
-        List<User> users = userDao.getAllUsers();
-        return usersToUsersDtos(users);
+        return userDao.getAllUsers().stream().map(this::userToDto).toList();
     }
 
     private UserDto userToDto(User user) {

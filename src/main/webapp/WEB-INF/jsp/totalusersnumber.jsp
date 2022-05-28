@@ -6,5 +6,6 @@
 </head>
 <body>
     <div>Total number of users is: ${number}</div>
+    <div><form action="/users"><input id="crud" type="submit" value="To users"/></form></div>
 </body>
 </html>

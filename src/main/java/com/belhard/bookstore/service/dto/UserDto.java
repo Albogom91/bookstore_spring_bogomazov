@@ -77,24 +77,6 @@ public class UserDto {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDto userDto = (UserDto) o;
-        return Objects.equals(id, userDto.id)
-                && Objects.equals(firstName, userDto.firstName)
-                && Objects.equals(lastName, userDto.lastName)
-                && Objects.equals(email, userDto.email)
-                && Objects.equals(password, userDto.password)
-                && roleDto == userDto.roleDto;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, email, password, roleDto);
-    }
-
-    @Override
     public String toString() {
         return "UserDto{" +
                 "id=" + id +
@@ -104,5 +86,23 @@ public class UserDto {
                 ", password='" + password + '\'' +
                 ", roleDto=" + roleDto +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDto userDto = (UserDto) o;
+        return id.equals(userDto.id)
+                && firstName.equals(userDto.firstName)
+                && lastName.equals(userDto.lastName)
+                && email.equals(userDto.email)
+                && password.equals(userDto.password)
+                && roleDto == userDto.roleDto;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email, password, roleDto);
     }
 }

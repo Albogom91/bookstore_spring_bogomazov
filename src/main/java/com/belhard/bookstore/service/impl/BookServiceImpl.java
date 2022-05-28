@@ -26,8 +26,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> getAll() {
         logger.debug("Service method \"getAll\" was called.");
-        List<Book> books = bookDao.getAllBooks();
-        return booksToBooksDtos(books);
+        return bookDao.getAllBooks().stream().map(this::bookToDto).toList();
     }
 
     private BookDto bookToDto(Book book) {

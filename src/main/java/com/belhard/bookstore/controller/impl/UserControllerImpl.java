@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/users")
 public class UserControllerImpl implements UserController {
-    private static Long updatedUserId = -1L;
-
     private final UserService userService;
 
     public UserControllerImpl(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping
     @Override
     public String getAll(Model model) {
         List<UserDto> userDtos = userService.getAll();
@@ -30,7 +30,7 @@ public class UserControllerImpl implements UserController {
         return "users";
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     @Override
     public String getById(Model model, @PathVariable Long id) {
         UserDto userDto = userService.getById(id);
@@ -38,14 +38,14 @@ public class UserControllerImpl implements UserController {
         return "user";
     }
 
-    @GetMapping(value = "/users/create")
+    @GetMapping("/create")
     @Override
     public String getCreate(Model model) {
         model.addAttribute("user", new UserDto());
         return "userform";
     }
 
-    @PostMapping("/users/create")
+    @PostMapping("/create")
     @Override
     public String create(@ModelAttribute UserDto userDto, Model model) {
         userDto = userService.create(userDto);
@@ -53,34 +53,23 @@ public class UserControllerImpl implements UserController {
         return "user";
     }
 
-    @GetMapping(value = "/users/update/{id}")
+    @GetMapping("/update/{id}")
     @Override
     public String getUpdate(Model model, @PathVariable Long id) {
         UserDto userDto = userService.getById(id);
-        setUpdatedUserId(userDto.getId());
         model.addAttribute("user", userDto);
         return "userupdateform";
     }
 
-    @PostMapping("/users/update/update")
+    @PostMapping("/update/{id}")
     @Override
     public String update(@ModelAttribute UserDto userDto, Model model) {
-        userDto.setId(getUpdatedUserId());
         userDto = userService.update(userDto);
         model.addAttribute("user", userDto);
-        setUpdatedUserId(-1L);
         return "user";
     }
 
-    private void setUpdatedUserId(Long id) {
-        updatedUserId = id;
-    }
-
-    private Long getUpdatedUserId() {
-        return updatedUserId;
-    }
-
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/delete/{id}")
     @Override
     public String delete(Model model, @PathVariable Long id) {
         userService.delete(id);
@@ -88,7 +77,7 @@ public class UserControllerImpl implements UserController {
         return "userdeleted";
     }
 
-    @GetMapping("/users/total")
+    @GetMapping("/total")
     @Override
     public String countAll(Model model) {
         int result = userService.countAll();
@@ -97,7 +86,7 @@ public class UserControllerImpl implements UserController {
 
     }
 
-    @GetMapping("/users/email/{email}")
+    @GetMapping("/email/{email}")
     @Override
     public String getByEmail(Model model, @PathVariable String email) {
         email = email.toLowerCase();
@@ -106,7 +95,7 @@ public class UserControllerImpl implements UserController {
         return "user";
     }
 
-    @GetMapping("/users/lastname/{lastName}")
+    @GetMapping("/lastname/{lastName}")
     @Override
     public String getByLastName(Model model, @PathVariable String lastName) {
         lastName = lastName.toUpperCase();

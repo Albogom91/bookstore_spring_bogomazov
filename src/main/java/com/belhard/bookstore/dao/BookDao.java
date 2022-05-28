@@ -5,6 +5,7 @@ import com.belhard.bookstore.dao.beans.Book;
 import java.util.List;
 
 public interface BookDao {
+
     List<Book> getAllBooks();
 
     Book getBookById(Long id);

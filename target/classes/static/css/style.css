@@ -5,11 +5,15 @@ h1 {
 div {
    font-style: italic;
    text-align: center;
-   font-size: 24px
+   font-size: 24px;
+}
+
+#divtab {
+    margin-top:25px;
 }
 
 table {
-     text-align: left;
+     text-align: center;
      width: 100%;
      border: 1px solid black;
 }
@@ -17,6 +21,18 @@ table {
 th, td {
       border: 1px solid black;
       padding: 10px;
+}
+
+#method {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#crud {
+    height: 50px;
+    width: 150px;
 }
 
 th {
@@ -30,4 +46,16 @@ form {
 
 input {
      margin: 10px;
+}
+
+ul {
+    font-style: italic;
+    font-size: 36px;
+    text-align: center;
+}
+
+li {
+    font-style: italic;
+    font-size: 36px;
+    display: inline-block;
 }
