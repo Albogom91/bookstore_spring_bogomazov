@@ -127,7 +127,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int countAll() {
+    public Long countAll() {
         logger.debug("Service method \"countAll\" was called.");
         return userDao.countAllUsers();
     }

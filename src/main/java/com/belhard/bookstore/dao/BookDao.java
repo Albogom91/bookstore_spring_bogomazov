@@ -20,6 +20,6 @@ public interface BookDao {
 
     boolean deleteBook(Long id);
 
-    int countAllBooks();
+    Long countAllBooks();
 }
 

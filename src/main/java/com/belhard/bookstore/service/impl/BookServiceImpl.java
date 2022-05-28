@@ -129,7 +129,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public int countAll() {
+    public Long countAll() {
         logger.debug("Service method \"countAll\" was called.");
         return bookDao.countAllBooks();
     }

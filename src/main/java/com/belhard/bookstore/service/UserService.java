@@ -19,7 +19,7 @@ public interface UserService {
 
     void delete(Long id);
 
-    int countAll();
+    Long countAll();
 
     boolean validate(String email, String password);
 }

@@ -1,16 +1,36 @@
 package com.belhard.bookstore.dao.beans;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Objects;
 
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "firstname")
     private String firstName;
+    @Column(name = "lastname")
     private String lastName;
+    @Column(name = "email")
     private String email;
+    @Column(name = "userpassword")
     private String password;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "role_id")
     private Role role;
 
     public enum Role {
+        UNSPECIFIED,
         ADMIN,
         MANAGER,
         CUSTOMER

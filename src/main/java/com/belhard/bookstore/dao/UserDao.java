@@ -19,5 +19,5 @@ public interface UserDao {
 
     boolean deleteUser(Long id);
 
-    int countAllUsers();
+    Long countAllUsers();
 }

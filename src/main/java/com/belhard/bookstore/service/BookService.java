@@ -20,7 +20,7 @@ public interface BookService {
 
     void delete(Long id);
 
-    int countAll();
+    Long countAll();
 
     public BigDecimal countPriceOfAllBooksByAuthor(String author);
 }
