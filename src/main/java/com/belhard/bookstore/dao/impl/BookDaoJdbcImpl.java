@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -47,8 +48,12 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public Book getBookById(Long id) {
-        Book book = entityManager.find(Book.class, id);
-        return book;
+        try {
+            Book book = entityManager.find(Book.class, id);
+            return book;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
@@ -82,10 +87,14 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public Book getBookByIsbn(String isbn) {
-        Book book = (Book) entityManager.createQuery(GET_BY_ISBN)
-                .setParameter(1, isbn)
-                .getSingleResult();
-        return book;
+        try {
+            Book book = (Book) entityManager.createQuery(GET_BY_ISBN)
+                    .setParameter(1, isbn)
+                    .getSingleResult();
+            return book;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override

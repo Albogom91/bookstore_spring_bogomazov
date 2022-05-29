@@ -84,8 +84,8 @@ public class OrderServiceImpl implements OrderService {
         orderDto = orderToDto(orderDao.createOrder(order));
         Long id = orderDto.getId();
         List<OrderItem> ois = oids.stream().map(oid -> dtoToOrderItem(oid, id)).toList();
-        ois = ois.stream().map(oi -> orderItemDao.createOrderItem(oi)).toList();
-        oids = ois.stream().map(oi -> orderItemToDto(oi)).toList();
+        ois = ois.stream().map(orderItemDao::createOrderItem).toList();
+        oids = ois.stream().map(this::orderItemToDto).toList();
         orderDto.setItems(oids);
         return orderDto;
     }
@@ -98,7 +98,7 @@ public class OrderServiceImpl implements OrderService {
         oisDeleted.forEach(oi -> orderItemDao.deleteOrderItem(oi.getId()));
         Long id = orderDto.getId();
         List<OrderItem> ois = orderDto.getItems().stream().map(oid -> dtoToOrderItem(oid, id)).toList();
-        ois.forEach(oi -> orderItemDao.createOrderItem(oi));
+        ois.forEach(orderItemDao::createOrderItem);
         orderDto = orderToDto(orderDao.updateOrder(order));
         return getById(orderDto.getId());
     }

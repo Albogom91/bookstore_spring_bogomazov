@@ -45,8 +45,12 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public User getUserById(Long id) {
-        User user = entityManager.find(User.class, id);
-        return user;
+        try {
+            User user = entityManager.find(User.class, id);
+            return user;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override

@@ -1,14 +1,36 @@
 package com.belhard.bookstore.dao.beans;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+@Entity
+@Table(name = "orders")
 public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    //@ManyToOne(targetEntity = com.belhard.bookstore.dao.beans.User.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @Column(name = "user_id")
     private Long userId;
+    @Column(name = "totalcost")
     private BigDecimal totalCost;
+    @Column(name = "timestamp")
     private LocalDateTime timestamp;
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status_id")
     private Status status;
 
     public Order() {
@@ -23,6 +45,7 @@ public class Order {
     }
 
     public enum Status {
+        INVALID,
         PENDING,
         COMPLETED,
         CANCELLED

@@ -1,13 +1,33 @@
 package com.belhard.bookstore.dao.beans;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "orderitems")
 public class OrderItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    //@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @Column(name = "order_id")
     private Long orderId;
+    //@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @Column(name = "book_id")
     private Long bookId;
+    @Column(name = "quantity")
     private Integer quantity;
+    @Column(name = "price")
     private BigDecimal price;
 
     public OrderItem() {

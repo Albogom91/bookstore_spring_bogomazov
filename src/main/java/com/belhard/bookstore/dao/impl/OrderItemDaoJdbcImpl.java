@@ -13,99 +13,79 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.sql.PreparedStatement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Repository("orderItemDao")
 public class OrderItemDaoJdbcImpl implements OrderItemDao {
     private static Logger logger = LogManager.getLogger(OrderItemDaoJdbcImpl.class);
-    private static final String GET_ALL = "SELECT oi.id, oi.order_id, oi.book_id, oi.quantity, oi.price FROM orderitems oi WHERE deleted = false;";
-    private static final String GET_BY_ID = "SELECT oi.id, oi.order_id, oi.book_id, oi.quantity, oi.price FROM orderitems oi WHERE oi.id = :id AND deleted = false";
-    private static final String GET_BY_ORDER_ID = "SELECT oi.id, oi.order_id, oi.book_id, oi.quantity, oi.price FROM orderitems oi WHERE oi.order_id = :id AND deleted = false";
-    private static final String DELETE = "UPDATE orderitems SET deleted = true WHERE id = :id AND deleted = false";
-    private static final String CREATE = "INSERT INTO orderitems (order_id, book_id, quantity, price) " +
-            "VALUES (:orderId, :bookId, :quantity, :price)";
-    private static final String UPDATE = "UPDATE orderitems SET order_id = :orderId, book_id = :bookId, quantity = :quantity, " +
-            "price = :price WHERE id = :id";
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final OrderItemRowMapper orderItemRowMapper;
+    private static final String GET_ALL_ORDERITEMS = "from OrderItem where deleted = false";
+    private static final String GET_BY_ORDER_ID = "select oi from OrderItem oi where oi.orderId = ?1 AND deleted = false";
+    private static final String DELETE = "update OrderItem set deleted = true where id = ?1 and deleted = false";
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Autowired
-    public OrderItemDaoJdbcImpl(NamedParameterJdbcTemplate jdbcTemplate, OrderItemRowMapper orderItemRowMapper) {
-        this.jdbcTemplate = jdbcTemplate;
-        this.orderItemRowMapper = orderItemRowMapper;
+    public OrderItemDaoJdbcImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     @Override
     public List<OrderItem> getAllOrderItems() {
-        return jdbcTemplate.query(GET_ALL, orderItemRowMapper);
+        List<OrderItem> ois = entityManager.createQuery(GET_ALL_ORDERITEMS, OrderItem.class).getResultList();
+        return ois;
     }
 
     @Override
     public OrderItem getOrderItemById(Long id) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
         try {
-            return jdbcTemplate.queryForObject(GET_BY_ID, params, orderItemRowMapper);
-        } catch (EmptyResultDataAccessException e) {
+            OrderItem orderItem = entityManager.find(OrderItem.class, id);
+            return orderItem;
+        } catch (NoResultException e) {
             return null;
         }
     }
 
     @Override
     public List<OrderItem> getOrderItemsByOrderId(Long id) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
         try {
-            return jdbcTemplate.query(GET_BY_ORDER_ID, params, orderItemRowMapper);
-        } catch (EmptyResultDataAccessException e) {
+            List<OrderItem> ois = entityManager.createQuery(GET_BY_ORDER_ID)
+                    .setParameter(1, id)
+                    .getResultList();
+            return ois;
+        } catch (NoResultException e) {
             return null;
         }
     }
 
     @Override
+    @Transactional
     public OrderItem createOrderItem(OrderItem orderItem) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("orderId", orderItem.getOrderId());
-        params.put("bookId", orderItem.getBookId());
-        params.put("quantity", orderItem.getQuantity());
-        params.put("price", orderItem.getPrice());
-        SqlParameterSource source = new MapSqlParameterSource(params);
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-        int result = jdbcTemplate.update(CREATE, source, keyHolder, new String[]{"id"});
-        if (result == 0) {
-            throw new RuntimeException("Order item was not created: " + orderItem);
-        }
-        Number number = keyHolder.getKey();
-        Long id = number.longValue();
-        return getOrderItemById(id);
+        entityManager.persist(orderItem);
+        return orderItem;
     }
 
     @Override
+    @Transactional
     public OrderItem updateOrderItem(OrderItem orderItem) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("orderId", orderItem.getOrderId());
-        params.put("bookId", orderItem.getBookId());
-        params.put("quantity", orderItem.getQuantity());
-        params.put("price", orderItem.getPrice());
-        params.put("id", orderItem.getId());
-        SqlParameterSource source = new MapSqlParameterSource(params);
-        int result = jdbcTemplate.update(UPDATE, source);
-        if (result == 0) {
-            throw new RuntimeException("Order item was not updated: " + orderItem);
-        }
-        return getOrderItemById(orderItem.getId());
+        entityManager.merge(orderItem);
+        return orderItem;
     }
 
     @Override
+    @Transactional
     public boolean deleteOrderItem(Long id) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("id", id);
-        SqlParameterSource source = new MapSqlParameterSource(params);
-        int result = jdbcTemplate.update(DELETE, source);
-        return result == 1;
+        int row = entityManager.createQuery(DELETE)
+                .setParameter(1, id)
+                .executeUpdate();
+        return row == 1;
     }
 }

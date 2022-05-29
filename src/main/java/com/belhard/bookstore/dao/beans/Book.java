@@ -44,7 +44,7 @@ public class Book {
     }
 
     public enum Cover {
-        UNSPECIFIED,
+        INVALID,
         SOFT,
         HARD,
         SPECIAL
