@@ -25,6 +25,7 @@ public class BookDto {
     }
 
     public enum CoverDto {
+        INVALID,
         SOFT,
         HARD,
         SPECIAL

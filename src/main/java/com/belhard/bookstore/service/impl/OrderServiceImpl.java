@@ -1,9 +1,12 @@
 package com.belhard.bookstore.service.impl;
 
+import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.OrderDao;
 import com.belhard.bookstore.dao.OrderItemDao;
+import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.beans.Order;
 import com.belhard.bookstore.dao.beans.OrderItem;
+import com.belhard.bookstore.dao.beans.User;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.OrderService;
 import com.belhard.bookstore.service.UserService;
@@ -26,13 +29,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemDao orderItemDao;
     private final UserService userService;
     private final BookService bookService;
+    private final UserDao userDao;
+    private final BookDao bookDao;
 
     @Autowired
-    public OrderServiceImpl(OrderDao orderDao, OrderItemDao orderItemDao, UserService userService, BookService bookService) {
+    public OrderServiceImpl(OrderDao orderDao, OrderItemDao orderItemDao, UserService userService, BookService bookService, UserDao userDao, BookDao bookDao) {
         this.orderDao = orderDao;
         this.orderItemDao = orderItemDao;
         this.userService = userService;
         this.bookService = bookService;
+        this.userDao = userDao;
+        this.bookDao = bookDao;
     }
 
     @Override
@@ -57,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
         orderDto.setTotalCost(order.getTotalCost());
         orderDto.setTimestamp(order.getTimestamp());
         orderDto.setStatusDto(OrderDto.StatusDto.valueOf(order.getStatus().toString()));
-        UserDto userDto = userService.getById(order.getUserId());
+        UserDto userDto = userService.getById(order.getUser().getId());
         orderDto.setUserDto(userDto);
         List<OrderItem> items = orderItemDao.getOrderItemsByOrderId(order.getId());
         List<OrderItemDto> itemDtos = items.stream().map(oi -> orderItemToDto(oi)).toList();
@@ -70,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
         orderItemDto.setId(orderItem.getId());
         orderItemDto.setQuantity(orderItem.getQuantity());
         orderItemDto.setPrice(orderItem.getPrice());
-        BookDto bookDto = bookService.getById(orderItem.getBookId());
+        BookDto bookDto = bookService.getById(orderItem.getBook().getId());
         orderItemDto.setBookDto(bookDto);
         return orderItemDto;
     }
@@ -115,7 +122,8 @@ public class OrderServiceImpl implements OrderService {
     private Order dtoToOrder(OrderDto orderDto) {
         Order order = new Order();
         order.setId(orderDto.getId());
-        order.setUserId(orderDto.getUserDto().getId());
+        User user = userDao.getUserById(orderDto.getUserDto().getId());
+        order.setUser(user);
         order.setTotalCost(orderDto.getTotalCost());
         order.setTimestamp(orderDto.getTimestamp());
         order.setStatus(Order.Status.valueOf(orderDto.getStatusDto().toString()));
@@ -125,8 +133,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderItem dtoToOrderItem(OrderItemDto orderItemDto, Long id) {
         OrderItem orderItem = new OrderItem();
         orderItem.setId(orderItemDto.getId());
-        orderItem.setOrderId(id);
-        orderItem.setBookId(orderItemDto.getBookDto().getId());
+        orderItem.setOrder(orderDao.getOrderById(id));
+        orderItem.setBook(bookDao.getBookById(orderItemDto.getBookDto().getId()));
         orderItem.setQuantity(orderItemDto.getQuantity());
         orderItem.setPrice(orderItemDto.getPrice());
         return orderItem;

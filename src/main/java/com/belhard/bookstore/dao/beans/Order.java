@@ -22,8 +22,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "user_id")
-    private Long userId;
+    //targetEntity = com.belhard.bookstore.dao.beans.User.class
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id")
+    private User user;
     @Column(name = "totalcost")
     private BigDecimal totalCost;
     @Column(name = "timestamp")
@@ -36,8 +38,8 @@ public class Order {
 
     }
 
-    public Order(Long userId, BigDecimal totalCost, LocalDateTime timestamp, Status status) {
-        this.userId = userId;
+    public Order(User user, BigDecimal totalCost, LocalDateTime timestamp, Status status) {
+        this.user = user;
         this.totalCost = totalCost;
         this.timestamp = timestamp;
         this.status = status;
@@ -58,12 +60,12 @@ public class Order {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public BigDecimal getTotalCost() {
@@ -91,31 +93,31 @@ public class Order {
     }
 
     @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", totalCost=" + totalCost +
-                ", timestamp=" + timestamp +
-                ", status=" + status +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return id.equals(order.id)
-                && userId.equals(order.userId)
-                && totalCost.equals(order.totalCost)
-                && timestamp.equals(order.timestamp)
+        return Objects.equals(id, order.id)
+                && Objects.equals(user, order.user)
+                && Objects.equals(totalCost, order.totalCost)
+                && Objects.equals(timestamp, order.timestamp)
                 && status == order.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, totalCost, timestamp, status);
+        return Objects.hash(id, user, totalCost, timestamp, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user=" + user +
+                ", totalCost=" + totalCost +
+                ", timestamp=" + timestamp +
+                ", status=" + status +
+                '}';
     }
 }
 

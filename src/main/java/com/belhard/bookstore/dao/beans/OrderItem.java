@@ -19,10 +19,12 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "order_id")
-    private Long orderId;
-    @Column(name = "book_id")
-    private Long bookId;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "order_id")
+    private Order order;
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "book_id")
+    private Book book;
     @Column(name = "quantity")
     private Integer quantity;
     @Column(name = "price")
@@ -32,9 +34,9 @@ public class OrderItem {
 
     }
 
-    public OrderItem(Long orderId, Long bookId, Integer quantity, BigDecimal price) {
-        this.orderId = orderId;
-        this.bookId = bookId;
+    public OrderItem(Order order, Book book, Integer quantity, BigDecimal price) {
+        this.order = order;
+        this.book = book;
         this.quantity = quantity;
         this.price = price;
     }
@@ -47,20 +49,20 @@ public class OrderItem {
         this.id = id;
     }
 
-    public Long getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public Long getBookId() {
-        return bookId;
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public Integer getQuantity() {
@@ -80,31 +82,31 @@ public class OrderItem {
     }
 
     @Override
-    public String toString() {
-        return "OrderItem{" +
-                "id=" + id +
-                ", orderId=" + orderId +
-                ", bookId=" + bookId +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderItem orderItem = (OrderItem) o;
-        return id.equals(orderItem.id)
-                && orderId.equals(orderItem.orderId)
-                && bookId.equals(orderItem.bookId)
-                && quantity.equals(orderItem.quantity)
-                && price.equals(orderItem.price);
+        return Objects.equals(id, orderItem.id)
+                && Objects.equals(order, orderItem.order)
+                && Objects.equals(book, orderItem.book)
+                && Objects.equals(quantity, orderItem.quantity)
+                && Objects.equals(price, orderItem.price);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, orderId, bookId, quantity, price);
+        return Objects.hash(id, order, book, quantity, price);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", order=" + order +
+                ", book=" + book +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                '}';
     }
 }
 
