@@ -93,8 +93,8 @@ public class OrderServiceImpl implements OrderService {
         Order order = dtoToOrder(orderDto);
         List<OrderItemDto> oids = orderDto.getItems();
         orderDto = orderToDto(orderDao.createOrder(order));
-        Long id = orderDto.getId();
-        List<OrderItem> ois = oids.stream().map(oid -> dtoToOrderItem(oid, id)).toList();
+        OrderDto od = orderDto;
+        List<OrderItem> ois = oids.stream().map(oid -> dtoToOrderItem(oid, od)).toList();
         ois = ois.stream().map(orderItemDao::createOrderItem).toList();
         oids = ois.stream().map(this::orderItemToDto).toList();
         orderDto.setItems(oids);
@@ -108,8 +108,8 @@ public class OrderServiceImpl implements OrderService {
         Order order = dtoToOrder(orderDto);
         List<OrderItem> oisDeleted = orderItemDao.getOrderItemsByOrderId(orderDto.getId());
         oisDeleted.forEach(oi -> orderItemDao.deleteOrderItem(oi.getId()));
-        Long id = orderDto.getId();
-        List<OrderItem> ois = orderDto.getItems().stream().map(oid -> dtoToOrderItem(oid, id)).toList();
+        OrderDto od = orderDto;
+        List<OrderItem> ois = orderDto.getItems().stream().map(oid -> dtoToOrderItem(oid, od)).toList();
         ois.forEach(orderItemDao::createOrderItem);
         orderDto = orderToDto(orderDao.updateOrder(order));
         return getById(orderDto.getId());
@@ -126,10 +126,10 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    private OrderItem dtoToOrderItem(OrderItemDto orderItemDto, Long id) {
+    private OrderItem dtoToOrderItem(OrderItemDto orderItemDto, OrderDto orderDto) {
         OrderItem orderItem = new OrderItem();
         orderItem.setId(orderItemDto.getId());
-        orderItem.setOrder(orderDao.getOrderById(id));
+        orderItem.setOrder(dtoToOrder(orderDto));
         orderItem.setBook(bookService.dtoToBook(orderItemDto.getBookDto()));
         orderItem.setQuantity(orderItemDto.getQuantity());
         orderItem.setPrice(orderItemDto.getPrice());
