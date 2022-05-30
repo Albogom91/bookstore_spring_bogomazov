@@ -10,9 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -33,16 +35,19 @@ public class Order {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status_id")
     private Status status;
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.REFRESH})
+    private List<OrderItem> orderItems;
 
     public Order() {
 
     }
 
-    public Order(User user, BigDecimal totalCost, LocalDateTime timestamp, Status status) {
+    public Order(User user, BigDecimal totalCost, LocalDateTime timestamp, Status status, List<OrderItem> orderItems) {
         this.user = user;
         this.totalCost = totalCost;
         this.timestamp = timestamp;
         this.status = status;
+        this.orderItems = orderItems;
     }
 
     public enum Status {
@@ -92,6 +97,14 @@ public class Order {
         this.status = status;
     }
 
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -101,12 +114,13 @@ public class Order {
                 && Objects.equals(user, order.user)
                 && Objects.equals(totalCost, order.totalCost)
                 && Objects.equals(timestamp, order.timestamp)
-                && status == order.status;
+                && status == order.status
+                && Objects.equals(orderItems, order.orderItems);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, totalCost, timestamp, status);
+        return Objects.hash(id, user, totalCost, timestamp, status, orderItems);
     }
 
     @Override
@@ -117,6 +131,7 @@ public class Order {
                 ", totalCost=" + totalCost +
                 ", timestamp=" + timestamp +
                 ", status=" + status +
+                ", orderItems=" + orderItems +
                 '}';
     }
 }
