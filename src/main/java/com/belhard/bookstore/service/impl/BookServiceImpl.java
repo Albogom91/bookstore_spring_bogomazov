@@ -29,7 +29,8 @@ public class BookServiceImpl implements BookService {
         return bookDao.getAllBooks().stream().map(this::bookToDto).toList();
     }
 
-    private BookDto bookToDto(Book book) {
+    @Override
+    public BookDto bookToDto(Book book) {
         BookDto bookDto = new BookDto();
         bookDto.setId(book.getId());
         bookDto.setIsbn(book.getIsbn());
@@ -91,7 +92,8 @@ public class BookServiceImpl implements BookService {
         return bookToDto(book);
     }
 
-    private Book dtoToBook(BookDto bookDto) {
+    @Override
+    public Book dtoToBook(BookDto bookDto) {
         Book book = new Book();
         book.setId(bookDto.getId());
         book.setIsbn(bookDto.getIsbn());

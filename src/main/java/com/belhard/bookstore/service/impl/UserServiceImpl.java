@@ -28,7 +28,8 @@ public class UserServiceImpl implements UserService {
         return userDao.getAllUsers().stream().map(this::userToDto).toList();
     }
 
-    private UserDto userToDto(User user) {
+    @Override
+    public UserDto userToDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setFirstName(user.getFirstName());
@@ -89,7 +90,8 @@ public class UserServiceImpl implements UserService {
         return userToDto(user);
     }
 
-    private User dtoToUser(UserDto userDto) {
+    @Override
+    public User dtoToUser(UserDto userDto) {
         User user = new User();
         user.setId(userDto.getId());
         user.setFirstName(userDto.getFirstName());

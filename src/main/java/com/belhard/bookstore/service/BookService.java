@@ -1,6 +1,7 @@
 package com.belhard.bookstore.service;
 
 import com.belhard.bookstore.service.dto.BookDto;
+import com.belhard.bookstore.dao.beans.Book;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,6 +23,10 @@ public interface BookService {
 
     Long countAll();
 
-    public BigDecimal countPriceOfAllBooksByAuthor(String author);
+    Book dtoToBook(BookDto bookDto);
+
+    BookDto bookToDto(Book book);
+
+    BigDecimal countPriceOfAllBooksByAuthor(String author);
 }
 

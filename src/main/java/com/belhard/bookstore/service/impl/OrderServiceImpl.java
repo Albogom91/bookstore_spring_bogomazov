@@ -29,17 +29,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemDao orderItemDao;
     private final UserService userService;
     private final BookService bookService;
-    private final UserDao userDao;
-    private final BookDao bookDao;
 
     @Autowired
-    public OrderServiceImpl(OrderDao orderDao, OrderItemDao orderItemDao, UserService userService, BookService bookService, UserDao userDao, BookDao bookDao) {
+    public OrderServiceImpl(OrderDao orderDao, OrderItemDao orderItemDao, UserService userService, BookService bookService) {
         this.orderDao = orderDao;
         this.orderItemDao = orderItemDao;
         this.userService = userService;
         this.bookService = bookService;
-        this.userDao = userDao;
-        this.bookDao = bookDao;
     }
 
     @Override
@@ -64,10 +60,10 @@ public class OrderServiceImpl implements OrderService {
         orderDto.setTotalCost(order.getTotalCost());
         orderDto.setTimestamp(order.getTimestamp());
         orderDto.setStatusDto(OrderDto.StatusDto.valueOf(order.getStatus().toString()));
-        UserDto userDto = userService.getById(order.getUser().getId());
+        UserDto userDto = userService.userToDto(order.getUser());
         orderDto.setUserDto(userDto);
         List<OrderItem> items = orderItemDao.getOrderItemsByOrderId(order.getId());
-        List<OrderItemDto> itemDtos = items.stream().map(oi -> orderItemToDto(oi)).toList();
+        List<OrderItemDto> itemDtos = items.stream().map(this::orderItemToDto).toList();
         orderDto.setItems(itemDtos);
         return orderDto;
     }
@@ -77,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
         orderItemDto.setId(orderItem.getId());
         orderItemDto.setQuantity(orderItem.getQuantity());
         orderItemDto.setPrice(orderItem.getPrice());
-        BookDto bookDto = bookService.getById(orderItem.getBook().getId());
+        BookDto bookDto = bookService.bookToDto(orderItem.getBook());
         orderItemDto.setBookDto(bookDto);
         return orderItemDto;
     }
@@ -122,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
     private Order dtoToOrder(OrderDto orderDto) {
         Order order = new Order();
         order.setId(orderDto.getId());
-        User user = userDao.getUserById(orderDto.getUserDto().getId());
+        User user = userService.dtoToUser(orderDto.getUserDto());
         order.setUser(user);
         order.setTotalCost(orderDto.getTotalCost());
         order.setTimestamp(orderDto.getTimestamp());
@@ -134,7 +130,7 @@ public class OrderServiceImpl implements OrderService {
         OrderItem orderItem = new OrderItem();
         orderItem.setId(orderItemDto.getId());
         orderItem.setOrder(orderDao.getOrderById(id));
-        orderItem.setBook(bookDao.getBookById(orderItemDto.getBookDto().getId()));
+        orderItem.setBook(bookService.dtoToBook(orderItemDto.getBookDto()));
         orderItem.setQuantity(orderItemDto.getQuantity());
         orderItem.setPrice(orderItemDto.getPrice());
         return orderItem;

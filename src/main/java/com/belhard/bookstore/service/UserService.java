@@ -1,6 +1,7 @@
 package com.belhard.bookstore.service;
 
 import com.belhard.bookstore.service.dto.UserDto;
+import com.belhard.bookstore.dao.beans.User;
 
 import java.util.List;
 
@@ -20,6 +21,10 @@ public interface UserService {
     void delete(Long id);
 
     Long countAll();
+
+    User dtoToUser(UserDto userDto);
+
+    UserDto userToDto(User user);
 
     boolean validate(String email, String password);
 }
