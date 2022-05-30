@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserById(id);
         if (user == null) {
             logger.error("There is no user with such id: " + id);
-            throw new RuntimeException("There is no user with such id: " + id);
         }
         return userToDto(user);
     }
@@ -64,7 +63,6 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserByEmail(email);
         if (user == null) {
             logger.error("There is no user with such email: " + email);
-            throw new RuntimeException("There is no user with such email!");
         }
         return userToDto(user);
     }
@@ -75,7 +73,6 @@ public class UserServiceImpl implements UserService {
         List<User> users = userDao.getUsersByLastName(lastName);
         if (users.isEmpty()) {
             logger.error("There are no users with such last name: " + lastName);
-            throw new RuntimeException("There are no users with such lastname!");
         }
         return usersToUsersDtos(users);
     }
@@ -86,7 +83,6 @@ public class UserServiceImpl implements UserService {
         User checkUser = userDao.getUserByEmail(userDto.getEmail());
         if (checkUser != null) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
-            throw new RuntimeException("User with such email already exists!");
         }
         User user = dtoToUser(userDto);
         user = userDao.createUser(user);
@@ -110,7 +106,6 @@ public class UserServiceImpl implements UserService {
         User checkUser = userDao.getUserByEmail(userDto.getEmail());
         if (checkUser != null && checkUser.getId() != userDto.getId()) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
-            throw new RuntimeException("User with such email already exists!");
         }
         User user = dtoToUser(userDto);
         user = userDao.updateUser(user);
@@ -122,7 +117,6 @@ public class UserServiceImpl implements UserService {
         logger.debug("Service method \"delete\" was called.");
         if (!userDao.deleteUser(id)) {
             logger.error("There is no user to delete with such id: " + id);
-            throw new RuntimeException("Deletion was not completed! There is no user with such id!");
         }
     }
 

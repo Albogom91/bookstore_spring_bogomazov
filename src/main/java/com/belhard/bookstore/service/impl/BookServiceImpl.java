@@ -55,7 +55,6 @@ public class BookServiceImpl implements BookService {
         Book book = bookDao.getBookById(id);
         if (book == null) {
             logger.error("There is no book with such id: " + id);
-            throw new RuntimeException("There is no book with such id: " + id);
         }
         return bookToDto(book);
     }
@@ -66,7 +65,6 @@ public class BookServiceImpl implements BookService {
         Book book = bookDao.getBookByIsbn(isbn);
         if (book == null) {
             logger.error("There is no book with such isbn: " + isbn);
-            throw new RuntimeException("There is no book with such isbn: " + isbn);
         }
         return bookToDto(book);
     }
@@ -77,7 +75,6 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookDao.getBooksByAuthor(author);
         if (books.isEmpty()) {
             logger.error("There are no books by such author: " + author);
-            throw new RuntimeException("There are no books by such author: " + author);
         }
         return booksToBooksDtos(books);
     }
@@ -88,7 +85,6 @@ public class BookServiceImpl implements BookService {
         Book checkBook = bookDao.getBookByIsbn(bookDto.getIsbn());
         if (checkBook != null) {
             logger.error("Book with such isbn already exists: " + checkBook.getIsbn());
-            throw new RuntimeException("Book with such isbn already exists: " + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
         book = bookDao.createBook(book);
@@ -112,7 +108,6 @@ public class BookServiceImpl implements BookService {
         Book checkBook = bookDao.getBookByIsbn(bookDto.getIsbn());
         if (checkBook != null && checkBook.getId() != bookDto.getId()) {
             logger.error("Book with such ISBN already exists!" + checkBook.getIsbn());
-            throw new RuntimeException("Book with such ISBN already exists!" + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
         book = bookDao.updateBook(book);
@@ -124,7 +119,6 @@ public class BookServiceImpl implements BookService {
         logger.debug("Service method \"delete\" was called.");
         if (!bookDao.deleteBook(id)) {
             logger.error("There is no book to delete with such id: " + id);
-            throw new RuntimeException("There is no book to delete with such id: " + id);
         }
     }
 

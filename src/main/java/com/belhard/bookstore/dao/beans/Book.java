@@ -1,6 +1,5 @@
 package com.belhard.bookstore.dao.beans;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;

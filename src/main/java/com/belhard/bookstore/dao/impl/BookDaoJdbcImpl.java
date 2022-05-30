@@ -5,24 +5,16 @@ import com.belhard.bookstore.dao.beans.Book;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.transaction.Transactional;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
-@Repository
+@Repository("bookDao")
+@Transactional
 public class BookDaoJdbcImpl implements BookDao {
     private static Logger logger = LogManager.getLogger(BookDaoJdbcImpl.class);
     private static final String GET_ALL_BOOKS = "from Book where deleted = false";
@@ -40,8 +32,8 @@ public class BookDaoJdbcImpl implements BookDao {
     }
 
     @Override
-    @Transactional
     public List<Book> getAllBooks() {
+        logger.debug("Database was accessed!");
         List<Book> books = entityManager.createQuery(GET_ALL_BOOKS, Book.class).getResultList();
         return books;
     }
@@ -49,6 +41,7 @@ public class BookDaoJdbcImpl implements BookDao {
     @Override
     public Book getBookById(Long id) {
         try {
+            logger.debug("Database was accessed!");
             Book book = entityManager.find(Book.class, id);
             return book;
         } catch (NoResultException e) {
@@ -57,22 +50,22 @@ public class BookDaoJdbcImpl implements BookDao {
     }
 
     @Override
-    @Transactional
     public Book createBook(Book book) {
+        logger.debug("Database was accessed!");
         entityManager.persist(book);
         return book;
     }
 
     @Override
-    @Transactional
     public Book updateBook(Book book) {
+        logger.debug("Database was accessed!");
         entityManager.merge(book);
         return book;
     }
 
     @Override
-    @Transactional
     public boolean deleteBook(Long id) {
+        logger.debug("Database was accessed!");
         int row = entityManager.createQuery(DELETE)
                 .setParameter(1, id)
                 .executeUpdate();
@@ -81,6 +74,7 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public Long countAllBooks() {
+        logger.debug("Database was accessed!");
         Long counter = (Long) entityManager.createQuery(COUNT_ALL_BOOKS).getSingleResult();
         return counter;
     }
@@ -88,6 +82,7 @@ public class BookDaoJdbcImpl implements BookDao {
     @Override
     public Book getBookByIsbn(String isbn) {
         try {
+            logger.debug("Database was accessed!");
             Book book = (Book) entityManager.createQuery(GET_BY_ISBN)
                     .setParameter(1, isbn)
                     .getSingleResult();
@@ -99,10 +94,15 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public List<Book> getBooksByAuthor(String author) {
-        List<Book> books = entityManager.createQuery(GET_BY_AUTHOR)
-                .setParameter(1, author)
-                .getResultList();
-        return books;
+        try {
+            logger.debug("Database was accessed!");
+            List<Book> books = entityManager.createQuery(GET_BY_AUTHOR)
+                    .setParameter(1, author)
+                    .getResultList();
+            return books;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }
 

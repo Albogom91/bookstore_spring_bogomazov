@@ -22,7 +22,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    //@ManyToOne(targetEntity = com.belhard.bookstore.dao.beans.User.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @Column(name = "user_id")
     private Long userId;
     @Column(name = "totalcost")

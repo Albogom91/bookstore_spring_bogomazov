@@ -37,12 +37,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> getAll() {
+        logger.debug("Service method \"getAll\" was called.");
         return orderDao.getAllOrders().stream().map(this::orderToDto).toList();
     }
 
     @Override
     public OrderDto getById(Long id) {
+        logger.debug("Service method \"getById\" was called.");
         Order order = orderDao.getOrderById(id);
+        if (order == null) {
+            logger.error("There is no order with such id: " + id);
+        }
         return orderToDto(order);
     }
 
@@ -72,12 +77,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> getAllByUserId(Long id) {
+        logger.debug("Service method \"getAllByUserId\" was called.");
+        UserDto userDto = userService.getById(id);//To check if user exists
         List<OrderDto> ods = getAll();
         return ods.stream().filter(od -> od.getUserDto().getId() == id).toList();
     }
 
     @Override
     public OrderDto create(OrderDto orderDto) {
+        logger.debug("Service method \"create\" was called.");
         orderDto.setTotalCost(calculateTotalCost(orderDto));
         Order order = dtoToOrder(orderDto);
         List<OrderItemDto> oids = orderDto.getItems();
@@ -92,6 +100,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto update(OrderDto orderDto) {
+        logger.debug("Service method \"update\" was called.");
         orderDto.setTotalCost(calculateTotalCost(orderDto));
         Order order = dtoToOrder(orderDto);
         List<OrderItem> oisDeleted = orderItemDao.getOrderItemsByOrderId(orderDto.getId());
@@ -128,7 +137,6 @@ public class OrderServiceImpl implements OrderService {
         logger.debug("Service method \"delete\" was called.");
         if (!orderDao.deleteOrder(id)) {
             logger.error("There is no order to delete with such id: " + id);
-            throw new RuntimeException("There is no order to delete with such id: " + id);
         }
     }
 

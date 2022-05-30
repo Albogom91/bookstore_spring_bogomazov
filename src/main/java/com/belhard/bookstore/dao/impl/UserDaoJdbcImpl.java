@@ -5,21 +5,16 @@ import com.belhard.bookstore.dao.beans.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository("userDao")
+@Transactional
 public class UserDaoJdbcImpl implements UserDao {
     private static Logger logger = LogManager.getLogger(UserDaoJdbcImpl.class);
 
@@ -39,6 +34,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
+        logger.debug("Database was accessed!");
         List<User> users = entityManager.createQuery(GET_ALL_USERS, User.class).getResultList();
         return users;
     }
@@ -46,6 +42,7 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public User getUserById(Long id) {
         try {
+            logger.debug("Database was accessed!");
             User user = entityManager.find(User.class, id);
             return user;
         } catch (NoResultException e) {
@@ -56,6 +53,7 @@ public class UserDaoJdbcImpl implements UserDao {
     @Override
     public User getUserByEmail(String email) {
         try {
+            logger.debug("Database was accessed!");
             User user = (User) entityManager.createQuery(GET_BY_EMAIL)
                     .setParameter(1, email)
                     .getSingleResult();
@@ -68,29 +66,34 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public List<User> getUsersByLastName(String lastName) {
-        List<User> users = entityManager.createQuery(GET_BY_LASTNAME)
-                .setParameter(1, lastName)
-                .getResultList();
-        return users;
+        try {
+            logger.debug("Database was accessed!");
+            List<User> users = entityManager.createQuery(GET_BY_LASTNAME)
+                    .setParameter(1, lastName)
+                    .getResultList();
+            return users;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
-    @Transactional
     public User createUser(User user) {
+        logger.debug("Database was accessed!");
         entityManager.persist(user);
         return user;
     }
 
     @Override
-    @Transactional
     public User updateUser(User user) {
+        logger.debug("Database was accessed!");
         entityManager.merge(user);
         return user;
     }
 
     @Override
-    @Transactional
     public boolean deleteUser(Long id) {
+        logger.debug("Database was accessed!");
         int row = entityManager.createQuery(DELETE)
                 .setParameter(1, id)
                 .executeUpdate();
@@ -99,6 +102,7 @@ public class UserDaoJdbcImpl implements UserDao {
 
     @Override
     public Long countAllUsers() {
+        logger.debug("Database was accessed!");
         Long counter = (Long) entityManager.createQuery(COUNT_ALL_USERS).getSingleResult();
         return counter;
     }
