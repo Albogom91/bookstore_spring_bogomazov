@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +36,7 @@ public class Order {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status_id")
     private Status status;
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.REFRESH})
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<OrderItem> orderItems;
 
     public Order() {

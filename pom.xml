@@ -38,8 +38,9 @@
         <artifactId>tomcat-embed-jasper</artifactId>
     </dependency>
     <dependency>
-        <groupId>org.glassfish.web</groupId>
-        <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <version>1.2</version>
     </dependency>
     <dependency>
         <groupId>org.springframework.boot</groupId>

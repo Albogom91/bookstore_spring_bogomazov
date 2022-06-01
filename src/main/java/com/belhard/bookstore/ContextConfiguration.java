@@ -30,7 +30,6 @@ public class ContextConfiguration {
         this.bookService = bookService;
     }
 
-
     public static void main(String[] args) {
 
         SpringApplication.run(ContextConfiguration.class, args);
@@ -50,20 +49,28 @@ public class ContextConfiguration {
         ois.add(oi);
         ois.add(oi1);
 
-
         OrderDto order = new OrderDto(user, LocalDateTime.now().truncatedTo(ChronoUnit.SECONDS), OrderDto.StatusDto.PENDING, ois);
         System.out.println(order);
+
         order = orderService.create(order);
         System.out.println(order);
 
         order.setUserDto(user1);
         ois.remove(oi1);
         ois.add(oi2);
-
         order.setItems(ois);
         System.out.println(order);
+
         order = orderService.update(order);
         System.out.println(order);
+
+        /*OrderDto order = orderService.getById(32L);
+        System.out.println(order);
+        order.setItems(ois);
+        order.setUserDto(user);
+        System.out.println(order);
+        order = orderService.update(order);
+        System.out.println(order);*/
 
     }
 

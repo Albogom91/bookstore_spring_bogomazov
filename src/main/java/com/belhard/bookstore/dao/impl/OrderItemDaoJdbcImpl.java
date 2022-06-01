@@ -48,7 +48,7 @@ public class OrderItemDaoJdbcImpl implements OrderItemDao {
         }
     }
 
-    @Override
+    /*@Override
     public List<OrderItem> getOrderItemsByOrderId(Long id) {
         try {
             logger.debug("Database was accessed!");
@@ -59,7 +59,7 @@ public class OrderItemDaoJdbcImpl implements OrderItemDao {
         } catch (NoResultException e) {
             return null;
         }
-    }
+    }*/
 
     @Override
     public OrderItem createOrderItem(OrderItem orderItem) {
@@ -78,9 +78,16 @@ public class OrderItemDaoJdbcImpl implements OrderItemDao {
     @Override
     public boolean deleteOrderItem(Long id) {
         logger.debug("Database was accessed!");
-        int row = entityManager.createQuery(DELETE)
+        System.out.println("--------------------------------------" + id);
+        try {
+            entityManager.remove(entityManager.find(OrderItem.class, id));
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+        /*int row = entityManager.createQuery(DELETE)
                 .setParameter(1, id)
                 .executeUpdate();
-        return row == 1;
+        return row == 1;*/
     }
 }

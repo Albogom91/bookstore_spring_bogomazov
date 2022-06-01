@@ -62,9 +62,10 @@ public class OrderServiceImpl implements OrderService {
         orderDto.setStatusDto(OrderDto.StatusDto.valueOf(order.getStatus().toString()));
         UserDto userDto = userService.userToDto(order.getUser());
         orderDto.setUserDto(userDto);
-        List<OrderItem> items = orderItemDao.getOrderItemsByOrderId(order.getId());
-        List<OrderItemDto> itemDtos = items.stream().map(this::orderItemToDto).toList();
-        orderDto.setItems(itemDtos);
+        //List<OrderItem> items = orderItemDao.getOrderItemsByOrderId(order.getId());
+        //List<OrderItemDto> itemDtos = items.stream().map(this::orderItemToDto).toList();
+        //orderDto.setItems(itemDtos);
+        orderDto.setItems(order.getOrderItems().stream().map(this::orderItemToDto).toList());
         return orderDto;
     }
 
@@ -90,14 +91,17 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto create(OrderDto orderDto) {
         logger.debug("Service method \"create\" was called.");
         orderDto.setTotalCost(calculateTotalCost(orderDto));
+        //OrderDto od = orderDto;
+        //List<OrderItemDto> oids = orderDto.getItems();
+        //List<OrderItem> ois = oids.stream().map(this::dtoToOrderItem).toList();
         Order order = dtoToOrder(orderDto);
-        List<OrderItemDto> oids = orderDto.getItems();
+        //order.setOrderItems(ois);
         orderDto = orderToDto(orderDao.createOrder(order));
-        OrderDto od = orderDto;
-        List<OrderItem> ois = oids.stream().map(oid -> dtoToOrderItem(oid, od)).toList();
-        ois = ois.stream().map(orderItemDao::createOrderItem).toList();
-        oids = ois.stream().map(this::orderItemToDto).toList();
-        orderDto.setItems(oids);
+        //OrderDto od = orderDto;
+        //List<OrderItem> ois = oids.stream().map(oid -> dtoToOrderItem(oid, od)).toList();
+        //ois = ois.stream().map(orderItemDao::createOrderItem).toList();
+        //oids = ois.stream().map(this::orderItemToDto).toList();
+        //orderDto.setItems(oids);
         return orderDto;
     }
 
@@ -106,11 +110,12 @@ public class OrderServiceImpl implements OrderService {
         logger.debug("Service method \"update\" was called.");
         orderDto.setTotalCost(calculateTotalCost(orderDto));
         Order order = dtoToOrder(orderDto);
-        List<OrderItem> oisDeleted = orderItemDao.getOrderItemsByOrderId(orderDto.getId());
+        //List<OrderItem> oisDeleted = orderItemDao.getOrderItemsByOrderId(orderDto.getId());
+        List<OrderItem> oisDeleted = orderDao.getOrderById(orderDto.getId()).getOrderItems();
         oisDeleted.forEach(oi -> orderItemDao.deleteOrderItem(oi.getId()));
-        OrderDto od = orderDto;
-        List<OrderItem> ois = orderDto.getItems().stream().map(oid -> dtoToOrderItem(oid, od)).toList();
-        ois.forEach(orderItemDao::createOrderItem);
+        //OrderDto od = orderDto;
+        //List<OrderItem> ois = orderDto.getItems().stream().map(this::dtoToOrderItem).toList();
+        //ois.forEach(orderItemDao::createOrderItem);
         orderDto = orderToDto(orderDao.updateOrder(order));
         return getById(orderDto.getId());
     }
@@ -123,13 +128,17 @@ public class OrderServiceImpl implements OrderService {
         order.setTotalCost(orderDto.getTotalCost());
         order.setTimestamp(orderDto.getTimestamp());
         order.setStatus(Order.Status.valueOf(orderDto.getStatusDto().toString()));
+        List<OrderItem> orderItems = orderDto.getItems().stream().map(this::dtoToOrderItem).toList();
+        orderItems.forEach(oi -> oi.setOrder(order));
+        order.setOrderItems(orderItems);
         return order;
     }
 
-    private OrderItem dtoToOrderItem(OrderItemDto orderItemDto, OrderDto orderDto) {
+    private OrderItem dtoToOrderItem(OrderItemDto orderItemDto) {
+        //Order order = dtoToOrder(orderDto);
         OrderItem orderItem = new OrderItem();
         orderItem.setId(orderItemDto.getId());
-        orderItem.setOrder(dtoToOrder(orderDto));
+        //orderItem.setOrder(order);
         orderItem.setBook(bookService.dtoToBook(orderItemDto.getBookDto()));
         orderItem.setQuantity(orderItemDto.getQuantity());
         orderItem.setPrice(orderItemDto.getPrice());
