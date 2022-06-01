@@ -30,7 +30,6 @@ public class User {
     private Role role;
 
     public enum Role {
-        INVALID,
         ADMIN,
         MANAGER,
         CUSTOMER

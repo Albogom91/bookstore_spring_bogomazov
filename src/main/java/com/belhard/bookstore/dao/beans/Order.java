@@ -52,7 +52,6 @@ public class Order {
     }
 
     public enum Status {
-        INVALID,
         PENDING,
         COMPLETED,
         CANCELLED

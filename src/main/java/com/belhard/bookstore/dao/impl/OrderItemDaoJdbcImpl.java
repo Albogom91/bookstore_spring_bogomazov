@@ -18,8 +18,8 @@ import java.util.List;
 public class OrderItemDaoJdbcImpl implements OrderItemDao {
     private static Logger logger = LogManager.getLogger(OrderItemDaoJdbcImpl.class);
 
-    private static final String GET_ALL_ORDERITEMS = "from OrderItem where deleted = false";
-    private static final String GET_BY_ORDER_ID = "select oi from OrderItem oi where oi.order.id = ?1 AND deleted = false";
+    private static final String GET_ALL_ORDERITEMS = "from OrderItem";
+    private static final String GET_BY_ORDER_ID = "select oi from OrderItem oi where oi.order.id = ?1";
     private static final String DELETE = "update OrderItem set deleted = true where id = ?1 and deleted = false";
 
     @PersistenceContext
