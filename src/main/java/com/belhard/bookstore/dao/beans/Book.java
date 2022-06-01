@@ -18,14 +18,19 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @Column(name = "isbn")
     private String isbn;
+
     @Column(name = "title")
     private String title;
+
     @Column(name = "author")
     private String author;
+
     @Column(name = "price")
     private BigDecimal price;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "cover_id")
     private Cover cover;

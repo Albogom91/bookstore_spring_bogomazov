@@ -2,19 +2,6 @@ package com.belhard.bookstore.dao;
 
 import com.belhard.bookstore.dao.beans.OrderItem;
 
-import java.util.List;
+public interface OrderItemDao extends EntityDao<OrderItem, Long> {
 
-public interface OrderItemDao {
-
-    List<OrderItem> getAllOrderItems();
-
-    OrderItem getOrderItemById(Long id);
-
-    //List<OrderItem> getOrderItemsByOrderId(Long id);
-
-    OrderItem createOrderItem(OrderItem orderItem);
-
-    OrderItem updateOrderItem(OrderItem orderItem);
-
-    boolean deleteOrderItem(Long id);
 }

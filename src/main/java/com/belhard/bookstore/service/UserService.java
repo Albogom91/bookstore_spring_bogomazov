@@ -5,20 +5,11 @@ import com.belhard.bookstore.dao.beans.User;
 
 import java.util.List;
 
-public interface UserService {
-    List<UserDto> getAll();
-
-    UserDto getById(Long id);
+public interface UserService extends Service<UserDto, Long> {
 
     UserDto getByEmail(String email);
 
     List<UserDto> getByLastName(String lastName);
-
-    UserDto create(UserDto userDto);
-
-    UserDto update(UserDto userDto);
-
-    void delete(Long id);
 
     Long countAll();
 

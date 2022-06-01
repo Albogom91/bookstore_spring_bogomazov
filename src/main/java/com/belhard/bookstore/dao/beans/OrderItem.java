@@ -19,14 +19,18 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "order_id")
     private Order order;
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "book_id")
     private Book book;
+
     @Column(name = "quantity")
     private Integer quantity;
+
     @Column(name = "price")
     private BigDecimal price;
 

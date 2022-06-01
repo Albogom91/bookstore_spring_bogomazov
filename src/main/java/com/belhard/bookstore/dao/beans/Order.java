@@ -25,18 +25,22 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    //targetEntity = com.belhard.bookstore.dao.beans.User.class
+
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
+
     @Column(name = "totalcost")
     private BigDecimal totalCost;
-    @Column(name = "timestamp")
+
+    @Column(name = "datetime")
     private LocalDateTime timestamp;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status_id")
     private Status status;
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, orphanRemoval = true)
     private List<OrderItem> orderItems;
 
     public Order() {

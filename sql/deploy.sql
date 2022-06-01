@@ -1,18 +1,12 @@
-DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS covers;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS orderitems;
 DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS statuses;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS books;
 
 TRUNCATE books CASCADE;
-TRUNCATE covers CASCADE;
 TRUNCATE users CASCADE;
-TRUNCATE roles CASCADE;
 TRUNCATE orderitems CASCADE;
 TRUNCATE orders CASCADE;
-TRUNCATE statuses CASCADE;
 
 CREATE TABLE books (
 	id BIGSERIAL PRIMARY KEY,
@@ -72,24 +66,24 @@ CREATE TABLE orders (
 	id BIGSERIAL PRIMARY KEY,
 	user_id BIGINT REFERENCES users,
 	totalcost DECIMAL(7,2) DEFAULT 0.0 NOT NULL,
-	timestamp VARCHAR(50) NOT NULL,
+	datetime VARCHAR(50) NOT NULL,
 	status_id BIGINT NOT NULL
 );
 
-INSERT INTO orders (user_id, totalcost, timestamp, status_id)
-VALUES (3, 10.75, '2022-05-04 11:30', 0),
-	(4, 20.00, '2022-04-04 10:30', 1),
-	(6, 11.55, '2022-03-04 10:30', 2),
-	(7, 28.90, '2022-02-04 10:30', 0),
-	(8, 9.45, '2022-01-04 11:30', 1),
-	(10, 5.75, '2022-05-10 11:30', 2);
+INSERT INTO orders (user_id, totalcost, datetime, status_id)
+VALUES (3, 10.75, '2022-05-04 11:30:15', 0),
+	(4, 20.00, '2022-04-04 10:30:05', 1),
+	(6, 11.55, '2022-03-04 10:30:25', 2),
+	(7, 28.90, '2022-02-04 10:30:30', 0),
+	(8, 9.45, '2022-01-04 11:30:45', 1),
+	(10, 5.75, '2022-05-10 11:30:50', 2);
 
 CREATE TABLE orderitems (
 	id BIGSERIAL PRIMARY KEY,
 	order_id BIGINT REFERENCES orders,
 	book_id BIGINT REFERENCES books,
 	quantity INT NOT NULL,
-	price DECIMAL(7,2) DEFAULT 0.0 NOT NULL,
+	price DECIMAL(7,2) DEFAULT 0.0 NOT NULL
 );
 
 INSERT INTO orderitems (order_id, book_id, quantity, price)
@@ -101,3 +95,8 @@ VALUES (1, 1, 1, 10.75),
 	(4, 4, 1, 17.35),
 	(5, 5, 1, 9.45),
 	(6, 6, 1, 5.75);
+
+DELETE FROM orderitems WHERE id BETWEEN 9 AND 1000;
+DELETE FROM orders WHERE id BETWEEN 7 AND 1000;
+DELETE FROM books WHERE id BETWEEN 21 AND 1000;
+DELETE FROM users WHERE id BETWEEN 11 AND 1000;

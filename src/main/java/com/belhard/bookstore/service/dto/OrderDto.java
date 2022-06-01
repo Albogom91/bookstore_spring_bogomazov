@@ -33,7 +33,6 @@ public class OrderDto {
     }
 
     public enum StatusDto {
-        INVALID,
         PENDING,
         COMPLETED,
         CANCELLED

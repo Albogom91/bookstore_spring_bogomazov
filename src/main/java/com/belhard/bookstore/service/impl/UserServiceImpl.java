@@ -6,9 +6,9 @@ import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +17,6 @@ public class UserServiceImpl implements UserService {
     private static Logger logger = LogManager.getLogger(UserServiceImpl.class);
     private UserDao userDao;
 
-    @Autowired
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> getAll() {
         logger.debug("Service method \"getAll\" was called.");
-        return userDao.getAllUsers().stream().map(this::userToDto).toList();
+        return userDao.getAll().stream().map(this::userToDto).toList();
     }
 
     @Override
@@ -51,7 +50,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getById(Long id) {
         logger.debug("Service method \"getById\" was called.");
-        User user = userDao.getUserById(id);
+        User user = userDao.getById(id);
         if (user == null) {
             logger.error("There is no user with such id: " + id);
         }
@@ -79,6 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDto create(UserDto userDto) {
         logger.debug("Service method \"create\" was called.");
         User checkUser = userDao.getUserByEmail(userDto.getEmail());
@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
             logger.error("User with such email already exists: " + checkUser.getEmail());
         }
         User user = dtoToUser(userDto);
-        user = userDao.createUser(user);
+        user = userDao.create(user);
         return userToDto(user);
     }
 
@@ -103,6 +103,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDto update(UserDto userDto) {
         logger.debug("Service method \"update\" was called.");
         User checkUser = userDao.getUserByEmail(userDto.getEmail());
@@ -110,14 +111,15 @@ public class UserServiceImpl implements UserService {
             logger.error("User with such email already exists: " + checkUser.getEmail());
         }
         User user = dtoToUser(userDto);
-        user = userDao.updateUser(user);
+        user = userDao.update(user);
         return userToDto(user);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         logger.debug("Service method \"delete\" was called.");
-        if (!userDao.deleteUser(id)) {
+        if (!userDao.delete(id)) {
             logger.error("There is no user to delete with such id: " + id);
         }
     }

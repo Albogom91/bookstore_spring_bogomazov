@@ -11,7 +11,6 @@ public class UserDto {
     private RoleDto roleDto;
 
     public enum RoleDto {
-        INVALID,
         ADMIN,
         MANAGER,
         CUSTOMER

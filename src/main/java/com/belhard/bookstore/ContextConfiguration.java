@@ -7,7 +7,6 @@ import com.belhard.bookstore.service.dto.BookDto;
 import com.belhard.bookstore.service.dto.OrderDto;
 import com.belhard.bookstore.service.dto.OrderItemDto;
 import com.belhard.bookstore.service.dto.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -22,8 +21,6 @@ public class ContextConfiguration {
     private static UserService userService;
     private static BookService bookService;
 
-
-    @Autowired
     public ContextConfiguration(OrderService orderService, UserService userService, BookService bookService) {
         this.orderService = orderService;
         this.userService = userService;
@@ -63,14 +60,6 @@ public class ContextConfiguration {
 
         order = orderService.update(order);
         System.out.println(order);
-
-        /*OrderDto order = orderService.getById(32L);
-        System.out.println(order);
-        order.setItems(ois);
-        order.setUserDto(user);
-        System.out.println(order);
-        order = orderService.update(order);
-        System.out.println(order);*/
 
     }
 

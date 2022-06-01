@@ -3,21 +3,11 @@ package com.belhard.bookstore.controller;
 import com.belhard.bookstore.service.dto.BookDto;
 import org.springframework.ui.Model;
 
-public interface BookController {
-
-    String getById(Model model, Long id);
-
-    String getAll(Model model);
+public interface BookController extends Controller<String, Model, BookDto, Long> {
 
     String getCreate(Model model);
 
-    String create(BookDto bookDto, Model model);
-
     String getUpdate(Model model, Long id);
-
-    String update(BookDto bookDto, Model model);
-
-    String delete(Model model, Long id);
 
     String countAll(Model model);
 

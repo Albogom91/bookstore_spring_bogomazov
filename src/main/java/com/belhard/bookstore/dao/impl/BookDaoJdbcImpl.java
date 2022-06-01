@@ -4,17 +4,14 @@ import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.beans.Book;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository("bookDao")
-@Transactional
 public class BookDaoJdbcImpl implements BookDao {
     private static Logger logger = LogManager.getLogger(BookDaoJdbcImpl.class);
     private static final String GET_ALL_BOOKS = "from Book where deleted = false";
@@ -26,20 +23,15 @@ public class BookDaoJdbcImpl implements BookDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    public BookDaoJdbcImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
-
     @Override
-    public List<Book> getAllBooks() {
+    public List<Book> getAll() {
         logger.debug("Database was accessed!");
         List<Book> books = entityManager.createQuery(GET_ALL_BOOKS, Book.class).getResultList();
         return books;
     }
 
     @Override
-    public Book getBookById(Long id) {
+    public Book getById(Long id) {
         try {
             logger.debug("Database was accessed!");
             Book book = entityManager.find(Book.class, id);
@@ -50,21 +42,21 @@ public class BookDaoJdbcImpl implements BookDao {
     }
 
     @Override
-    public Book createBook(Book book) {
+    public Book create(Book book) {
         logger.debug("Database was accessed!");
         entityManager.persist(book);
         return book;
     }
 
     @Override
-    public Book updateBook(Book book) {
+    public Book update(Book book) {
         logger.debug("Database was accessed!");
         entityManager.merge(book);
         return book;
     }
 
     @Override
-    public boolean deleteBook(Long id) {
+    public boolean delete(Long id) {
         logger.debug("Database was accessed!");
         int row = entityManager.createQuery(DELETE)
                 .setParameter(1, id)
