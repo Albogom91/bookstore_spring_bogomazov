@@ -12,6 +12,8 @@ public interface BookService extends Service<BookDto, Long> {
 
     List<BookDto> getByAuthor(String author);
 
+    BookDto save(BookDto bookDto);
+
     Long countAll();
 
     Book dtoToBook(BookDto bookDto);

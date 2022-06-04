@@ -48,7 +48,7 @@ public class BookControllerImpl implements BookController {
     @PostMapping("/create")
     @Override
     public String create(@ModelAttribute BookDto bookDto, Model model) {
-        bookDto = bookService.create(bookDto);
+        bookDto = bookService.save(bookDto);
         model.addAttribute("book", bookDto);
         return "book";
     }
@@ -64,7 +64,7 @@ public class BookControllerImpl implements BookController {
     @PostMapping("/update/{id}")
     @Override
     public String update(@ModelAttribute BookDto bookDto, Model model) {
-        bookDto = bookService.update(bookDto);
+        bookDto = bookService.save(bookDto);
         model.addAttribute("book", bookDto);
         return "book";
     }
