@@ -4,6 +4,7 @@ import com.belhard.bookstore.dao.OrderDao;
 import com.belhard.bookstore.dao.OrderItemDao;
 import com.belhard.bookstore.dao.beans.Order;
 import com.belhard.bookstore.dao.beans.OrderItem;
+import com.belhard.bookstore.dao.beans.User;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.OrderService;
 import com.belhard.bookstore.service.UserService;
@@ -13,9 +14,9 @@ import com.belhard.bookstore.service.dto.OrderItemDto;
 import com.belhard.bookstore.service.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -27,7 +28,6 @@ public class OrderServiceImpl implements OrderService {
     private final UserService userService;
     private final BookService bookService;
 
-    @Autowired
     public OrderServiceImpl(OrderDao orderDao, OrderItemDao orderItemDao, UserService userService, BookService bookService) {
         this.orderDao = orderDao;
         this.orderItemDao = orderItemDao;
@@ -37,12 +37,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderDto> getAll() {
-        return orderDao.getAllOrders().stream().map(this::orderToDto).toList();
+        logger.debug("Service method \"getAll\" was called.");
+        return orderDao.getAll().stream().map(this::orderToDto).toList();
     }
 
     @Override
     public OrderDto getById(Long id) {
-        Order order = orderDao.getOrderById(id);
+        logger.debug("Service method \"getById\" was called.");
+        Order order = orderDao.getById(id);
+        if (order == null) {
+            logger.error("There is no order with such id: " + id);
+        }
         return orderToDto(order);
     }
 
@@ -52,11 +57,9 @@ public class OrderServiceImpl implements OrderService {
         orderDto.setTotalCost(order.getTotalCost());
         orderDto.setTimestamp(order.getTimestamp());
         orderDto.setStatusDto(OrderDto.StatusDto.valueOf(order.getStatus().toString()));
-        UserDto userDto = userService.getById(order.getUserId());
+        UserDto userDto = userService.userToDto(order.getUser());
         orderDto.setUserDto(userDto);
-        List<OrderItem> items = orderItemDao.getOrderItemsByOrderId(order.getId());
-        List<OrderItemDto> itemDtos = items.stream().map(oi -> orderItemToDto(oi)).toList();
-        orderDto.setItems(itemDtos);
+        orderDto.setItems(order.getOrderItems().stream().map(this::orderItemToDto).toList());
         return orderDto;
     }
 
@@ -65,70 +68,70 @@ public class OrderServiceImpl implements OrderService {
         orderItemDto.setId(orderItem.getId());
         orderItemDto.setQuantity(orderItem.getQuantity());
         orderItemDto.setPrice(orderItem.getPrice());
-        BookDto bookDto = bookService.getById(orderItem.getBookId());
+        BookDto bookDto = bookService.bookToDto(orderItem.getBook());
         orderItemDto.setBookDto(bookDto);
         return orderItemDto;
     }
 
     @Override
     public List<OrderDto> getAllByUserId(Long id) {
+        logger.debug("Service method \"getAllByUserId\" was called.");
+        UserDto userDto = userService.getById(id);//To check if user exists
         List<OrderDto> ods = getAll();
         return ods.stream().filter(od -> od.getUserDto().getId() == id).toList();
     }
 
     @Override
+    @Transactional
     public OrderDto create(OrderDto orderDto) {
+        logger.debug("Service method \"create\" was called.");
         orderDto.setTotalCost(calculateTotalCost(orderDto));
         Order order = dtoToOrder(orderDto);
-        List<OrderItemDto> oids = orderDto.getItems();
-        orderDto = orderToDto(orderDao.createOrder(order));
-        Long id = orderDto.getId();
-        List<OrderItem> ois = oids.stream().map(oid -> dtoToOrderItem(oid, id)).toList();
-        ois = ois.stream().map(oi -> orderItemDao.createOrderItem(oi)).toList();
-        oids = ois.stream().map(oi -> orderItemToDto(oi)).toList();
-        orderDto.setItems(oids);
+        orderDto = orderToDto(orderDao.create(order));
         return orderDto;
     }
 
     @Override
+    @Transactional
     public OrderDto update(OrderDto orderDto) {
+        logger.debug("Service method \"update\" was called.");
         orderDto.setTotalCost(calculateTotalCost(orderDto));
         Order order = dtoToOrder(orderDto);
-        List<OrderItem> oisDeleted = orderItemDao.getOrderItemsByOrderId(orderDto.getId());
-        oisDeleted.forEach(oi -> orderItemDao.deleteOrderItem(oi.getId()));
-        Long id = orderDto.getId();
-        List<OrderItem> ois = orderDto.getItems().stream().map(oid -> dtoToOrderItem(oid, id)).toList();
-        ois.forEach(oi -> orderItemDao.createOrderItem(oi));
-        orderDto = orderToDto(orderDao.updateOrder(order));
+        List<OrderItem> oisDeleted = orderDao.getById(orderDto.getId()).getOrderItems();
+        oisDeleted.forEach(oi -> orderItemDao.delete(oi.getId()));
+        orderDto = orderToDto(orderDao.update(order));
         return getById(orderDto.getId());
     }
 
     private Order dtoToOrder(OrderDto orderDto) {
         Order order = new Order();
         order.setId(orderDto.getId());
-        order.setUserId(orderDto.getUserDto().getId());
+        User user = userService.dtoToUser(orderDto.getUserDto());
+        order.setUser(user);
         order.setTotalCost(orderDto.getTotalCost());
         order.setTimestamp(orderDto.getTimestamp());
         order.setStatus(Order.Status.valueOf(orderDto.getStatusDto().toString()));
+        List<OrderItem> orderItems = orderDto.getItems().stream().map(this::dtoToOrderItem).toList();
+        orderItems.forEach(oi -> oi.setOrder(order));
+        order.setOrderItems(orderItems);
         return order;
     }
 
-    private OrderItem dtoToOrderItem(OrderItemDto orderItemDto, Long id) {
+    private OrderItem dtoToOrderItem(OrderItemDto orderItemDto) {
         OrderItem orderItem = new OrderItem();
         orderItem.setId(orderItemDto.getId());
-        orderItem.setOrderId(id);
-        orderItem.setBookId(orderItemDto.getBookDto().getId());
+        orderItem.setBook(bookService.dtoToBook(orderItemDto.getBookDto()));
         orderItem.setQuantity(orderItemDto.getQuantity());
         orderItem.setPrice(orderItemDto.getPrice());
         return orderItem;
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         logger.debug("Service method \"delete\" was called.");
-        if (!orderDao.deleteOrder(id)) {
+        if (!orderDao.delete(id)) {
             logger.error("There is no order to delete with such id: " + id);
-            throw new RuntimeException("There is no order to delete with such id: " + id);
         }
     }
 

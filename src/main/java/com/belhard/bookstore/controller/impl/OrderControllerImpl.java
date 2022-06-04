@@ -3,7 +3,6 @@ package com.belhard.bookstore.controller.impl;
 import com.belhard.bookstore.controller.OrderController;
 import com.belhard.bookstore.service.OrderService;
 import com.belhard.bookstore.service.dto.OrderDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import java.util.List;
 public class OrderControllerImpl implements OrderController {
     private final OrderService orderService;
 
-    @Autowired
     public OrderControllerImpl(OrderService orderService) {
         this.orderService = orderService;
     }

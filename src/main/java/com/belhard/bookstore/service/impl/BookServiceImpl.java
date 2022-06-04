@@ -6,9 +6,9 @@ import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,6 @@ public class BookServiceImpl implements BookService {
     private static Logger logger = LogManager.getLogger(BookServiceImpl.class);
     private final BookDao bookDao;
 
-    @Autowired
     public BookServiceImpl(BookDao bookDao) {
         this.bookDao = bookDao;
     }
@@ -26,10 +25,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDto> getAll() {
         logger.debug("Service method \"getAll\" was called.");
-        return bookDao.getAllBooks().stream().map(this::bookToDto).toList();
+        return bookDao.getAll().stream().map(this::bookToDto).toList();
     }
 
-    private BookDto bookToDto(Book book) {
+    @Override
+    public BookDto bookToDto(Book book) {
         BookDto bookDto = new BookDto();
         bookDto.setId(book.getId());
         bookDto.setIsbn(book.getIsbn());
@@ -52,10 +52,9 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto getById(Long id) {
         logger.debug("Service method \"getById\" was called.");
-        Book book = bookDao.getBookById(id);
+        Book book = bookDao.getById(id);
         if (book == null) {
             logger.error("There is no book with such id: " + id);
-            throw new RuntimeException("There is no book with such id: " + id);
         }
         return bookToDto(book);
     }
@@ -66,7 +65,6 @@ public class BookServiceImpl implements BookService {
         Book book = bookDao.getBookByIsbn(isbn);
         if (book == null) {
             logger.error("There is no book with such isbn: " + isbn);
-            throw new RuntimeException("There is no book with such isbn: " + isbn);
         }
         return bookToDto(book);
     }
@@ -77,25 +75,25 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookDao.getBooksByAuthor(author);
         if (books.isEmpty()) {
             logger.error("There are no books by such author: " + author);
-            throw new RuntimeException("There are no books by such author: " + author);
         }
         return booksToBooksDtos(books);
     }
 
     @Override
+    @Transactional
     public BookDto create(BookDto bookDto) {
         logger.debug("Service method \"create\" was called.");
         Book checkBook = bookDao.getBookByIsbn(bookDto.getIsbn());
         if (checkBook != null) {
             logger.error("Book with such isbn already exists: " + checkBook.getIsbn());
-            throw new RuntimeException("Book with such isbn already exists: " + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
-        book = bookDao.createBook(book);
+        book = bookDao.create(book);
         return bookToDto(book);
     }
 
-    private Book dtoToBook(BookDto bookDto) {
+    @Override
+    public Book dtoToBook(BookDto bookDto) {
         Book book = new Book();
         book.setId(bookDto.getId());
         book.setIsbn(bookDto.getIsbn());
@@ -107,29 +105,29 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public BookDto update(BookDto bookDto) {
         logger.debug("Service method \"update\" was called.");
         Book checkBook = bookDao.getBookByIsbn(bookDto.getIsbn());
         if (checkBook != null && checkBook.getId() != bookDto.getId()) {
             logger.error("Book with such ISBN already exists!" + checkBook.getIsbn());
-            throw new RuntimeException("Book with such ISBN already exists!" + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
-        book = bookDao.updateBook(book);
+        book = bookDao.update(book);
         return bookToDto(book);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         logger.debug("Service method \"delete\" was called.");
-        if (!bookDao.deleteBook(id)) {
+        if (!bookDao.delete(id)) {
             logger.error("There is no book to delete with such id: " + id);
-            throw new RuntimeException("There is no book to delete with such id: " + id);
         }
     }
 
     @Override
-    public int countAll() {
+    public Long countAll() {
         logger.debug("Service method \"countAll\" was called.");
         return bookDao.countAllBooks();
     }

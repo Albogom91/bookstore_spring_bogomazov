@@ -80,7 +80,7 @@ public class UserControllerImpl implements UserController {
     @GetMapping("/total")
     @Override
     public String countAll(Model model) {
-        int result = userService.countAll();
+        Long result = userService.countAll();
         model.addAttribute("number", result);
         return "totalusersnumber";
 

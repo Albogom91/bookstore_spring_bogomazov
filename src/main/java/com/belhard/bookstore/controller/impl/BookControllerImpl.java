@@ -3,7 +3,6 @@ package com.belhard.bookstore.controller.impl;
 import com.belhard.bookstore.controller.BookController;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +18,9 @@ import java.util.List;
 public class BookControllerImpl implements BookController {
     private final BookService bookService;
 
-    @Autowired
     public BookControllerImpl(BookService bookService) {
         this.bookService = bookService;
     }
-
 
     @GetMapping
     @Override
@@ -83,7 +80,7 @@ public class BookControllerImpl implements BookController {
     @GetMapping("/total")
     @Override
     public String countAll(Model model) {
-        int result = bookService.countAll();
+        Long result = bookService.countAll();
         model.addAttribute("number", result);
         return "totalbooksnumber";
 

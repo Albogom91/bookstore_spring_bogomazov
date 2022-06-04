@@ -1,27 +1,23 @@
 package com.belhard.bookstore.service;
 
 import com.belhard.bookstore.service.dto.BookDto;
+import com.belhard.bookstore.dao.beans.Book;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface BookService {
-    List<BookDto> getAll();
-
-    BookDto getById(Long id);
+public interface BookService extends Service<BookDto, Long> {
 
     BookDto getByIsbn(String isbn);
 
     List<BookDto> getByAuthor(String author);
 
-    BookDto create(BookDto bookDto);
+    Long countAll();
 
-    BookDto update(BookDto bookDto);
+    Book dtoToBook(BookDto bookDto);
 
-    void delete(Long id);
+    BookDto bookToDto(Book book);
 
-    int countAll();
-
-    public BigDecimal countPriceOfAllBooksByAuthor(String author);
+    BigDecimal countPriceOfAllBooksByAuthor(String author);
 }
 

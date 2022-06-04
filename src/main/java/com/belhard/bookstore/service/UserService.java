@@ -1,25 +1,21 @@
 package com.belhard.bookstore.service;
 
 import com.belhard.bookstore.service.dto.UserDto;
+import com.belhard.bookstore.dao.beans.User;
 
 import java.util.List;
 
-public interface UserService {
-    List<UserDto> getAll();
-
-    UserDto getById(Long id);
+public interface UserService extends Service<UserDto, Long> {
 
     UserDto getByEmail(String email);
 
     List<UserDto> getByLastName(String lastName);
 
-    UserDto create(UserDto userDto);
+    Long countAll();
 
-    UserDto update(UserDto userDto);
+    User dtoToUser(UserDto userDto);
 
-    void delete(Long id);
-
-    int countAll();
+    UserDto userToDto(User user);
 
     boolean validate(String email, String password);
 }
