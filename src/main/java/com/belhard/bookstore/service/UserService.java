@@ -1,7 +1,10 @@
 package com.belhard.bookstore.service;
 
+import com.belhard.bookstore.service.dto.BookDto;
 import com.belhard.bookstore.service.dto.UserDto;
 import com.belhard.bookstore.dao.beans.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -9,7 +12,11 @@ public interface UserService extends Service<UserDto, Long> {
 
     UserDto getByEmail(String email);
 
-    List<UserDto> getByLastName(String lastName);
+    Page<UserDto> getByLastName(String lastName, Pageable pageable);
+
+    Page<UserDto> getAll(Pageable pageable);
+
+    UserDto save(UserDto userDto);
 
     Long countAll();
 
@@ -17,5 +24,4 @@ public interface UserService extends Service<UserDto, Long> {
 
     UserDto userToDto(User user);
 
-    boolean validate(String email, String password);
 }

@@ -34,6 +34,9 @@ public class User {
     @Column(name = "role_id")
     private Role role;
 
+    @Column(name = "deleted")
+    private boolean deleted = Boolean.FALSE;
+
     public enum Role {
         ADMIN,
         MANAGER,
@@ -98,6 +101,14 @@ public class User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override
