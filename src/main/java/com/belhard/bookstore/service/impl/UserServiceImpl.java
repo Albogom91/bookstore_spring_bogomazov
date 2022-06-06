@@ -1,12 +1,9 @@
 package com.belhard.bookstore.service.impl;
 
-import com.belhard.bookstore.dao.BookRepository;
 import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.UserRepository;
-import com.belhard.bookstore.dao.beans.Book;
 import com.belhard.bookstore.dao.beans.User;
 import com.belhard.bookstore.service.UserService;
-import com.belhard.bookstore.service.dto.BookDto;
 import com.belhard.bookstore.service.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,7 +37,6 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.findAll().stream().map(this::userToDto).toList();
 
-        //return userDao.getAll().stream().map(this::userToDto).toList();
     }
 
     @Override
@@ -63,24 +58,14 @@ public class UserServiceImpl implements UserService {
         return userDto;
     }
 
-    private List<UserDto> usersToUsersDtos(List<User> users) {
-        List<UserDto> userDtos = new ArrayList<>();
-        for (User user : users) {
-            userDtos.add(userToDto(user));
-        }
-        return userDtos;
-    }
-
     @Override
     public UserDto getById(Long id) {
         logger.debug("Service method \"getById\" was called.");
-
         User user = userRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("There is no user with such id: " + id);
                     return new RuntimeException("There is no user with such id: " + id);
                 });
-
         return userToDto(user);
     }
 
@@ -88,7 +73,6 @@ public class UserServiceImpl implements UserService {
     public UserDto getByEmail(String email) {
         logger.debug("Service method \"getByEmail\" was called.");
         User user = userRepository.findByEmail(email);
-
         if (user == null) {
             logger.error("There is no user with such email: " + email);
             throw new RuntimeException("There is no user with such email: " + email);
@@ -106,24 +90,18 @@ public class UserServiceImpl implements UserService {
         }
         return users.map(this::userToDto);
 
-        /*List<User> users = userDao.getUsersByLastName(lastName);
-        if (users.isEmpty()) {
-            logger.error("There are no users with such last name: " + lastName);
-        }
-        return usersToUsersDtos(users);*/
     }
 
     @Override
     @Transactional
     public UserDto create(UserDto userDto) {
         logger.debug("Service method \"create\" was called.");
-        User checkUser = userDao.getUserByEmail(userDto.getEmail());
+        User checkUser = userRepository.findByEmail(userDto.getEmail());
         if (checkUser != null) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
             throw new RuntimeException("User with such email already exists: " + checkUser.getEmail());
         }
         User user = dtoToUser(userDto);
-        //user = userDao.create(user);
         user = userRepository.save(user);
         return userToDto(user);
     }
@@ -144,13 +122,12 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto update(UserDto userDto) {
         logger.debug("Service method \"update\" was called.");
-        User checkUser = userDao.getUserByEmail(userDto.getEmail());
+        User checkUser = userRepository.findByEmail(userDto.getEmail());
         if (checkUser != null && checkUser.getId() != userDto.getId()) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
             throw new RuntimeException("User with such email already exists: " + checkUser.getEmail());
         }
         User user = dtoToUser(userDto);
-        //user = userDao.update(user);
         user = userRepository.save(user);
         return userToDto(user);
     }

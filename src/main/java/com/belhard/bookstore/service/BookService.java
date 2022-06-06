@@ -1,14 +1,9 @@
 package com.belhard.bookstore.service;
 
-import com.belhard.bookstore.service.dto.BookDto;
 import com.belhard.bookstore.dao.beans.Book;
+import com.belhard.bookstore.service.dto.BookDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
 
 public interface BookService extends Service<BookDto, Long> {
 

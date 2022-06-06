@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -59,15 +58,6 @@ public class BookServiceImpl implements BookService {
         bookDto.setCoverDto(BookDto.CoverDto.valueOf(book.getCover().toString()));
         return bookDto;
     }
-
-    /*private List<BookDto> booksToBooksDtos(List<Book> books) {
-        List<BookDto> bookDtos = new ArrayList<>();
-        for (Book book : books) {
-            BookDto bookDto = bookToDto(book);
-            bookDtos.add(bookDto);
-        }
-        return bookDtos;
-    }*/
 
     @Override
     public BookDto getById(Long id) {

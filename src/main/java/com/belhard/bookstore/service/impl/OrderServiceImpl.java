@@ -4,8 +4,6 @@ import com.belhard.bookstore.dao.OrderDao;
 import com.belhard.bookstore.dao.OrderItemDao;
 import com.belhard.bookstore.dao.OrderItemRepository;
 import com.belhard.bookstore.dao.OrderRepository;
-import com.belhard.bookstore.dao.UserDao;
-import com.belhard.bookstore.dao.beans.Book;
 import com.belhard.bookstore.dao.beans.Order;
 import com.belhard.bookstore.dao.beans.OrderItem;
 import com.belhard.bookstore.dao.beans.User;

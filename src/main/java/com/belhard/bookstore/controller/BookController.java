@@ -2,7 +2,6 @@ package com.belhard.bookstore.controller;
 
 import com.belhard.bookstore.service.dto.BookDto;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
