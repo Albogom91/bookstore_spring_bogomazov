@@ -20,9 +20,9 @@
         <c:forEach items="${books}" var="book">
             <tr>
                 <td>${book.id}</td>
-                <td>${book.isbn}</td>
-                <td><a href="/books/${book.id}" target="_blank">${book.title}</a></td>
-                <td>${book.author}</td>
+                <td><c:out value="${book.isbn}"/></td>
+                <td><a href="/books/${book.id}" target="_blank"><c:out value="${book.title}"/></a></td>
+                <td><c:out value="${book.author}"/></td>
                 <td>${book.price}</td>
                 <td>${book.coverDto.toString().toLowerCase()}</td>
                 <td id="method"><form action="/books/${book.id}"><input id="crud" type="submit" value="View"/></form>

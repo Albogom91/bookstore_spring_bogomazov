@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Book</title>
@@ -6,8 +7,8 @@
 </head>
 <body>
     <h1>Book, id = ${book.id}</h1>
-    <div>${book.title} by ${book.author} in ${book.coverDto.toString().toLowerCase()} cover</div>
-    <div>ISBN = ${book.isbn}</div>
+    <div><c:out value="${book.title}"/> by <c:out value="${book.author}"/> in ${book.coverDto.toString().toLowerCase()} cover</div>
+    <div>ISBN = <c:out value="${book.isbn}"/></div>
     <div>Price = ${book.price}</div>
     <div>
         <form action="/books?page=0&size=20&sort=asc&column=id">

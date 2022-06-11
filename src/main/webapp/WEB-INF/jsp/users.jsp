@@ -20,10 +20,10 @@
         <c:forEach items="${users}" var="user">
             <tr>
                 <td>${user.id}</td>
-                <td>${user.firstName}</td>
-                <td><a href="/users/${user.id}" target="_blank">${user.lastName}</a></td>
-                <td>${user.email}</td>
-                <td>${user.password}</td>
+                <td><c:out value="${user.firstName}"/></td>
+                <td><a href="/users/${user.id}" target="_blank"><c:out value="${user.lastName}"/></a></td>
+                <td><c:out value="${user.email}"/></td>
+                <td><c:out value="${user.password}"/></td>
                 <td>${user.roleDto.toString().toLowerCase()}</td>
                 <td id="method"><form action="/users/${user.id}"><input id="crud" type="submit" value="View"/></form>
                                 <form action="/users/update/${user.id}"><input id="crud" type="submit" value="Update"/></form>

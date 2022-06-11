@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>User</title>
@@ -6,9 +7,9 @@
 </head>
 <body>
     <h1>User, id = ${user.id}</h1>
-    <div>${user.firstName} ${user.lastName}, ${user.roleDto.toString().toLowerCase()}</div>
-    <div>Email = ${user.email}</div>
-    <div>Password = ${user.password}</div>
+    <div><c:out value="${user.firstName}"/> <c:out value="${user.lastName}"/>, ${user.roleDto.toString().toLowerCase()}</div>
+    <div>Email = <c:out value="${user.email}"/></div>
+    <div>Password = <c:out value="${user.password}"/></div>
     <div>
         <form action="/users?page=0&size=20&sort=asc&column=id">
             <input type="hidden" name="page" value="0"/>
