@@ -3,6 +3,8 @@ package com.belhard.bookstore.service.impl;
 import com.belhard.bookstore.dao.UserDao;
 import com.belhard.bookstore.dao.UserRepository;
 import com.belhard.bookstore.dao.beans.User;
+import com.belhard.bookstore.exceptions.EntityAlreadyExistsException;
+import com.belhard.bookstore.exceptions.EntityNotFoundException;
 import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.dto.UserDto;
 import org.apache.logging.log4j.LogManager;
@@ -64,7 +66,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("There is no user with such id: " + id);
-                    return new RuntimeException("There is no user with such id: " + id);
+                    return new EntityNotFoundException("There is no user with such id: " + id);
                 });
         return userToDto(user);
     }
@@ -75,7 +77,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             logger.error("There is no user with such email: " + email);
-            throw new RuntimeException("There is no user with such email: " + email);
+            throw new EntityNotFoundException("There is no user with such email: " + email);
         }
         return userToDto(user);
     }
@@ -86,7 +88,7 @@ public class UserServiceImpl implements UserService {
         Page<User> users = userRepository.findByDeletedAndLastNameIgnoreCase(Boolean.FALSE, lastName, pageable);
         if (users.isEmpty()) {
             logger.error("There are no users such last name: " + lastName);
-            throw new RuntimeException("There are no users such last name: " + lastName);
+            throw new EntityNotFoundException("There are no users such last name: " + lastName);
         }
         return users.map(this::userToDto);
 
@@ -99,7 +101,7 @@ public class UserServiceImpl implements UserService {
         User checkUser = userRepository.findByEmail(userDto.getEmail());
         if (checkUser != null) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
-            throw new RuntimeException("User with such email already exists: " + checkUser.getEmail());
+            throw new EntityAlreadyExistsException("User with such email already exists: " + checkUser.getEmail());
         }
         User user = dtoToUser(userDto);
         user = userRepository.save(user);
@@ -125,7 +127,7 @@ public class UserServiceImpl implements UserService {
         User checkUser = userRepository.findByEmail(userDto.getEmail());
         if (checkUser != null && checkUser.getId() != userDto.getId()) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
-            throw new RuntimeException("User with such email already exists: " + checkUser.getEmail());
+            throw new EntityAlreadyExistsException("User with such email already exists: " + checkUser.getEmail());
         }
         User user = dtoToUser(userDto);
         user = userRepository.save(user);
@@ -139,7 +141,7 @@ public class UserServiceImpl implements UserService {
         User checkUser = userRepository.findByEmail(userDto.getEmail());
         if (checkUser != null && checkUser.getId() != userDto.getId()) {
             logger.error("User with such email already exists: " + checkUser.getEmail());
-            throw new RuntimeException("User with such email already exists: " + checkUser.getEmail());
+            throw new EntityAlreadyExistsException("User with such email already exists: " + checkUser.getEmail());
         }
         User user = dtoToUser(userDto);
         user = userRepository.save(user);

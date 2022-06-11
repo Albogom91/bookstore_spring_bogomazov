@@ -7,6 +7,7 @@ import com.belhard.bookstore.dao.OrderRepository;
 import com.belhard.bookstore.dao.beans.Order;
 import com.belhard.bookstore.dao.beans.OrderItem;
 import com.belhard.bookstore.dao.beans.User;
+import com.belhard.bookstore.exceptions.EntityNotFoundException;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.OrderService;
 import com.belhard.bookstore.service.UserService;
@@ -72,7 +73,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("There is no order with such id: " + id);
-                    return new RuntimeException("There is no order with such id: " + id);
+                    return new EntityNotFoundException("There is no order with such id: " + id);
                 });
         return orderToDto(order);
     }

@@ -6,6 +6,7 @@
 </head>
 <body>
     <div>Error was encountered during your working process!</div>
+    <div>Status: ${status}</div>
     <div>${message}</div>
 </body>
 </html>

@@ -3,6 +3,8 @@ package com.belhard.bookstore.service.impl;
 import com.belhard.bookstore.dao.BookDao;
 import com.belhard.bookstore.dao.BookRepository;
 import com.belhard.bookstore.dao.beans.Book;
+import com.belhard.bookstore.exceptions.EntityAlreadyExistsException;
+import com.belhard.bookstore.exceptions.EntityNotFoundException;
 import com.belhard.bookstore.service.BookService;
 import com.belhard.bookstore.service.dto.BookDto;
 import org.apache.logging.log4j.LogManager;
@@ -66,7 +68,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> {
                     logger.error("There is no book with such id: " + id);
-                    return new RuntimeException("There is no book with such id: " + id);
+                    return new EntityNotFoundException("There is no book with such id: " + id);
                 });
         return bookToDto(book);
     }
@@ -79,7 +81,7 @@ public class BookServiceImpl implements BookService {
 
         if (book == null) {
             logger.error("There is no book with such isbn: " + isbn);
-            throw new RuntimeException("There is no book with such id: " + isbn);
+            throw new EntityNotFoundException("There is no book with such id: " + isbn);
         }
         return bookToDto(book);
     }
@@ -91,7 +93,7 @@ public class BookServiceImpl implements BookService {
         Page<Book> books = bookRepository.findByDeletedAndAuthorIgnoreCase(Boolean.FALSE, author, pageable);
         if (books.isEmpty()) {
             logger.error("There are no books by such author: " + author);
-            throw new RuntimeException("There are no books by such author: " + author);
+            throw new EntityNotFoundException("There are no books by such author: " + author);
         }
         return books.map(this::bookToDto);
     }
@@ -103,10 +105,9 @@ public class BookServiceImpl implements BookService {
         Book checkBook = bookRepository.findByIsbn(bookDto.getIsbn());
         if (checkBook != null) {
             logger.error("Book with such ISBN already exists: " + checkBook.getIsbn());
-            throw new RuntimeException("Book with such ISBN already exists: " + checkBook.getIsbn());
+            throw new EntityAlreadyExistsException("Book with such ISBN already exists: " + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
-        //book = bookDao.create(book);
         book = bookRepository.save(book);
         return bookToDto(book);
     }
@@ -130,7 +131,7 @@ public class BookServiceImpl implements BookService {
         Book checkBook = bookRepository.findByIsbn(bookDto.getIsbn());
         if (checkBook != null && checkBook.getId() != bookDto.getId()) {
             logger.error("Book with such ISBN already exists: " + checkBook.getIsbn());
-            throw new RuntimeException("Book with such ISBN already exists: " + checkBook.getIsbn());
+            throw new EntityAlreadyExistsException("Book with such ISBN already exists: " + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
 
@@ -145,7 +146,7 @@ public class BookServiceImpl implements BookService {
         Book checkBook = bookRepository.findByIsbn(bookDto.getIsbn());
         if (checkBook != null && checkBook.getId() != bookDto.getId()) {
             logger.error("Book with such ISBN already exists: " + checkBook.getIsbn());
-            throw new RuntimeException("Book with such ISBN already exists: " + checkBook.getIsbn());
+            throw new EntityAlreadyExistsException("Book with such ISBN already exists: " + checkBook.getIsbn());
         }
         Book book = dtoToBook(bookDto);
         book = bookRepository.save(book);
