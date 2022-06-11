@@ -3,9 +3,13 @@ package com.belhard.bookstore.controller;
 import com.belhard.bookstore.service.dto.BookDto;
 import org.springframework.ui.Model;
 
+import java.util.Map;
+
 public interface BookController extends Controller<String, Model, BookDto, Long> {
 
     String getCreate(Model model);
+
+    String getAll(Model model, Map<String, String> map);
 
     String getUpdate(Model model, Long id);
 
@@ -13,6 +17,6 @@ public interface BookController extends Controller<String, Model, BookDto, Long>
 
     String getByIsbn(Model model, String isbn);
 
-    String getByAuthor(Model model, String author);
+    String getByAuthor(Model model, Map<String, String> map);
 
 }

@@ -3,6 +3,8 @@ package com.belhard.bookstore.controller.impl;
 import com.belhard.bookstore.controller.UserController;
 import com.belhard.bookstore.service.UserService;
 import com.belhard.bookstore.service.dto.UserDto;
+import com.belhard.bookstore.util.PageUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,8 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/users")
@@ -22,13 +25,16 @@ public class UserControllerImpl implements UserController {
         this.userService = userService;
     }
 
-    @GetMapping
     @Override
-    public String getAll(Model model) {
-        List<UserDto> userDtos = userService.getAll();
-        model.addAttribute("users", userDtos);
+    @GetMapping
+    public String getAll(Model model, @RequestParam Map<String, String> map) {
+
+        Page<UserDto> users = userService.getAll(PageUtil.getPageRequest(map));
+        model.addAttribute("users", users.getContent());
+
         return "users";
     }
+
 
     @GetMapping("/{id}")
     @Override
@@ -48,7 +54,7 @@ public class UserControllerImpl implements UserController {
     @PostMapping("/create")
     @Override
     public String create(@ModelAttribute UserDto userDto, Model model) {
-        userDto = userService.create(userDto);
+        userDto = userService.save(userDto);
         model.addAttribute("user", userDto);
         return "user";
     }
@@ -64,7 +70,7 @@ public class UserControllerImpl implements UserController {
     @PostMapping("/update/{id}")
     @Override
     public String update(@ModelAttribute UserDto userDto, Model model) {
-        userDto = userService.update(userDto);
+        userDto = userService.save(userDto);
         model.addAttribute("user", userDto);
         return "user";
     }
@@ -95,12 +101,14 @@ public class UserControllerImpl implements UserController {
         return "user";
     }
 
-    @GetMapping("/lastname/{lastName}")
+    @GetMapping("/lastname")
     @Override
-    public String getByLastName(Model model, @PathVariable String lastName) {
-        lastName = lastName.toUpperCase();
-        List<UserDto> userDtos = userService.getByLastName(lastName);
-        model.addAttribute("users", userDtos);
+    public String getByLastName(Model model, @RequestParam Map<String, String> map) {
+
+        String lastName = map.get("lastname");
+
+        Page<UserDto> users = userService.getByLastName(lastName, PageUtil.getPageRequest(map));
+        model.addAttribute("users", users.getContent());
         return "users";
     }
 }

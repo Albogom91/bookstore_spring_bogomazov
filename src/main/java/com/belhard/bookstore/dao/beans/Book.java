@@ -35,6 +35,9 @@ public class Book {
     @Column(name = "cover_id")
     private Cover cover;
 
+    @Column(name = "deleted")
+    private boolean deleted = Boolean.FALSE;
+
     public Book() {
 
     }
@@ -99,6 +102,14 @@ public class Book {
 
     public void setCover(Cover cover) {
         this.cover = cover;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

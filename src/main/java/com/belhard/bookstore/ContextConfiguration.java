@@ -32,7 +32,7 @@ public class ContextConfiguration {
         SpringApplication.run(ContextConfiguration.class, args);
 
         //To check if orderservice/dao, orderitemdao work as intended
-        UserDto user = userService.getById(3L);
+        /*UserDto user = userService.getById(3L);
         UserDto user1 = userService.getById(8L);
         BookDto book = bookService.getById(7L);
         BookDto book1 = bookService.getById(8L);
@@ -59,7 +59,7 @@ public class ContextConfiguration {
         System.out.println(order);
 
         order = orderService.update(order);
-        System.out.println(order);
+        System.out.println(order);*/
 
     }
 
