@@ -157,6 +157,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void delete(Long id) {
         logger.debug("Service method \"delete\" was called.");
+        getById(id);
         orderRepository.delete(id);
     }
 

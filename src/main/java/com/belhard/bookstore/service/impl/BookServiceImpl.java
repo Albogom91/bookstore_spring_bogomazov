@@ -157,6 +157,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public void delete(Long id) {
         logger.debug("Service method \"delete\" was called.");
+        getById(id);
         bookRepository.delete(id);
     }
 
