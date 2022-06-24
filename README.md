@@ -1,3 +1,3 @@
 # Bookstore project
-## CRUD, App architecture
+## Spring, Spring Boot, Spring Data JPA
 ### By A. Bogomazov
