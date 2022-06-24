@@ -1,3 +1,3 @@
 # Bookstore project
-## Spring, Spring Boot, Spring Data JPA
+## Spring, Spring Boot
 ### By A. Bogomazov
